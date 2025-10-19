@@ -1,0 +1,782 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="keywords" content="MRCP, MRCP Part 1, MRCP Part 2, MRCGP, AKT, GP ST Stage 2, Specialty Recruitment Assessment, MSRA, Medical student finals, MRCP Part 2, Situational Judgement Test, PLAB, DRCOG, USMLE Step 1">
+    <meta name="description" content="Online revision for the MRCP Part 1, MRCGP Applied Knowledge Test (AKT), GP ST Stage 2 - Specialty Recruitment Assessment, Medical student finals, MRCP Part 2, Situational Judgement Test, PLAB, DRCOG. Revision questions in the current format to help you pass.">
+    <meta name="author" content="FRCOphth Pro Ltd">
+    <meta name="theme-color" content="#1e3a8a">
+    
+    <link rel="icon" type="image/svg+xml" href="{% static 'img/logo.png' %}">
+
+    <title>FRCOphth Pro</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha512-MoRNloxbStBcD8z3M/2BmnT+rg4IsMxPkXaGh2zD6LGNNFE80W3onsAhRcMAMrSoyWL9xD7Ert0men7vR8LUZg==" crossorigin="anonymous" />
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+      :root {
+        --primary: #1e3a8a;
+        --primary-dark: #1e40af;
+        --secondary: #64748b;
+        --accent: #0ea5e9;
+        --light: #f8fafc;
+        --dark: #1e293b;
+        --success: #10b981;
+        --info: #06b6d4;
+        --gradient: linear-gradient(135deg, rgba(30, 58, 138, 0.85) 0%, rgba(30, 64, 175, 0.9) 100%);
+        --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      }
+
+      body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        color: var(--dark);
+        line-height: 1.6;
+      }
+
+      .navbar {
+        background: var(--gradient) !important;
+        box-shadow: var(--shadow);
+        padding: 0.8rem 1rem;
+      }
+
+      .navbar-brand {
+        font-weight: 700;
+        font-size: 1.4rem;
+        display: flex;
+        align-items: center;
+      }
+
+      .navbar-brand img {
+        margin-right: 10px;
+      }
+
+      .navbar-dark .navbar-nav .nav-link {
+        color: rgba(255, 255, 255, 0.9);
+        font-weight: 500;
+        transition: all 0.3s ease;
+      }
+
+      .navbar-dark .navbar-nav .nav-link:hover {
+        color: white;
+        transform: translateY(-2px);
+      }
+
+      .dropdown-menu {
+        border: none;
+        border-radius: 10px;
+        box-shadow: var(--shadow-lg);
+        padding: 0.5rem 0;
+      }
+
+      .dropdown-item {
+        padding: 0.6rem 1.5rem;
+        transition: all 0.2s ease;
+      }
+
+      .dropdown-item:hover {
+        background-color: #f1f5f9;
+        color: var(--primary);
+      }
+
+      /* FIXED HERO SECTION - DARKER OVERLAY */
+      .jumbotron {
+        position: relative;
+        background: 
+          linear-gradient(135deg, rgba(15, 23, 42, 0.445) 0%, rgba(30, 41, 59, 0.9) 100%),
+          url('{% static "img/landing.jpg" %}') center/cover;
+        color: white;
+        padding: 6rem 0;
+        margin-bottom: 0;
+        border-radius: 0;
+        text-align: center;
+        overflow: hidden;
+      }
+
+      .jumbotron::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(15, 23, 42, 0.7);
+        z-index: 1;
+      }
+
+      .jumbotron .container {
+        position: relative;
+        z-index: 2;
+      }
+
+      .jumbotron-heading {
+        font-weight: 800;
+        font-size: 3.5rem;
+        margin-bottom: 1.5rem;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      }
+
+      .jumbotron .lead {
+        font-size: 1.5rem;
+        font-weight: 400;
+        margin-bottom: 2rem;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+
+      .btn {
+        border-radius: 8px;
+        font-weight: 600;
+        padding: 0.75rem 1.5rem;
+        transition: all 0.3s ease;
+        border: none;
+      }
+
+      .btn-primary {
+        background: var(--primary);
+      }
+
+      .btn-primary:hover {
+        background: var(--primary-dark);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow);
+      }
+
+      .btn-success {
+        background: var(--success);
+      }
+
+      .btn-success:hover {
+        background: #0da271;
+        transform: translateY(-2px);
+        box-shadow: var(--shadow);
+      }
+
+      .btn-info {
+        background: var(--info);
+      }
+
+      .btn-info:hover {
+        background: #0891b2;
+        transform: translateY(-2px);
+        box-shadow: var(--shadow);
+      }
+
+      .btn-outline-info, .btn-outline-success {
+        border-width: 2px;
+        font-weight: 600;
+      }
+
+      .btn-outline-info:hover, .btn-outline-success:hover {
+        transform: translateY(-2px);
+      }
+
+      .album {
+        padding: 5rem 0;
+        background-color: var(--light);
+      }
+
+      .card {
+        border: none;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        height: 100%;
+      }
+
+      .card:hover {
+        transform: translateY(-10px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .card-img-top {
+        height: 180px;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+      }
+
+      .card:hover .card-img-top {
+        transform: scale(1.05);
+      }
+
+      .card-body {
+        padding: 1.5rem;
+      }
+
+      .card-title {
+        font-weight: 700;
+        color: var(--dark);
+        margin-bottom: 0.75rem;
+      }
+
+      .card-text {
+        color: var(--secondary);
+        margin-bottom: 1.5rem;
+      }
+
+      #feature-wrapper {
+        margin-top: 5rem;
+      }
+
+      .featurette-heading {
+        font-weight: 700;
+        color: var(--dark);
+        margin-bottom: 1rem;
+      }
+
+      .featurette-heading .text-muted {
+        color: var(--secondary) !important;
+        font-weight: 400;
+      }
+
+      .feature-box {
+        padding: 3rem 0;
+      }
+
+      .feature-box img {
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+      }
+
+      .footer-wrapper {
+        background: var(--dark);
+        color: white;
+        padding: 4rem 0 2rem;
+      }
+
+      .footer-wrapper a {
+        color: #cbd5e1;
+        transition: color 0.3s ease;
+      }
+
+      .footer-wrapper a:hover {
+        color: white;
+        text-decoration: none;
+      }
+
+      .footer-brand {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1.5rem;
+      }
+
+      .form-control {
+        border-radius: 8px;
+        padding: 0.75rem 1rem;
+        border: 1px solid #e2e8f0;
+      }
+
+      .form-control:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+      }
+
+      .section-title {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+
+      .section-title h2 {
+        font-weight: 800;
+        color: var(--dark);
+        margin-bottom: 1rem;
+      }
+
+      .section-title p {
+        color: var(--secondary);
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .stats-section {
+        background: white;
+        padding: 4rem 0;
+      }
+
+      .stat-item {
+        text-align: center;
+        padding: 1.5rem;
+      }
+
+      .stat-number {
+        font-size: 3rem;
+        font-weight: 800;
+        color: var(--primary);
+        display: block;
+        line-height: 1;
+      }
+
+      .stat-label {
+        color: var(--secondary);
+        font-weight: 500;
+      }
+
+      .testimonial-section {
+        background: var(--light);
+        padding: 5rem 0;
+      }
+
+      .testimonial-card {
+        background: white;
+        border-radius: 12px;
+        padding: 2rem;
+        box-shadow: var(--shadow);
+        margin-bottom: 2rem;
+      }
+
+      .testimonial-text {
+        font-style: italic;
+        margin-bottom: 1.5rem;
+        color: var(--secondary);
+      }
+
+      .testimonial-author {
+        font-weight: 600;
+        color: var(--dark);
+      }
+
+      .testimonial-role {
+        color: var(--secondary);
+        font-size: 0.9rem;
+      }
+
+      @media (max-width: 768px) {
+        .jumbotron-heading {
+          font-size: 2.5rem;
+        }
+        
+        .jumbotron .lead {
+          font-size: 1.2rem;
+        }
+        
+        .stat-number {
+          font-size: 2.5rem;
+        }
+      }
+
+
+
+.disabled-btn {
+  background: #94a3b8 !important;
+  cursor: not-allowed;
+}
+
+
+
+/* Login highlight animation */
+@keyframes highlight {
+  0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.6); }
+  50% { box-shadow: 0 0 15px 8px rgba(37, 99, 235, 0.4); }
+  100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+}
+
+.highlighted {
+  animation: highlight 1.2s ease;
+}
+
+
+@media (max-width: 992px) {
+  #navbar-login-form {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  #navbar-login-form .form-control {
+    margin-bottom: 0.5rem;
+    width: 100%;
+  }
+
+  #navbar-login-form button {
+    width: 100%;
+  }
+
+  #navbar-login-form .ml-3 {
+    margin-left: 0 !important;
+    margin-top: 0.5rem;
+  }
+}
+
+.navbar .container {
+  max-width: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+#navbar-login-form button {
+  white-space: nowrap;
+}
+
+
+.alert-fixed {
+  position: fixed;
+  top: 90px; /* slightly below navbar */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5000; /* ensure it's above navbar */
+  width: auto;
+  max-width: 600px;
+  text-align: center;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+  opacity: 0.95;
+  background: rgba(17, 24, 39, 0.9); /* subtle dark overlay */
+  color: #fff;
+  border: none;
+  font-weight: 500;
+}
+}
+
+    </style>
+  </head>
+
+  <body>
+    
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="container-fluid px-4">
+        <a class="navbar-brand" href="#">
+          <img type="logo" src="{% static 'img/logo.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+          <b>FRCOphth Pro</b>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            {% if not user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'signup'%}" role="button">
+                  <i class="fas fa-user-plus me-1"></i> Sign up
+                </a>
+              </li>
+            {% endif %}
+          </ul>
+
+          {% if user.is_authenticated %}
+          <form method="post" action="{% url 'logout' %}" class="mb-0">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-light my-2 my-sm-0">
+              <i class="fas fa-sign-out-alt me-1"></i> Logout
+            </button>
+          </form>
+
+          {% else %}
+            {% if messages %}
+              {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-fixed fade show" role="alert">
+                  {{ message }}
+                </div>
+              {% endfor %}
+            {% endif %}
+
+            <form id="navbar-login-form" class="d-flex align-items-center" method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            <div class="d-flex align-items-center">
+              <input class="form-control mr-2" name="username" type="text" placeholder="E-mail..." required>
+              <input class="form-control mr-2" name="password" type="password" placeholder="Password..." required>
+              <button class="btn btn-light" type="submit" name="login_new">
+                <i class="fas fa-sign-in-alt me-1"></i> Log in
+              </button>
+            </div>
+            <div class="ml-3">
+              <a href="{% url 'password_reset' %}" class="text-light small">Forgot password?</a>
+            </div>
+          </form>
+          {% endif %}
+        </div>
+      </div>
+    </nav>
+
+    <main role="main">
+      <!-- Hero Section -->
+      <section class="jumbotron";>
+        <div class="container">
+          <h1 class="jumbotron-heading">Pass FRCOphth Part 1</h1>
+          <p class="lead">Welcome to the gold standard in FRCOphth preparation with thousands of practice questions and detailed explanations.</p>
+          <p>
+            <div class="btn-group">
+              <a class="nav-link" href="{% url 'signup'%}" role="button">
+                <button type="button" id="jump_to_features" class="btn btn-info"><i class="fas fa-info-circle me-1" ></i> Sign Up Now</button>
+              </a>
+            </div>
+          </p>
+        </div>
+      </section>
+
+      <!-- Rest of the content remains the same -->
+      <!-- Stats Section -->
+      <section class="stats-section">
+        <div class="container">
+          <div class="row text-center">
+            <div class="col-md-3 col-6 stat-item">
+              <span class="stat-number">1,500+</span>
+              <span class="stat-label">Medical Questions</span>
+            </div>
+            <div class="col-md-3 col-6 stat-item">
+              <span class="stat-number">95%</span>
+              <span class="stat-label">Pass Rate</span>
+            </div>
+            <div class="col-md-3 col-6 stat-item">
+              <span class="stat-number">11+</span>
+              <span class="stat-label">Medical Exams</span>
+            </div>
+            <div class="col-md-3 col-6 stat-item">
+              <span class="stat-number">5+</span>
+              <span class="stat-label">Years Experience</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {% if not user.is_authenticated %}
+      <div class="alert alert-info text-center mb-4" role="alert">
+        Please <a href="#" id="focus-login" class="alert-link">log in</a> to unlock all quizzes.
+      </div>
+      {% endif %}
+
+
+      <!-- Course Cards Section -->
+      <section class="album py-5">
+        <div class="container">
+          <div class="section-title">
+            <h2>Comprehensive Medical Courses</h2>
+            <p>Choose from our extensive range of medical revision courses designed to help you succeed in your exams</p>
+          </div>
+          
+          <div class="row" id="course-cards">
+            {% for quiz in quizzes %}
+              <div class="col-md-4 mb-4 d-flex">
+                <div class="card course-card h-100 w-100">
+                  {% if quiz.image %}
+                    <img src="{{ quiz.image.url }}" class="card-img-top" alt="{{ quiz.title }}">
+                  {% else %}
+                    <img src="{% static 'img/placeholder.jpg' %}" class="card-img-top" alt="{{ quiz.title }}">
+                  {% endif %}
+                  <div class="card-body text-center">
+                    <h5 class="card-title">{{ quiz.title }}</h5>
+                    <p class="card-text">{{ quiz.description|truncatechars:120 }}</p>
+                    <p class="text-muted small mb-2">
+                      {% if quiz.category %}{{ quiz.category }}{% endif %}
+                    </p>
+
+                    {% if user.is_authenticated %}
+                      <a href="{% url 'Quizzes:select_questions' quiz.id %}" class="btn btn-primary w-100">
+                        Start Test
+                      </a>
+                    {% else %}
+                      <a href="{% url 'signup'%}" class="btn btn-secondary w-100" data-toggle="tooltip" data-placement="top" title="Sign up to access the quizzes">
+                        Sign up to Access
+                      </a>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            {% empty %}
+              <p class="text-center">No quizzes available yet. Please check back soon.</p>
+            {% endfor %}
+          </div>
+
+
+      <!-- Features Section -->
+      <section id="feature-wrapper">
+        <div class="container">
+          <div class="section-title">
+            <h2>Why Choose FRCOphth Pro?</h2>
+            <p>Our platform offers everything you need to prepare effectively for your FRCOphth Part 1 exam</p>
+          </div>
+          
+          <div class="row feature-box align-items-center">
+            <div class="col-md-6">
+              <h2 class="featurette-heading">Focused Learning <span class="text-muted">Maximize Your Study Time</span></h2>
+              <p class="lead">Our questions are continuously updated based on the latest exam patterns. Each question comes with detailed explanations and references to deepen your understanding of complex medical concepts.</p>
+              <ul class="list-unstyled">
+                <li><i class="fas fa-check text-success me-2"></i> Updated question bank aligned with current exams</li>
+                <li><i class="fas fa-check text-success me-2"></i> Detailed explanations and references</li>
+                <li><i class="fas fa-check text-success me-2"></i> Focus on high-yield topics</li>
+              </ul>
+            </div>
+            <div class="col-md-6">
+              <img src="{% static 'img/Focus-learning.jpg' %}" alt="Textbook" class="img-fluid">
+            </div>
+          </div>
+
+          <div class="row feature-box align-items-center">
+            <div class="col-md-6 order-md-2">
+              <h2 class="featurette-heading">Advanced Study Features <span class="text-muted">Everything You Need to Succeed</span></h2>
+              <p class="lead">Our platform includes feedback on every question to identify knowledge gaps. You can flag questions, add custom filters, and track your progress with detailed analytics.</p>
+              <ul class="list-unstyled">
+                <li><i class="fas fa-check text-success me-2"></i> Flag questions for later review</li>
+                <li><i class="fas fa-check text-success me-2"></i> Take quizzes after custom filtering</li>
+                <li><i class="fas fa-check text-success me-2"></i> Track progress with analytics</li>
+                <li><i class="fas fa-check text-success me-2"></i> Mobile-friendly design</li>
+              </ul>
+            </div>
+            <div class="col-md-6 order-md-1">
+              <img src="{% static 'img/Advanced-study.jpg' %}" alt="Features" class="img-fluid">
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Testimonials Section -->
+      <section class="testimonial-section">
+        <div class="container">
+          <div class="section-title">
+            <h2>What Our Users Say</h2>
+            <p>Hear from medical professionals who have succeeded with our platform</p>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="testimonial-card">
+                <p class="testimonial-text">"FRCOphth Pro helped me pass my FRCOphth exam on the first attempt. The question bank was comprehensive and the explanations were incredibly helpful."</p>
+                <p class="testimonial-author">Dr. Sarah Johnson</p>
+                <p class="testimonial-role">Junior Doctor, London</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="testimonial-card">
+                <p class="testimonial-text">"The preparation course was excellent. The practice questions closely mirrored the actual exam, and the performance tracking helped me identify my weak areas."</p>
+                <p class="testimonial-author">James Wilson</p>
+                <p class="testimonial-role">Medical Student, Manchester</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="testimonial-card">
+                <p class="testimonial-text">"As an international medical graduate, the preparation materials were absolutely invaluable. I passed both parts on my first try thanks to this platform."</p>
+                <p class="testimonial-author">Dr. Anika Patel</p>
+                <p class="testimonial-role">IMG, now working in NHS</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-wrapper">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="footer-brand">
+              <img type="image" src="{% static 'img/logo.png' %}" width="25" height="25" class="d-inline-block align-top me-2" alt=""> 
+              <b>FRCOphth Pro</b>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-3">
+            <p>&copy; 2025 FRCOphth Pro Ltd</p>
+            <a target="_blank" href="{% url 'Quizzes:terms' %}">Terms and conditions</a>
+            <br>
+            <a target="_blank" href="{% url 'Quizzes:privacy' %}">Privacy policy</a>
+          </div>
+
+          <div class="col-md-3">
+            <ul class="list-unstyled">
+              <li>FRCOphth Pro Ltd</li>
+              <li>100 Green Street</li>
+              <li>Green Avenue</li>
+              <li>Manchester</li>
+            </ul>
+          </div>
+
+          <div class="col-md-3">
+            <ul class="list-unstyled">
+              <li><a href="{% url 'Quizzes:about' %}">About FRCOphth Pro Ltd</a></li>
+              <li><a href="#">Contact us</a></li>
+            </ul>
+          </div>
+
+          <div class="col-md-3">
+            <ul class="list-unstyled">
+              <li><a href="https://www.mrcpuk.org/mrcpuk-examinations">MRCP UK Examinations guidance</a></li>
+              <li><a href="http://www.rcgp.org.uk/training-exams/mrcgp-exams-overview/mrcgp-applied-knowledge-test-akt.aspx">MRCGP AKT examination guidance</a></li>
+              <li><a href="https://gprecruitment.hee.nhs.uk/Recruitment/Applicant-Guidance/MSRA">MSRA exam guidance</a></li>
+              <li><a href="https://www.medschools.ac.uk/our-work/assessment/msc-assessment-alliance">UK Medical School Alliance</a></li>
+              <li><a href="http://www.foundationprogramme.nhs.uk/content/epm-sjt">SJT guidance</a></li>
+              <li><a href="https://prescribingsafetyassessment.ac.uk/">PSA guidance</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- External Site Modal -->
+    <div class="modal fade" id="extsite" tabindex="-1" role="dialog" aria-labelledby="extsite-title" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="extsite-title">External Site</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id="extsite-content">
+            <!-- Content will be loaded here -->
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha512-M5KW3ztuIICmVIhjSqXe01oV2bpe248gOxqmlcYrEzAvws7Pw3z6BK0iGbrwvdrUQUhi3eXgtxp5I8PDo9YfjQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+  const loginLink = document.getElementById('focus-login');
+  const navbarLoginForm = document.getElementById('navbar-login-form');
+
+  if (loginLink && navbarLoginForm) {
+    loginLink.addEventListener('click', function(e) {
+      e.preventDefault();
+
+      // Scroll smoothly to navbar
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+
+      // Highlight the form briefly
+      navbarLoginForm.classList.add('highlighted');
+      setTimeout(() => {
+        navbarLoginForm.classList.remove('highlighted');
+      }, 1500);
+
+      // Focus on the username input
+      const usernameField = navbarLoginForm.querySelector('input[name="username"]');
+      if (usernameField) {
+        setTimeout(() => usernameField.focus(), 600);
+      }
+    });
+  }
+});
+
+
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip({
+    trigger: 'hover click',
+    placement: 'top'
+  });
+});
+</script>
+</script>
+  </body>
+</html>
+

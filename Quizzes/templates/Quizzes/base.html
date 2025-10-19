@@ -1,0 +1,478 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#1e3a8a">
+
+    <title>{% block title %}FRCOphth Pro{% endblock %}</title>
+
+    <!-- Bootstrap / Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- Main site styling -->
+     <style>
+      :root {
+        --primary: #1e3a8a;
+        --primary-dark: #1e40af;
+        --secondary: #64748b;
+        --accent: #0ea5e9;
+        --light: #f8fafc;
+        --dark: #1e293b;
+        --success: #10b981;
+        --info: #06b6d4;
+        --gradient: linear-gradient(135deg, rgba(30, 58, 138, 0.85) 0%, rgba(30, 64, 175, 0.9) 100%);
+        --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      }
+
+      body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        color: var(--dark);
+        line-height: 1.6;
+      }
+
+      .navbar {
+        background: var(--gradient) !important;
+        box-shadow: var(--shadow);
+        padding: 0.8rem 1rem;
+        display: flex;
+      }
+
+      .navbar-brand {
+        font-weight: 700;
+        font-size: 1.4rem;
+        display: flex;
+        align-items: center;
+      }
+
+      .navbar-brand img {
+        margin-right: 10px;
+      }
+
+      .navbar-dark .navbar-nav .nav-link {
+        color: rgba(255, 255, 255, 0.9);
+        font-weight: 500;
+        transition: all 0.3s ease;
+      }
+
+      .navbar-dark .navbar-nav .nav-link:hover {
+        color: white;
+        transform: translateY(-2px);
+      }
+
+      .dropdown-menu {
+        border: none;
+        border-radius: 10px;
+        box-shadow: var(--shadow-lg);
+        padding: 0.5rem 0;
+      }
+
+      .dropdown-item {
+        padding: 0.6rem 1.5rem;
+        transition: all 0.2s ease;
+      }
+
+      .dropdown-item:hover {
+        background-color: #f1f5f9;
+        color: var(--primary);
+      }
+
+      /* FIXED HERO SECTION - DARKER OVERLAY */
+      .jumbotron {
+        position: relative;
+        background: 
+          linear-gradient(135deg, rgba(15, 23, 42, 0.445) 0%, rgba(30, 41, 59, 0.9) 100%),
+          url('{% static "img/landing.jpg" %}') center/cover;
+        color: white;
+        padding: 6rem 0;
+        margin-bottom: 0;
+        border-radius: 0;
+        text-align: center;
+        overflow: hidden;
+      }
+
+      .jumbotron::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(15, 23, 42, 0.7);
+        z-index: 1;
+      }
+
+      .jumbotron .container {
+        position: relative;
+        z-index: 2;
+      }
+
+      .jumbotron-heading {
+        font-weight: 800;
+        font-size: 3.5rem;
+        margin-bottom: 1.5rem;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      }
+
+      .jumbotron .lead {
+        font-size: 1.5rem;
+        font-weight: 400;
+        margin-bottom: 2rem;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .btn {
+        border-radius: 8px;
+        font-weight: 600;
+        padding: 0.75rem 1.5rem;
+        transition: all 0.3s ease;
+        border: none;
+      }
+
+      .btn-primary {
+        background: var(--primary);
+      }
+
+      .btn-primary:hover {
+        background: var(--primary-dark);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow);
+      }
+
+      .btn-success {
+        background: var(--success);
+      }
+
+      .btn-success:hover {
+        background: #0da271;
+        transform: translateY(-2px);
+        box-shadow: var(--shadow);
+      }
+
+      .btn-info {
+        background: var(--info);
+      }
+
+      .btn-info:hover {
+        background: #0891b2;
+        transform: translateY(-2px);
+        box-shadow: var(--shadow);
+      }
+
+      .btn-outline-info, .btn-outline-success {
+        border-width: 2px;
+        font-weight: 600;
+      }
+
+      .btn-outline-info:hover, .btn-outline-success:hover {
+        transform: translateY(-2px);
+      }
+
+      .album {
+        padding: 5rem 0;
+        background-color: var(--light);
+      }
+
+      .card {
+        border: none;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        height: 100%;
+      }
+
+      .card:hover {
+        transform: translateY(-10px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .card-img-top {
+        height: 180px;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+      }
+
+      .card:hover .card-img-top {
+        transform: scale(1.05);
+      }
+
+      .card-body {
+        padding: 1.5rem;
+      }
+
+      .card-title {
+        font-weight: 700;
+        color: var(--dark);
+        margin-bottom: 0.75rem;
+      }
+
+      .card-text {
+        color: var(--secondary);
+        margin-bottom: 1.5rem;
+      }
+
+      #feature-wrapper {
+        margin-top: 5rem;
+      }
+
+      .featurette-heading {
+        font-weight: 700;
+        color: var(--dark);
+        margin-bottom: 1rem;
+      }
+
+      .featurette-heading .text-muted {
+        color: var(--secondary) !important;
+        font-weight: 400;
+      }
+
+      .feature-box {
+        padding: 3rem 0;
+      }
+
+      .feature-box img {
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+      }
+
+      .footer-wrapper {
+        background: var(--dark);
+        color: white;
+        padding: 4rem 0 2rem;
+      }
+
+      .footer-wrapper a {
+        color: #cbd5e1;
+        transition: color 0.3s ease;
+      }
+
+      .footer-wrapper a:hover {
+        color: white;
+        text-decoration: none;
+      }
+
+      .footer-brand {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1.5rem;
+      }
+
+      .form-control {
+        border-radius: 8px;
+        padding: 0.75rem 1rem;
+        border: 1px solid #e2e8f0;
+      }
+
+      .form-control:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+      }
+
+      .section-title {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+
+      .section-title h2 {
+        font-weight: 800;
+        color: var(--dark);
+        margin-bottom: 1rem;
+      }
+
+      .section-title p {
+        color: var(--secondary);
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .stats-section {
+        background: white;
+        padding: 4rem 0;
+      }
+
+      .stat-item {
+        text-align: center;
+        padding: 1.5rem;
+      }
+
+      .stat-number {
+        font-size: 3rem;
+        font-weight: 800;
+        color: var(--primary);
+        display: block;
+        line-height: 1;
+      }
+
+      .stat-label {
+        color: var(--secondary);
+        font-weight: 500;
+      }
+
+      .testimonial-section {
+        background: var(--light);
+        padding: 5rem 0;
+      }
+
+      .testimonial-card {
+        background: white;
+        border-radius: 12px;
+        padding: 2rem;
+        box-shadow: var(--shadow);
+        margin-bottom: 2rem;
+      }
+
+      .testimonial-text {
+        font-style: italic;
+        margin-bottom: 1.5rem;
+        color: var(--secondary);
+      }
+
+      .testimonial-author {
+        font-weight: 600;
+        color: var(--dark);
+      }
+
+      .testimonial-role {
+        color: var(--secondary);
+        font-size: 0.9rem;
+      }
+
+      @media (max-width: 768px) {
+        .jumbotron-heading {
+          font-size: 2.5rem;
+        }
+        
+        .jumbotron .lead {
+          font-size: 1.2rem;
+        }
+        
+        .stat-number {
+          font-size: 2.5rem;
+        }
+      }
+
+
+      .card {
+        border: none;
+      }
+
+      .card input.form-control {
+        border-radius: 8px;
+      }
+
+      .card button.btn-primary {
+        background-color: #1e3a8a;
+        border: none;
+        transition: background 0.3s ease;
+      }
+
+      .card button.btn-primary:hover {
+        background-color: #1e40af;
+      }
+
+      body {
+        font-size: 1.05rem;  /* Default Bootstrap is ~1rem (16px) */
+        line-height: 1.6;
+      }
+      h4, h5, h6 {
+        font-weight: 600;
+      }
+      .question-box {
+        font-size: 1.1rem;  /* Slightly larger for quiz text */
+      }
+      .form-check-label {
+        font-size: 1.05rem;
+      }
+    </style>
+
+    {% block extra_head %}{% endblock %}
+  </head>
+
+  <body>
+    <!-- ✅ NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background: var(--gradient); box-shadow: var(--shadow);">
+      <div class="container">
+        <a class="navbar-brand font-weight-bold" href="{% url 'Quizzes:home' %}">
+          <img type="image" src="{% static 'img/logo.png' %}" width="25" height="25" alt="logo">
+          FRCOphth Pro
+        </a>
+
+        <div class="ml-auto text-white-50">
+          {% if user.is_authenticated %}
+            Hi, {{ user.username }} • <a class="text-white" href="{% url 'logout' %}">Logout</a>
+          {% else %}
+            <a class="text-white" href="{% url 'login' %}">Login</a>
+          {% endif %}
+        </div>
+      </div>
+    </nav>
+
+    <!-- ✅ PAGE-SPECIFIC CONTENT -->
+    <main class="container-fluid px-0" style="min-height:70vh;">
+      {% block content %}
+      {% endblock %}
+    </main>
+
+    <!-- ✅ FOOTER -->
+     <footer class="footer-wrapper">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="footer-brand">
+              <img type="image" src="{% static 'img/logo.png' %}" width="25" height="25" class="d-inline-block align-top me-2" alt="">
+              <b>FRCOphth Pro</b>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-3">
+            <p>&copy; 2025 FRCOphth Pro Ltd</p>
+            <a target="_blank" href="{% url 'Quizzes:terms' %}">Terms and conditions</a>
+            <br>
+            <a target="_blank" href="{% url 'Quizzes:privacy' %}">Privacy policy</a>
+          </div>
+
+          <div class="col-md-3">
+            <ul class="list-unstyled">
+              <li>FRCOphth Pro Ltd</li>
+              <li>100 Green Street</li>
+              <li>Green Avenue</li>
+              <li>Manchester</li>
+            </ul>
+          </div>
+
+          <div class="col-md-3">
+            <ul class="list-unstyled">
+              <li><a href="{% url 'Quizzes:about' %}">About FRCOphth Pro Ltd</a></li>
+              <li><a href="#">Contact us</a></li>
+            </ul>
+          </div>
+
+          <div class="col-md-3">
+            <ul class="list-unstyled">
+              <li><a href="https://www.mrcpuk.org/mrcpuk-examinations">MRCP UK Examinations guidance</a></li>
+              <li><a href="http://www.rcgp.org.uk/training-exams/mrcgp-exams-overview/mrcgp-applied-knowledge-test-akt.aspx">MRCGP AKT examination guidance</a></li>
+              <li><a href="https://gprecruitment.hee.nhs.uk/Recruitment/Applicant-Guidance/MSRA">MSRA exam guidance</a></li>
+              <li><a href="https://www.medschools.ac.uk/our-work/assessment/msc-assessment-alliance">UK Medical School Alliance</a></li>
+              <li><a href="http://www.foundationprogramme.nhs.uk/content/epm-sjt">SJT guidance</a></li>
+              <li><a href="https://prescribingsafetyassessment.ac.uk/">PSA guidance</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- ✅ GLOBAL JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    {% block extra_scripts %}{% endblock %}
+  </body>
+</html>

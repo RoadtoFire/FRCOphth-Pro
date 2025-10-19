@@ -1,0 +1,38 @@
+{% extends "Quizzes/base.html" %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+  <div class="card shadow-lg p-4" style="max-width: 420px; width: 100%; border-radius: 16px;">
+    <div class="text-center mb-4">
+      <h3 class="text-primary font-weight-bold">Create an Account</h3>
+      <p class="text-muted mb-0">Join to access all medical quizzes</p>
+    </div>
+
+    <form method="POST" class="mt-3">
+      {% csrf_token %}
+      <div class="form-group mb-3">
+        <label for="username" class="font-weight-semibold">Username</label>
+        <input type="text" id="username" name="username" class="form-control" placeholder="Choose a username" required>
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="email" class="font-weight-semibold">Email</label>
+        <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
+      </div>
+
+      <div class="form-group mb-4">
+        <label for="password" class="font-weight-semibold">Password</label>
+        <input type="password" id="password" name="password" class="form-control" placeholder="Enter a strong password" required>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-block py-2 font-weight-bold w-100" style="border-radius: 10px;">
+        Sign Up
+      </button>
+    </form>
+
+    <div class="text-center mt-3">
+      <small>Already have an account? <a href="{% url 'login' %}" class="text-primary font-weight-semibold">Log in</a></small>
+    </div>
+  </div>
+</div>
+{% endblock %}

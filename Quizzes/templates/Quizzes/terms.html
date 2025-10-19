@@ -1,0 +1,135 @@
+{% extends "Quizzes/base.html" %}
+{% load static %}
+
+{% block title %}Terms and Conditions — FRCOphtn Pro{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="card shadow-sm p-4">
+    <h2 class="text-center mb-4 fw-bold">Terms and Conditions</h2>
+
+    <h4 class="mt-4">Introduction</h4>
+    <p>
+      Welcome to the <strong>FRCOphtn Pro</strong> website — an online revision resource created for ophthalmology
+      trainees preparing for the <strong>FRCOphth examinations</strong>.
+      Use of this website is conditional upon acceptance of these Terms and Conditions, so please read them carefully.
+    </p>
+    <p>
+      These Terms and Conditions apply to all users of the services provided by FRCOphtn Pro.
+      By accessing or using this website, you agree to be bound by them.
+      If you do not agree, please discontinue use of the site.
+    </p>
+    <p>
+      Terms and Conditions may change over time; the version in effect is the one you agree to when subscribing.
+      The website and subscription process are in English.
+      For any queries, contact us at <a href="mailto:contact@frcophthpro.com">contact@frcophthpro.com</a>.
+    </p>
+
+    <h4 class="mt-4">Subscription</h4>
+    <p>
+      Subscription pricing is displayed on our website. Payments must be made in pounds sterling (GBP).
+      If paying from a non-UK account, your card provider will determine the applicable exchange rate.
+    </p>
+    <p>
+      Once access to the service has been granted, refunds or cancellations are not normally permitted
+      due to the nature of the digital content.
+      We reserve the right to apply a cancellation fee at our discretion.
+    </p>
+    <p>
+      You agree that all details you provide during registration are accurate,
+      including ownership of the payment card used and sufficient funds to cover the subscription cost.
+    </p>
+
+    <h4 class="mt-4">Usage of Website</h4>
+    <p>
+      By using the FRCOphtn Pro website, whether as a registered or guest user,
+      you acknowledge and accept these Terms and Conditions.
+    </p>
+    <p>
+      Each account is personal and intended for individual revision only.
+      Passwords or login details must not be shared.
+      We reserve the right to suspend or terminate any account found to be in breach of this requirement.
+    </p>
+    <p>
+      Copying, reproducing, or distributing any questions, explanations, or notes from the website
+      is strictly prohibited. Attempts to tamper with, hack, or otherwise compromise site functionality
+      will result in immediate termination of access and may lead to legal action.
+    </p>
+    <p>
+      Offensive, discriminatory, or inappropriate content posted in comments or discussions
+      will not be tolerated and may lead to suspension or termination of service.
+    </p>
+    <p>
+      While we strive to maintain continuous access, temporary interruptions may occur
+      due to maintenance or unforeseen technical issues.
+      Should downtime occur, users may request an extension of their subscription
+      equivalent to the period of unavailability.
+    </p>
+    <p>
+      The site has been optimised for use on modern browsers and devices.
+      Accessing the site on unsupported platforms may limit functionality.
+    </p>
+
+    <h4 class="mt-4">External Links</h4>
+    <p>
+      For user convenience, the FRCOphtn Pro website may contain links to external sites.
+      These are provided for reference only; we do not endorse or control their content
+      and accept no responsibility for any loss or damage arising from their use.
+    </p>
+
+    <h4 class="mt-4">Copyright</h4>
+    <p>
+      All content on the FRCOphtn Pro website — including text, questions, explanations, graphics,
+      and database structure — is protected by copyright.
+      You may use the material solely for personal, non-commercial study.
+      Copying, reproducing, or modifying any part of this site without prior written permission
+      is strictly prohibited.
+    </p>
+    <p>
+      Any unauthorised use or attempt to reproduce our content will result in immediate
+      termination of access and potential legal action.
+    </p>
+
+    <h4 class="mt-4">Limitation of Liability</h4>
+    <p>
+      The FRCOphtn Pro website is provided as an educational resource only.
+      While every effort is made to ensure accuracy, we make no representations or warranties,
+      express or implied, regarding the completeness, reliability, or suitability of the information provided.
+    </p>
+    <p>
+      Medical knowledge and guidelines evolve continuously;
+      users must verify drug dosages and management protocols using official sources such as the
+      <em>British National Formulary</em> or local institutional guidelines.
+    </p>
+    <p>
+      FRCOphtn Pro, its team, and affiliates accept no liability for any loss, damage, or injury
+      resulting from the use of material on this website.
+      In no event shall our total liability exceed the value of the current subscription fee paid.
+    </p>
+
+    <h4 class="mt-4">Privacy</h4>
+    <p>
+      All personal information collected by FRCOphtn Pro is handled in accordance with our
+      <a href="{% url 'Quizzes:privacy' %}">Privacy Policy</a>.
+      By using the site, you consent to such processing of data.
+    </p>
+
+    <h4 class="mt-4">Law Governing These Terms</h4>
+    <p>
+      These Terms and Conditions are governed exclusively by the laws of England and Wales.
+      FRCOphtn Pro reserves the right to initiate proceedings in any relevant jurisdiction
+      for breaches of these terms.
+    </p>
+
+    <hr class="my-4">
+
+    <div class="text-center">
+      <a href="#top" class="btn btn-outline-secondary btn-sm">Back to top</a>
+    </div>
+
+    <p class="text-center text-muted small mt-4 mb-0">
+      © 2025 FRCOphtn Pro. All rights reserved.
+    </p>
+  </div>
+</div>
+{% endblock %}

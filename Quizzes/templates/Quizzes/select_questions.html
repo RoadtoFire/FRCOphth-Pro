@@ -1,0 +1,753 @@
+{% extends "Quizzes/base.html" %}
+{% load static %}
+
+{% block content %}
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    background: #f5f7fa;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    color: #333;
+  }
+
+  .page-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 30px 20px;
+  }
+
+  .header-section {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+
+  .quiz-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 10px;
+  }
+
+  .quiz-description {
+    font-size: 15px;
+    color: #666;
+    line-height: 1.6;
+  }
+
+  .content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-bottom: 30px;
+  }
+
+  .card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+  }
+
+  .card-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #007bff;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 20px;
+  }
+
+  /* Progress Card */
+  .progress-section {
+    margin-bottom: 20px;
+  }
+
+  .progress-bar-container {
+    background: #e9ecef;
+    border-radius: 4px;
+    height: 24px;
+    overflow: hidden;
+    display: flex;
+    margin-bottom: 15px;
+  }
+
+  .progress-segment {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .progress-attempted {
+    background: #007bff;
+  }
+
+  .progress-wrong {
+    background: #dc3545;
+  }
+
+  .progress-flagged {
+    background: #ffc107;
+    color: #333;
+  }
+
+  .progress-unattempted {
+    background: #adb5bd;
+  }
+
+  .stats-summary {
+    background: #f8f9fa;
+    border-radius: 6px;
+    padding: 12px 15px;
+    font-size: 13px;
+    line-height: 1.8;
+    margin-bottom: 15px;
+  }
+
+  .stat-line {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+  }
+
+  .stat-label {
+    color: #666;
+  }
+
+  .stat-value {
+    font-weight: 600;
+    color: #1a1a1a;
+  }
+
+  .spinner {
+    display: none;
+    text-align: center;
+    margin: 10px 0;
+  }
+
+  .spinner-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #007bff;
+    animation: spin 1.4s infinite;
+    margin: 0 3px;
+  }
+
+  .spinner-dot:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+
+  .spinner-dot:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+
+  @keyframes spin {
+    0%, 80%, 100% {
+      transform: scaleY(0.5);
+      opacity: 0.5;
+    }
+    40% {
+      transform: scaleY(1);
+      opacity: 1;
+    }
+  }
+
+  .match-count {
+    display: none;
+    font-size: 14px;
+    font-weight: 600;
+    color: #007bff;
+    text-align: center;
+    padding: 10px;
+    background: #f0f7ff;
+    border-radius: 6px;
+    margin-bottom: 15px;
+  }
+
+  .match-count.zero {
+    color: #dc3545;
+    background: #fef2f2;
+  }
+
+  .btn-reset {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.2s ease;
+    margin-bottom: 10px;
+  }
+
+  .btn-reset:hover {
+    background: #c82333;
+  }
+
+  .btn-reset-flags {
+    background: #ffc107;
+    color: #333;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.2s ease;
+    margin-bottom: 10px;
+  }
+
+  .btn-reset-flags:hover {
+    background: #ffb300;
+  }
+
+  /* Filters Card */
+  .filter-group {
+    margin-bottom: 20px;
+  }
+
+  .filter-label-text {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+  }
+
+  .topic-select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .topic-select:hover,
+  .topic-select:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+  }
+
+  .checkbox-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: white;
+  }
+
+  .checkbox-item:hover {
+    border-color: #007bff;
+    background: #f8f9ff;
+  }
+
+  .checkbox-item input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    margin-right: 10px;
+    accent-color: #007bff;
+  }
+
+  .checkbox-item label {
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0;
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .btn-primary {
+    flex: 1;
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+  }
+
+  .btn-primary:hover {
+    background: #0056b3;
+    text-decoration: none;
+  }
+
+  .btn-primary:disabled,
+  .btn-primary.disabled {
+    background: #ccc;
+    color: #999;
+    cursor: not-allowed;
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  .btn-secondary {
+    flex: 1;
+    background: #e9ecef;
+    color: #333;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+  }
+
+  .btn-secondary:hover {
+    background: #dee2e6;
+    text-decoration: none;
+  }
+
+  .back-btn {
+    display: inline-block;
+    background: #6c757d;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .back-btn:hover {
+    background: #5a6268;
+    text-decoration: none;
+  }
+
+  .modal-custom {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  .modal-custom.show {
+    display: flex;
+  }
+
+  .modal-content-custom {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    max-width: 350px;
+    width: 90%;
+    overflow: hidden;
+  }
+
+  .modal-header-custom {
+    background: #dc3545;
+    color: white;
+    padding: 15px 20px;
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  .modal-body-custom {
+    padding: 20px;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .modal-footer-custom {
+    padding: 15px 20px;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    border-top: 1px solid #e0e0e0;
+  }
+
+  .btn-modal {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .btn-modal-cancel {
+    background: #e9ecef;
+    color: #333;
+  }
+
+  .btn-modal-cancel:hover {
+    background: #dee2e6;
+  }
+
+  .btn-modal-confirm {
+    background: #dc3545;
+    color: white;
+  }
+
+  .btn-modal-confirm:hover {
+    background: #c82333;
+  }
+
+  .footer-section {
+    text-align: center;
+    margin-top: 30px;
+  }
+
+  @media (max-width: 768px) {
+    .content-grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .action-buttons {
+      flex-direction: column;
+    }
+
+    .quiz-title {
+      font-size: 22px;
+    }
+  }
+</style>
+
+<div class="page-container">
+  <!-- Header -->
+  <div class="header-section">
+    <h1 class="quiz-title">{{ quiz.title }}</h1>
+    {% if quiz.description %}
+      <p class="quiz-description">{{ quiz.description }}</p>
+    {% endif %}
+  </div>
+
+  <!-- Main Content -->
+  <div class="content-grid">
+    <!-- Progress Card -->
+    <div class="card">
+      <div class="card-title">Your Progress</div>
+
+      <div class="progress-section">
+        <div class="progress-bar-container">
+          <div id="attempted-bar" class="progress-segment progress-attempted" style="width: 0%;"></div>
+          <div id="wrong-bar" class="progress-segment progress-wrong" style="width: 0%;"></div>
+          <div id="flagged-bar" class="progress-segment progress-flagged" style="width: 0%;"></div>
+          <div id="unattempted-bar" class="progress-segment progress-unattempted" style="width: 0%;"></div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; font-size: 13px;">
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <div style="width: 12px; height: 12px; background: #007bff; border-radius: 2px;"></div>
+            <span>Attempted</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <div style="width: 12px; height: 12px; background: #dc3545; border-radius: 2px;"></div>
+            <span>Wrong</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <div style="width: 12px; height: 12px; background: #ffc107; border-radius: 2px;"></div>
+            <span>Flagged</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <div style="width: 12px; height: 12px; background: #adb5bd; border-radius: 2px;"></div>
+            <span>Unattempted</span>
+          </div>
+        </div>
+
+        <div id="stats-summary" class="stats-summary">
+          <div class="stat-line">
+            <span class="stat-label">Total Questions:</span>
+            <span class="stat-value" id="total-count">0</span>
+          </div>
+          <div class="stat-line">
+            <span class="stat-label">Attempted:</span>
+            <span class="stat-value" id="attempted-count">0</span>
+          </div>
+          <div class="stat-line">
+            <span class="stat-label">Wrong:</span>
+            <span class="stat-value" id="wrong-count">0</span>
+          </div>
+          <div class="stat-line">
+            <span class="stat-label">Flagged:</span>
+            <span class="stat-value" id="flagged-count">0</span>
+          </div>
+          <div class="stat-line">
+            <span class="stat-label">Unattempted:</span>
+            <span class="stat-value" id="unattempted-count">0</span>
+          </div>
+        </div>
+
+        <div id="spinner" class="spinner">
+          <div class="spinner-dot"></div>
+          <div class="spinner-dot"></div>
+          <div class="spinner-dot"></div>
+        </div>
+      </div>
+
+      <button type="button" class="btn-reset-flags" onclick="openResetFlagsModal()">☆ Reset All Flags</button>
+
+      <form method="post" action="{% url 'Quizzes:reset_progress' quiz.id %}" style="margin: 0;">
+        {% csrf_token %}
+        <button type="button" class="btn-reset" onclick="openResetModal()">Reset Progress</button>
+      </form>
+    </div>
+
+    <!-- Filters Card -->
+    <div class="card">
+      <div class="card-title">Choose Questions</div>
+
+      <form id="filter-form">
+        <div class="filter-group">
+          <label class="filter-label-text">Topic</label>
+          <select name="topic" id="topic" class="topic-select">
+            <option value="">All topics</option>
+            {% for t in topics %}
+            <option value="{{ t }}">{{ t }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label class="filter-label-text">Filters</label>
+
+          <div class="checkbox-item">
+            <input class="form-check-input" type="checkbox" name="only_wrong" value="1" id="only_wrong">
+            <label for="only_wrong">Only Wrong Answers</label>
+          </div>
+
+          <div class="checkbox-item">
+            <input class="form-check-input" type="checkbox" name="only_flagged" value="1" id="only_flagged">
+            <label for="only_flagged">Only Flagged</label>
+          </div>
+
+          <div class="checkbox-item">
+            <input class="form-check-input" type="checkbox" name="only_unattempted" value="1" id="only_unattempted" checked>
+            <label for="only_unattempted">Only Unattempted</label>
+          </div>
+
+          <div class="checkbox-item">
+            <input class="form-check-input" type="checkbox" name="random" value="1" id="random">
+            <label for="random">Randomize Order</label>
+          </div>
+        </div>
+
+        <div id="match-count" class="match-count"></div>
+
+        <div class="action-buttons">
+          <a href="#" id="start-quiz-btn" class="btn-primary">Start Quiz →</a>
+          {% if has_queue %}
+          <a href="{% url 'Quizzes:quiz_question' quiz.id 1 %}" class="btn-secondary">Continue</a>
+          {% endif %}
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer-section">
+    <a href="{% url 'Quizzes:home' %}" class="back-btn">← Back to Quizzes</a>
+  </div>
+</div>
+
+<!-- Reset Progress Modal -->
+<div class="modal-custom" id="resetModal">
+  <div class="modal-content-custom">
+    <div class="modal-header-custom">Reset Progress?</div>
+    <div class="modal-body-custom">
+      <p>Are you sure you want to reset all progress for this quiz?</p>
+      <p><strong>This action cannot be undone.</strong></p>
+    </div>
+    <div class="modal-footer-custom">
+      <button type="button" class="btn-modal btn-modal-cancel" onclick="closeResetModal()">Cancel</button>
+      <form id="resetForm" method="post" action="{% url 'Quizzes:reset_progress' quiz.id %}" style="margin: 0;">
+        {% csrf_token %}
+        <button type="submit" class="btn-modal btn-modal-confirm">Reset</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Reset Flags Modal -->
+<div class="modal-custom" id="resetFlagsModal">
+  <div class="modal-content-custom">
+    <div class="modal-header-custom">Reset All Flags?</div>
+    <div class="modal-body-custom">
+      <p>Are you sure you want to remove all flags from this quiz?</p>
+      <p><strong>This action cannot be undone.</strong></p>
+    </div>
+    <div class="modal-footer-custom">
+      <button type="button" class="btn-modal btn-modal-cancel" onclick="closeResetFlagsModal()">Cancel</button>
+      <form id="resetFlagsForm" method="post" action="{% url 'Quizzes:reset_flags' quiz.id %}" style="margin: 0;">
+        {% csrf_token %}
+        <button type="submit" class="btn-modal btn-modal-confirm">Reset Flags</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+const form = document.getElementById("filter-form");
+const spinner = document.getElementById("spinner");
+const matchCount = document.getElementById("match-count");
+const startQuizBtn = document.getElementById("start-quiz-btn");
+const onlyUnattempted = document.getElementById("only_unattempted");
+
+form.addEventListener("change", updateFilters);
+document.addEventListener("DOMContentLoaded", () => {
+  onlyUnattempted.dataset.manual = true;
+  updateFilters();
+});
+
+async function updateFilters() {
+  const params = new URLSearchParams(new FormData(form));
+
+  const othersActive =
+    document.getElementById("only_wrong").checked ||
+    document.getElementById("only_flagged").checked ||
+    document.getElementById("topic").value !== "";
+
+  if (othersActive && onlyUnattempted.checked && !onlyUnattempted.dataset.manualOff) {
+    onlyUnattempted.checked = false;
+    params.set("only_unattempted", "");
+  }
+
+  onlyUnattempted.addEventListener("click", () => {
+    onlyUnattempted.dataset.manualOff = true;
+  });
+
+  spinner.style.display = "block";
+  matchCount.style.display = "none";
+
+  try {
+    const res = await fetch("{% url 'Quizzes:ajax_filter_preview' quiz.id %}?" + params.toString());
+    const data = await res.json();
+
+    const total = data.total || 1;
+    const attemptedPct = Math.round((data.attempted / total) * 100);
+    const wrongPct = Math.round((data.wrong / total) * 100);
+    const flaggedPct = Math.round((data.flagged / total) * 100);
+    const unattemptedPct = Math.max(0, 100 - attemptedPct);
+
+    setBar("attempted-bar", attemptedPct);
+    setBar("wrong-bar", wrongPct);
+    setBar("flagged-bar", flaggedPct);
+    setBar("unattempted-bar", unattemptedPct);
+
+    document.getElementById("total-count").textContent = data.total;
+    document.getElementById("attempted-count").textContent = data.attempted;
+    document.getElementById("wrong-count").textContent = data.wrong;
+    document.getElementById("flagged-count").textContent = data.flagged;
+    document.getElementById("unattempted-count").textContent = data.unattempted;
+
+    matchCount.textContent = `Matching questions: ${data.filtered_count}`;
+    
+    if (data.filtered_count === 0) {
+      matchCount.classList.add("zero");
+      startQuizBtn.classList.add("disabled");
+    } else {
+      matchCount.classList.remove("zero");
+      startQuizBtn.classList.remove("disabled");
+    }
+    
+    matchCount.style.display = "block";
+
+    startQuizBtn.href = "{% url 'Quizzes:start_quiz' quiz.id %}?" + params.toString();
+  } catch (e) {
+    console.error("Filter update failed", e);
+  } finally {
+    spinner.style.display = "none";
+  }
+}
+
+function openResetModal() {
+  document.getElementById("resetModal").classList.add("show");
+}
+
+function closeResetModal() {
+  document.getElementById("resetModal").classList.remove("show");
+}
+
+document.getElementById("resetModal").addEventListener("click", function(e) {
+  if (e.target === this) {
+    closeResetModal();
+  }
+});
+
+function openResetFlagsModal() {
+  document.getElementById("resetFlagsModal").classList.add("show");
+}
+
+function closeResetFlagsModal() {
+  document.getElementById("resetFlagsModal").classList.remove("show");
+}
+
+document.getElementById("resetFlagsModal").addEventListener("click", function(e) {
+  if (e.target === this) {
+    closeResetFlagsModal();
+  }
+});
+
+function setBar(id, widthPct) {
+  const el = document.getElementById(id);
+  el.style.width = Math.max(0, Math.min(100, widthPct)) + "%";
+}
+
+function resetProgress() {
+  if (confirm('Are you sure you want to reset all progress for this quiz?')) {
+    const form = document.createElement('form');
+    form.method = 'post';
+    form.action = "{% url 'Quizzes:reset_progress' quiz.id %}";
+    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]');
+    if (csrfToken) {
+      form.appendChild(csrfToken.cloneNode());
+    }
+    document.body.appendChild(form);
+    form.submit();
+  }
+}
+</script>
+
+{% endblock %}

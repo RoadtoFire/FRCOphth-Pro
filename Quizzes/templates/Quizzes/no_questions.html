@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head><title>No Questions</title></head>
+<body>
+  <h2>{{ quiz.title }}</h2>
+  <p>{{ reason }}</p>
+
+  <p>
+    <a href="{% url 'Quizzes:start_quiz' quiz.id %}?only_unattempted=0">Try Again (include all)</a> |
+    <a href="/">Back to Home</a>
+  </p>
+</body>
+</html>
