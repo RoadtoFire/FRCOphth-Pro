@@ -1,0 +1,509 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block extrastyle %}
+{{ block.super }}
+<style>
+/* ===============================
+   Modern Dashboard Layout
+   =============================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+* {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 1fr;
+  gap: 2rem;
+  margin: 2rem;
+  align-items: stretch;
+}
+
+/* Responsive behavior for smaller screens */
+@media (max-width: 1200px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===============================
+   Left Column: Metric Cards
+   =============================== */
+
+.dashboard-left {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
+  border-radius: 16px;
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(139, 92, 246, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #7c3aed, #8b5cf6, #a78bfa);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px -4px rgba(124, 58, 237, 0.15), 0 8px 16px -4px rgba(124, 58, 237, 0.1);
+}
+
+.card:hover::before {
+  opacity: 1;
+}
+
+.card h3 {
+  margin: 0;
+  font-size: 0.75rem;
+  color: #6b7280;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.card p {
+  margin: 0.75rem 0 0;
+  font-size: 2rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #7c3aed, #a78bfa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ===============================
+   Center Column: Charts & Tables
+   =============================== */
+
+.dashboard-center {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.chart-container {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  padding: 1.75rem;
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  transition: all 0.3s ease;
+}
+
+.chart-container:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+}
+
+.chart-container h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #111827;
+  text-align: left;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid #f3f4f6;
+}
+
+canvas {
+  width: 100% !important;
+  max-height: 280px;
+}
+
+.table-card {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  padding: 1.75rem;
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  transition: all 0.3s ease;
+}
+
+.table-card:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+}
+
+.table-card h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 1rem;
+  text-align: left;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid #f3f4f6;
+}
+
+.table-card table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.table-card th,
+.table-card td {
+  padding: 0.875rem 1rem;
+  border-bottom: 1px solid #f3f4f6;
+  text-align: left;
+}
+
+.table-card th {
+  font-weight: 600;
+  color: #6b7280;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: #f9fafb;
+}
+
+.table-card tr:last-child td {
+  border-bottom: none;
+}
+
+.table-card tbody tr {
+  transition: background 0.2s ease;
+}
+
+.table-card tbody tr:hover {
+  background: #f9fafb;
+}
+
+/* ===============================
+   Right Column: Manage Content
+   =============================== */
+
+.dashboard-right {
+  background: linear-gradient(135deg, #7c3aed 0%, #8b5cf6 100%);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 10px 25px -5px rgba(124, 58, 237, 0.3), 0 8px 10px -6px rgba(124, 58, 237, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.dashboard-right::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.app-list-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.app-list-section h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+  text-align: left;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.app-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.app-card:hover {
+  background: #ffffff;
+  transform: translateX(4px);
+  box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.15);
+}
+
+.app-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.app-card-header h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+}
+
+.app-add {
+  background: linear-gradient(135deg, #7c3aed, #8b5cf6);
+  color: #fff !important;
+  font-size: 0.85rem;
+  padding: 0.5rem 1.25rem;
+  border-radius: 8px;
+  text-decoration: none !important;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(124, 58, 237, 0.3);
+  letter-spacing: 0.3px;
+}
+
+.app-add:hover {
+  background: linear-gradient(135deg, #6d28d9, #7c3aed);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.4);
+}
+
+.app-add:active {
+  transform: translateY(0);
+}
+
+/* Meta / Helper text */
+.app-meta {
+  font-size: 0.8rem;
+  color: #6b7280;
+  line-height: 1.5;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #f3f4f6;
+}
+
+.app-meta small {
+  display: block;
+  font-size: 0.75rem;
+  color: #9ca3af;
+  margin-top: 0.25rem;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Chart animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.chart-container,
+.table-card,
+.card {
+  animation: fadeIn 0.5s ease-out;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-grid">
+  <!-- COLUMN 1: METRICS -->
+  <div class="dashboard-left">
+    <div class="card"><h3>Total Quizzes</h3><p>{{ total_quizzes }}</p></div>
+    <div class="card"><h3>Total Questions</h3><p>{{ total_questions }}</p></div>
+    <div class="card"><h3>Total Categories</h3><p>{{ total_categories }}</p></div>
+    <div class="card"><h3>Total Attempts</h3><p>{{ total_attempts }}</p></div>
+    <div class="card"><h3>Avg. Questions / Quiz</h3><p>{{ avg_questions_per_quiz }}</p></div>
+  </div>
+
+  <!-- COLUMN 2: CHARTS -->
+  <div class="dashboard-center">
+    <div class="chart-container">
+      <h3>Quiz Attempts Overview</h3>
+      <canvas id="quizAttemptsChart"></canvas>
+    </div>
+
+    <div class="chart-container">
+      <h3>Questions by Category</h3>
+      <canvas id="questionCategoryChart"></canvas>
+    </div>
+
+    <div class="table-card">
+      <h3>Top 5 Quizzes by Attempts</h3>
+      <table>
+        <thead>
+          <tr><th>Quiz</th><th>Attempts</th></tr>
+        </thead>
+        <tbody>
+          {% for quiz, attempts in top_quizzes_data %}
+          <tr>
+            <td>{{ quiz }}</td>
+            <td>{{ attempts }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- COLUMN 3: MANAGE CONTENT -->
+  <div class="dashboard-right">
+    <div class="app-list-section">
+      <h2>Manage Content</h2>
+      <div class="app-card">
+        <div class="app-card-header">
+          <h3>Quizzes</h3>
+          <a class="app-add" href="/admin/Quizzes/quiz/add/">Add</a>
+        </div>
+      </div>
+
+      <div class="app-card">
+        <div class="app-card-header">
+          <h3>Questions</h3>
+          <a class="app-add" href="/admin/Quizzes/question/add/">Add</a>
+        </div>
+      </div>
+
+      <div class="app-card">
+        <div class="app-card-header">
+          <h3>Attempts</h3>
+          <a class="app-add" href="/admin/Quizzes/attempts/add/">Manage</a>
+        </div>
+        <div class="app-meta">
+          <small>Adjust user attempts only if required.</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CHARTS -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const ctx1 = document.getElementById("quizAttemptsChart");
+  const ctx2 = document.getElementById("questionCategoryChart");
+
+  const quizTitles = {{ top_quizzes_titles|safe }};
+  const quizAttempts = {{ top_quizzes_attempts|safe }};
+  const categoryLabels = {{ category_labels|safe }};
+  const categoryCounts = {{ category_counts|safe }};
+
+  // Chart 1: Bar Chart with gradient
+  new Chart(ctx1, {
+    type: "bar",
+    data: {
+      labels: quizTitles,
+      datasets: [{
+        label: "Attempts",
+        data: quizAttempts,
+        backgroundColor: "rgba(124, 58, 237, 0.8)",
+        borderColor: "rgba(124, 58, 237, 1)",
+        borderWidth: 2,
+        borderRadius: 8,
+        borderSkipped: false,
+      }],
+    },
+    options: {
+      maintainAspectRatio: false,
+      plugins: { 
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: 'rgba(0, 0, 0, 0.8)',
+          padding: 12,
+          borderColor: 'rgba(124, 58, 237, 0.5)',
+          borderWidth: 1,
+          titleFont: { size: 14, weight: 'bold' },
+          bodyFont: { size: 13 },
+          cornerRadius: 8,
+        }
+      },
+      scales: { 
+        y: { 
+          beginAtZero: true, 
+          ticks: { 
+            stepSize: 1,
+            color: '#6b7280',
+            font: { size: 12 }
+          },
+          grid: {
+            color: 'rgba(0, 0, 0, 0.05)',
+          }
+        },
+        x: {
+          ticks: {
+            color: '#6b7280',
+            font: { size: 12 }
+          },
+          grid: {
+            display: false,
+          }
+        }
+      },
+    },
+  });
+
+  // Chart 2: Pie Chart with modern colors
+  new Chart(ctx2, {
+    type: "pie",
+    data: {
+      labels: categoryLabels,
+      datasets: [{
+        data: categoryCounts,
+        backgroundColor: [
+          "#7C3AED", 
+          "#3B82F6", 
+          "#10B981", 
+          "#F59E0B", 
+          "#EF4444",
+          "#8B5CF6",
+          "#06B6D4",
+          "#84CC16"
+        ],
+        borderWidth: 3,
+        borderColor: '#ffffff',
+      }],
+    },
+    options: {
+      maintainAspectRatio: false,
+      plugins: { 
+        legend: { 
+          position: "right",
+          labels: {
+            padding: 15,
+            font: { size: 12, weight: '500' },
+            color: '#374151',
+            usePointStyle: true,
+            pointStyle: 'circle',
+          }
+        },
+        tooltip: {
+          backgroundColor: 'rgba(0, 0, 0, 0.8)',
+          padding: 12,
+          borderColor: 'rgba(124, 58, 237, 0.5)',
+          borderWidth: 1,
+          titleFont: { size: 14, weight: 'bold' },
+          bodyFont: { size: 13 },
+          cornerRadius: 8,
+        }
+      },
+    },
+  });
+});
+</script>
+{% endblock %}

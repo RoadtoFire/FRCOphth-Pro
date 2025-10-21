@@ -2,38 +2,80 @@ from django.db import models
 from django.utils.text import slugify
 from django.contrib.auth.models import User
 
+
+# ---------------------------
+# Category
+# ---------------------------
+class Category(models.Model):
+    """
+    Represents a subject area or grouping of questions.
+    e.g. Anatomy, Pathology, Optics.
+    """
+    name = models.CharField(max_length=200, unique=True)
+    display_order = models.PositiveIntegerField(default=0)  # ✅ added for homepage order
+
+    class Meta:
+        verbose_name_plural = "Categories"
+        ordering = ["display_order", "name"]
+
+    def __str__(self):
+        return self.name
+
+
+# ---------------------------
+# Quiz
+# ---------------------------
 class Quiz(models.Model):
+    """
+    A quiz is a collection of questions.
+    Each quiz has its own description and display order.
+    """
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)
     description = models.TextField(blank=True)
-    time_limit = models.PositiveIntegerField(null=True, blank=True)  # in minutes (optional)
+    time_limit = models.PositiveIntegerField(null=True, blank=True)
     image = models.ImageField(upload_to="quiz_images/", null=True, blank=True)
-    category = models.CharField(max_length=100, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    display_order = models.PositiveIntegerField(default=0, help_text="Lower numbers appear first.")
+    display_order = models.PositiveIntegerField(default=0)
 
     class Meta:
         verbose_name_plural = "Quizzes"
-        ordering = ["display_order", '-title']
-    
+        ordering = ["display_order", "-title"]
+
     def __str__(self):
         return self.title
-    
+
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.title)
         super().save(*args, **kwargs)
 
+    @property
+    def question_count(self):
+        """Count of questions in this quiz."""
+        return self.questions.count()
 
+
+# ---------------------------
+# Question
+# ---------------------------
 class Question(models.Model):
+    """
+    Each question belongs to exactly one quiz and one category.
+    """
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, related_name="questions")
+    category = models.ForeignKey(
+        Category, related_name="questions", on_delete=models.SET_NULL, null=True, blank=True
+    )  # ✅ added related_name
+
     text = models.TextField()
-    topic_name = models.CharField(max_length=200)  # For filtering & random quizzes
+
     option_a = models.CharField(max_length=300)
     option_b = models.CharField(max_length=300)
     option_c = models.CharField(max_length=300)
     option_d = models.CharField(max_length=300)
     option_e = models.CharField(max_length=300)
+
     correct_answer = models.CharField(
         max_length=1,
         choices=[("A", "A"), ("B", "B"), ("C", "C"), ("D", "D"), ("E", "E")],
@@ -55,29 +97,37 @@ class Question(models.Model):
         ]
 
 
+# ---------------------------
+# Attempt
+# ---------------------------
 class Attempt(models.Model):
+    """
+    Tracks each user's attempt per quiz and question set.
+    Stores answers and flags inside a JSONField (extra_data).
+    """
     user = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
     quiz = models.ForeignKey(Quiz, related_name="attempts", on_delete=models.CASCADE)
+    question = models.ForeignKey(
+        Question, related_name="attempts", on_delete=models.CASCADE, null=True, blank=True
+    )
+
+    selected_option = models.CharField(
+        max_length=1,
+        choices=[("A", "A"), ("B", "B"), ("C", "C"), ("D", "D"), ("E", "E")],
+        null=True,
+        blank=True,
+    )
+    is_correct = models.BooleanField(default=False)
+    is_flagged = models.BooleanField(default=False)
+
     score = models.FloatField(default=0)
     started_at = models.DateTimeField(auto_now_add=True)
     finished_at = models.DateTimeField(null=True, blank=True)
-    extra_data = models.JSONField(default=dict, blank=True)  # stores answers, flags, etc.
+
+    extra_data = models.JSONField(default=dict, blank=True)  # ✅ Added JSON storage
+
+    class Meta:
+        verbose_name_plural = "Attempts"
 
     def __str__(self):
-        return f"Attempt by {self.user} on {self.quiz}"
-
-
-class Subscription(models.Model):
-    PLAN_CHOICES = [
-        ('3-month', '3-Month Plan'),
-        ('6-month', '6-Month Plan'),
-    ]
-
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    plan = models.CharField(max_length=20, choices=PLAN_CHOICES)
-    active = models.BooleanField(default=False)
-    start_date = models.DateTimeField(null=True, blank=True)
-    end_date = models.DateTimeField(null=True, blank=True)
-
-    def __str__(self):
-        return f"{self.user.username} - {self.plan}"
+        return f"{self.user} - {self.quiz.title}"

@@ -14,7 +14,7 @@
       <p class="fs-4 mb-4">Percentage: <strong>{{ percentage }}%</strong></p>
 
       <a class="btn btn-primary btn-lg me-3"
-         href="{% url 'Quizzes:select_questions' quiz.id %}?refresh=1">
+         href="{% url 'Quizzes:start_quiz' quiz.id %}?refresh=1">
          🔁 Try the Quiz Again
       </a>
       <a class="btn btn-outline-secondary btn-lg" href="{% url 'Quizzes:home' %}">

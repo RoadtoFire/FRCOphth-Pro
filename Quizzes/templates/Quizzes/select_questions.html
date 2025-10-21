@@ -633,36 +633,40 @@ const form = document.getElementById("filter-form");
 const spinner = document.getElementById("spinner");
 const matchCount = document.getElementById("match-count");
 const startQuizBtn = document.getElementById("start-quiz-btn");
-const onlyUnattempted = document.getElementById("only_unattempted");
 
-form.addEventListener("change", updateFilters);
-document.addEventListener("DOMContentLoaded", () => {
-  onlyUnattempted.dataset.manual = true;
-  updateFilters();
+const cbWrong = document.getElementById("only_wrong");
+const cbFlagged = document.getElementById("only_flagged");
+const cbUnattempted = document.getElementById("only_unattempted");
+const topicSelect = document.getElementById("topic");
+
+// prevent navigation if disabled
+startQuizBtn.addEventListener("click", (e) => {
+  if (startQuizBtn.classList.contains("disabled")) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
 });
 
-async function updateFilters() {
-  const params = new URLSearchParams(new FormData(form));
-
-  const othersActive =
-    document.getElementById("only_wrong").checked ||
-    document.getElementById("only_flagged").checked ||
-    document.getElementById("topic").value !== "";
-
-  if (othersActive && onlyUnattempted.checked && !onlyUnattempted.dataset.manualOff) {
-    onlyUnattempted.checked = false;
-    params.set("only_unattempted", "");
+function buildParams() {
+  // If any “other” filter is active, auto-uncheck “Only Unattempted”
+  const othersActive = cbWrong.checked || cbFlagged.checked || topicSelect.value !== "";
+  if (othersActive && cbUnattempted.checked) {
+    cbUnattempted.checked = false;
   }
 
-  onlyUnattempted.addEventListener("click", () => {
-    onlyUnattempted.dataset.manualOff = true;
-  });
+  const fd = new FormData(form);
+  // Unchecked checkboxes won’t be sent — that’s what we want.
+  return new URLSearchParams(fd);
+}
+
+async function updateFilters() {
+  const params = buildParams();
 
   spinner.style.display = "block";
   matchCount.style.display = "none";
 
   try {
-    const res = await fetch("{% url 'Quizzes:ajax_filter_preview' quiz.id %}?" + params.toString());
+    const res = await fetch("{% url 'Quizzes:ajax_filter_preview' quiz.id %}?" + params.toString(), { cache: "no-store" });
     const data = await res.json();
 
     const total = data.total || 1;
@@ -683,18 +687,19 @@ async function updateFilters() {
     document.getElementById("unattempted-count").textContent = data.unattempted;
 
     matchCount.textContent = `Matching questions: ${data.filtered_count}`;
-    
+
     if (data.filtered_count === 0) {
       matchCount.classList.add("zero");
       startQuizBtn.classList.add("disabled");
+      startQuizBtn.setAttribute("aria-disabled", "true");
+      startQuizBtn.href = "#";
     } else {
       matchCount.classList.remove("zero");
       startQuizBtn.classList.remove("disabled");
+      startQuizBtn.removeAttribute("aria-disabled");
+      startQuizBtn.href = "{% url 'Quizzes:start_quiz' quiz.id %}?" + params.toString();
     }
-    
     matchCount.style.display = "block";
-
-    startQuizBtn.href = "{% url 'Quizzes:start_quiz' quiz.id %}?" + params.toString();
   } catch (e) {
     console.error("Filter update failed", e);
   } finally {
@@ -702,52 +707,24 @@ async function updateFilters() {
   }
 }
 
-function openResetModal() {
-  document.getElementById("resetModal").classList.add("show");
-}
-
-function closeResetModal() {
-  document.getElementById("resetModal").classList.remove("show");
-}
-
-document.getElementById("resetModal").addEventListener("click", function(e) {
-  if (e.target === this) {
-    closeResetModal();
-  }
-});
-
-function openResetFlagsModal() {
-  document.getElementById("resetFlagsModal").classList.add("show");
-}
-
-function closeResetFlagsModal() {
-  document.getElementById("resetFlagsModal").classList.remove("show");
-}
-
-document.getElementById("resetFlagsModal").addEventListener("click", function(e) {
-  if (e.target === this) {
-    closeResetFlagsModal();
-  }
-});
+// wire once
+form.addEventListener("change", updateFilters);
+document.addEventListener("DOMContentLoaded", updateFilters);
 
 function setBar(id, widthPct) {
   const el = document.getElementById(id);
   el.style.width = Math.max(0, Math.min(100, widthPct)) + "%";
 }
 
-function resetProgress() {
-  if (confirm('Are you sure you want to reset all progress for this quiz?')) {
-    const form = document.createElement('form');
-    form.method = 'post';
-    form.action = "{% url 'Quizzes:reset_progress' quiz.id %}";
-    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]');
-    if (csrfToken) {
-      form.appendChild(csrfToken.cloneNode());
-    }
-    document.body.appendChild(form);
-    form.submit();
-  }
-}
+// reset modal helpers remain unchanged…
+function openResetModal(){ document.getElementById("resetModal").classList.add("show"); }
+function closeResetModal(){ document.getElementById("resetModal").classList.remove("show"); }
+document.getElementById("resetModal").addEventListener("click", e => { if (e.target === e.currentTarget) closeResetModal(); });
+
+function openResetFlagsModal(){ document.getElementById("resetFlagsModal").classList.add("show"); }
+function closeResetFlagsModal(){ document.getElementById("resetFlagsModal").classList.remove("show"); }
+document.getElementById("resetFlagsModal").addEventListener("click", e => { if (e.target === e.currentTarget) closeResetFlagsModal(); });
 </script>
+
 
 {% endblock %}
