@@ -504,11 +504,15 @@
           <h1 class="jumbotron-heading">Pass FRCOphth Part 1</h1>
           <p class="lead">Welcome to the gold standard in FRCOphth preparation with thousands of practice questions and detailed explanations.</p>
           <p>
-            <div class="btn-group">
-              <a class="nav-link" href="{% url 'signup'%}" role="button">
-                <button type="button" id="jump_to_features" class="btn btn-info"><i class="fa fa-user-plus" ></i> Sign Up Now</button>
-              </a>
-            </div>
+            {% if not user.is_authenticated %}
+              <div class="btn-group">
+                <a class="nav-link" href="{% url 'signup'%}" role="button">
+                  <button type="button" id="jump_to_features" class="btn btn-info">
+                    <i class="fa fa-user-plus"></i> Sign Up Now
+                  </button>
+                </a>
+              </div>
+            {% endif %}
           </p>
         </div>
       </section>
