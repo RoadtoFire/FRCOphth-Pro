@@ -190,12 +190,17 @@ def ajax_filter_preview(request, quiz_id):
 
 @login_required
 def start_quiz(request, quiz_id):
-    """Creates or refreshes a quiz queue and redirects to question 1."""
+    """
+    Creates a fresh run 'queue' and a 'fresh' list for this run.
+    All questions in the new queue render as if unattempted (no pre-selected answers),
+    but submitting will overwrite previous per-question answers (stats remain intact).
+    """
     quiz = get_object_or_404(Quiz, id=quiz_id)
     attempt = _get_attempt(request.user, quiz)
 
-    # Refresh mode clears progress
+    # Optional hard refresh (kept for admin/testing only)
     if request.GET.get("mode") == "all" or request.GET.get("refresh") == "1":
+        # NOTE: We keep this path but the UI will no longer link to it from 'Try Again'.
         attempt.extra_data = {"answers": {}, "flagged": []}
         attempt.score = 0
         attempt.save()
@@ -213,7 +218,7 @@ def start_quiz(request, quiz_id):
     # Start with ordered queryset
     qs = quiz.questions.all().order_by("order", "id")
     
-    # Apply filters using shared logic
+    # Apply shared filters
     qs = _apply_filters(
         qs, answers, flagged_ids,
         only_unattempted=only_unattempted,
@@ -234,8 +239,11 @@ def start_quiz(request, quiz_id):
     if randomize:
         random.shuffle(ids)
 
-    # Store in session
-    request.session[f"quiz_{quiz.id}_queue"] = ids
+    # Store in session: queue + fresh (treat as unattempted for UI)
+    queue_key = f"quiz_{quiz.id}_queue"
+    fresh_key = f"quiz_{quiz.id}_fresh"
+    request.session[queue_key] = ids
+    request.session[fresh_key] = ids[:]   # copy
     request.session.modified = True
 
     return redirect("Quizzes:quiz_question", quiz_id=quiz.id, question_number=1)
@@ -250,39 +258,37 @@ def quiz_complete(request, quiz_id):
     quiz = get_object_or_404(Quiz, id=quiz_id)
     attempt = _get_attempt(request.user, quiz)
 
-    # Get the queue to calculate based on questions attempted in this run
+    # Calculate based on this run's queue
     queue_key = f"quiz_{quiz.id}_queue"
+    fresh_key = f"quiz_{quiz.id}_fresh"
     queue = request.session.get(queue_key, [])
-    
     answers = attempt.extra_data.get("answers", {})
-    
-    # Calculate stats based on the current queue (the questions in this quiz run)
+
     if queue:
         total_attempted = len(queue)
-        attempted_in_queue = sum(1 for qid in queue if str(qid) in answers)
         correct_in_queue = sum(
-            1 for qid in queue 
-            if str(qid) in answers 
-            and isinstance(answers[str(qid)], dict) 
+            1 for qid in queue
+            if str(qid) in answers
+            and isinstance(answers[str(qid)], dict)
             and answers[str(qid)].get("is_correct")
         )
     else:
-        # Fallback to all questions if queue doesn't exist
+        # Fallback to all answered
         total_attempted = len(answers)
         correct_in_queue = sum(
-            1 for d in answers.values() 
+            1 for d in answers.values()
             if isinstance(d, dict) and d.get("is_correct")
         )
 
-    # Calculate percentage
     percentage = round((correct_in_queue / total_attempted) * 100, 1) if total_attempted > 0 else 0
 
-    # Save the score
+    # Save the score for reference (overall scoreboard can still use this if needed)
     attempt.score = percentage
     attempt.save()
 
-    # Clean the session queue after finishing
+    # Clean this run's session state
     request.session.pop(queue_key, None)
+    request.session.pop(fresh_key, None)
 
     context = {
         "quiz": quiz,
@@ -323,15 +329,23 @@ def reset_flags(request, quiz_id):
     messages.success(request, "All flags have been removed.")
     return redirect("Quizzes:select_questions", quiz.id)
 
-
 @login_required
 def quiz_question(request, quiz_id, question_number):
+    """
+    Displays one question within the current quiz run.
+    - Uses the queue stored in session to define this attempt's subset of questions.
+    - Handles re-attempt logic (fresh questions appear unanswered but overwrite previous results).
+    - Calculates accurate per-run progress (not overall quiz progress).
+    """
     quiz = get_object_or_404(Quiz, id=quiz_id)
     attempt = _get_attempt(request.user, quiz)
 
-    # Load queue
     queue_key = f"quiz_{quiz.id}_queue"
-    queue: List[int] = request.session.get(queue_key, [])
+    fresh_key = f"quiz_{quiz.id}_fresh"
+    queue = request.session.get(queue_key, [])
+    fresh_ids = set(request.session.get(fresh_key, []))
+
+    # If queue empty, redirect to question selection
     if not queue:
         messages.warning(request, "Your question queue is empty. Please start again.")
         return redirect("Quizzes:select_questions", quiz.id)
@@ -343,50 +357,95 @@ def quiz_question(request, quiz_id, question_number):
     qid = queue[question_number - 1]
     question = get_object_or_404(Question, id=qid, quiz=quiz)
 
+    
+
     answers = attempt.extra_data.get("answers", {})
     flagged_ids = set(attempt.extra_data.get("flagged", []))
 
-    # Check if question was already answered
-    already_answered = str(question.id) in answers
-    selected_answer = answers.get(str(question.id), {}).get("selected")
-    
-    # Handle submission: only allow if not already answered
+
+
+    # Determine if question was answered before or should appear fresh
+    was_answered_before = str(question.id) in answers
+    is_fresh_now = qid in fresh_ids
+    already_answered = was_answered_before and not is_fresh_now
+    selected_answer = None if is_fresh_now else answers.get(str(question.id), {}).get("selected")
+
     feedback = None
-    if request.method == "POST" and not already_answered:
+
+
+    # Check if this is the first question AND no submission has happened yet
+    is_first_question = (question_number == 1)
+    is_fresh_run = is_first_question and request.method != "POST"
+    
+    # ───────────────────────────────────────────────
+    # Handle submission
+    # ───────────────────────────────────────────────
+    if request.method == "POST":
         selected_answer = request.POST.get("selected_choice")
         if selected_answer:
             is_correct = (selected_answer == question.correct_answer)
             answers[str(question.id)] = {"selected": selected_answer, "is_correct": is_correct}
             attempt.extra_data["answers"] = answers
             attempt.save()
+
+            # ✅ ensure we use the latest data for recalculations
+            attempt.refresh_from_db()
+
             feedback = "Correct!" if is_correct else "Not correct."
             already_answered = True
 
-    # Always show explanation if the question was ever attempted
-    if already_answered:
-        feedback = feedback or "Previously attempted."
+            # Once answered, remove from 'fresh' list so revisits show as answered
+            if qid in fresh_ids:
+                fresh_ids.remove(qid)
+                request.session[fresh_key] = list(fresh_ids)
+                request.session.modified = True
 
-    # Progress (within current run only)
-    attempted_in_run = sum(1 for q in queue if str(q) in answers)
-    wrong_in_run = sum(
-        1 for q in queue
-        if isinstance(answers.get(str(q)), dict) and not answers[str(q)].get("is_correct")
-    )
+    # If user has already answered (either before or just now)
+    if already_answered and feedback is None:
+        feedback = "Previously attempted."
+
+    # ───────────────────────────────────────────────
+    # Calculate progress (for CURRENT RUN ONLY)
+    # ───────────────────────────────────────────────
+    # Refresh answers from database after potential save
+    answers = attempt.extra_data.get("answers", {})
+
+    correct_in_run = 0
+    wrong_in_run = 0
+
+    # Only count questions that have been answered AND are no longer in the fresh list
+    for q in queue:
+        # Skip if this question is still marked as "fresh" (not yet attempted in this run)
+        if q in fresh_ids:
+            continue
+        
+        data = answers.get(str(q))
+        if isinstance(data, dict):
+            if data.get("is_correct"):
+                correct_in_run += 1
+            else:
+                wrong_in_run += 1
+
+    attempted_in_run = correct_in_run + wrong_in_run
     unattempted_in_run = max(0, total_in_run - attempted_in_run)
 
-    progress_attempted = round((attempted_in_run / total_in_run) * 100, 1) if total_in_run else 0
+    progress_correct = round((correct_in_run / total_in_run) * 100, 1) if total_in_run else 0
     progress_wrong = round((wrong_in_run / total_in_run) * 100, 1) if total_in_run else 0
+    progress_attempted = round((attempted_in_run / total_in_run) * 100, 1) if total_in_run else 0
     progress_unattempted = max(0, 100 - progress_attempted)
 
+    # ───────────────────────────────────────────────
+    # Navigation + Finish state
+    # ───────────────────────────────────────────────
     prev_index = question_number - 1 if question_number > 1 else None
     next_index = question_number + 1 if question_number < total_in_run else None
 
-    # Check if this is the last question and if it's been answered
     is_last_question = (question_number == total_in_run)
-    last_question_answered = False
-    if is_last_question:
-        last_question_answered = str(question.id) in answers
+    last_question_answered = qid not in fresh_ids and str(question.id) in answers
 
+    # ───────────────────────────────────────────────
+    # Context for template
+    # ───────────────────────────────────────────────
     context = {
         "quiz": quiz,
         "question": question,
@@ -398,15 +457,22 @@ def quiz_question(request, quiz_id, question_number):
         "feedback": feedback,
         "prev_index": prev_index,
         "next_index": next_index,
-        "progress_attempted": progress_attempted,
+        "progress_correct": progress_correct,
         "progress_wrong": progress_wrong,
         "progress_unattempted": progress_unattempted,
+        "progress_attempted": progress_attempted,
+        "attempted_in_run": attempted_in_run,
+        "correct_in_run": correct_in_run,
+        "wrong_in_run": wrong_in_run,
         "is_flagged": question.id in flagged_ids,
         "explanation": question.explanation,
         "already_answered": already_answered,
         "is_last_question": is_last_question,
         "last_question_answered": last_question_answered,
+        "is_first_question": is_first_question,
+        "is_fresh_run": is_fresh_run,
     }
+
     return render(request, "Quizzes/quiz_question.html", context)
 
 
@@ -437,3 +503,58 @@ def toggle_flag(request, quiz_id, question_id):
     if referer:
         return redirect(referer)
     return redirect("Quizzes:select_questions", quiz.id)
+
+
+
+
+
+
+
+@login_required
+def profile_view(request):
+    """
+    Displays user's overall and per-topic statistics.
+    Data pulled from Attempt.extra_data['answers'] and linked quizzes.
+    """
+    user = request.user
+    attempts = Attempt.objects.filter(user=user).select_related("quiz")
+
+    overall_attempted = 0
+    overall_correct = 0
+    topic_stats = {}
+
+    for attempt in attempts:
+        answers = attempt.extra_data.get("answers", {})
+        correct = sum(1 for a in answers.values() if a.get("is_correct"))
+        total = len(answers)
+        overall_attempted += total
+        overall_correct += correct
+
+        quiz_title = attempt.quiz.title
+        if quiz_title not in topic_stats:
+            topic_stats[quiz_title] = {"attempted": 0, "correct": 0}
+
+        topic_stats[quiz_title]["attempted"] += total
+        topic_stats[quiz_title]["correct"] += correct
+
+    overall_accuracy = round((overall_correct / overall_attempted) * 100, 1) if overall_attempted else 0
+
+    # Add percentage for each topic
+    for topic, data in topic_stats.items():
+        attempted = data["attempted"]
+        correct = data["correct"]
+        accuracy = round((correct / attempted) * 100, 1) if attempted else 0
+        topic_stats[topic]["accuracy"] = accuracy
+
+    context = {
+        "overall_attempted": overall_attempted,
+        "overall_correct": overall_correct,
+        "overall_accuracy": overall_accuracy,
+        "topic_stats": topic_stats,
+    }
+
+    return render(request, "Quizzes/profile.html", context)
+
+
+def blog_view(request):
+    return render(request, "Quizzes/blog.html")

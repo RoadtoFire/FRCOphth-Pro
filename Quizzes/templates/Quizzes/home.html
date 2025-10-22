@@ -78,6 +78,87 @@
         transition: all 0.2s ease;
       }
 
+
+            .ai-card {
+        position: relative;
+        overflow: hidden;
+        border-radius: 16px;
+        background: linear-gradient(135deg, #0a2540, #1e3a8a);
+      }
+
+
+
+      .ai-glow {
+        position: absolute;
+        width: 250px;
+        height: 250px;
+        border-radius: 50%;
+        filter: blur(60px);
+        opacity: 0.4;
+        pointer-events: none;
+      }
+
+      .ai-glow-top {
+        top: -100px;
+        right: -80px;
+        background: radial-gradient(circle, rgba(59,130,246,0.4), transparent 70%);
+      }
+
+      .ai-glow-bottom {
+        bottom: -120px;
+        left: -100px;
+        background: radial-gradient(circle, rgba(37,99,235,0.3), transparent 70%);
+      }
+
+      /* === Shimmer effect === */
+      .ai-shimmer {
+        position: absolute;
+        top: 0;
+        left: -150%;
+        width: 50%;
+        height: 100%;
+        background: linear-gradient(120deg,
+          rgba(255, 255, 255, 0) 0%,
+          rgba(255, 255, 255, 0.2) 50%,
+          rgba(255, 255, 255, 0) 100%);
+        animation: shimmerMove 6s infinite linear;
+        pointer-events: none;
+      }
+
+      @keyframes shimmerMove {
+        0% { left: -150%; }
+        100% { left: 150%; }
+      }
+      .nav-item {
+        list-style-type: none !important;
+      }
+
+
+
+
+            .ai-card .btn-light {
+        transition: all 0.3s ease-in-out;
+        box-shadow: 0 0 0 rgba(37, 99, 235, 0);
+      }
+
+      .ai-card .btn-light:hover {
+        background-color: #e0ecff;
+        color: #0a2540;
+        box-shadow: 0 0 20px rgba(59, 130, 246, 0.6), 0 0 40px rgba(59, 130, 246, 0.3);
+        transform: translateY(-2px);
+      }
+
+
+            .ai-card .btn-light:hover {
+        animation: pulseGlow 2s infinite alternate ease-in-out;
+      }
+
+      @keyframes pulseGlow {
+        0% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.6), 0 0 40px rgba(59, 130, 246, 0.3); }
+        100% { box-shadow: 0 0 10px rgba(59, 130, 246, 0.3), 0 0 25px rgba(59, 130, 246, 0.1); }
+      }
+
+
       .dropdown-item:hover {
         background-color: #f1f5f9;
         color: var(--primary);
@@ -362,6 +443,17 @@
         }
       }
 
+/* === Make Carousel Arrows Black === */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: invert(1) grayscale(100%);
+  opacity: 0.9;
+}
+
+.carousel-control-prev-icon:hover,
+.carousel-control-next-icon:hover {
+  opacity: 1;
+}
 
 
 .disabled-btn {
@@ -433,7 +525,26 @@
   border: none;
   font-weight: 500;
 }
-}
+
+
+    #testimonialCarousel .carousel-item {
+      transition: transform 1s ease, opacity 1s ease-in-out;
+    }
+
+    #testimonialCarousel .lead {
+      color: #334155;
+      line-height: 1.6;
+    }
+
+    #testimonialCarousel .fw-semibold {
+      color: #0a2540;
+    }
+
+    #testimonialCarousel i.bi-star-fill {
+      margin: 0 2px;
+    }
+
+
 
     </style>
   </head>
@@ -450,13 +561,26 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
           <span class="navbar-toggler-icon"></span>
         </button>
+        {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="navbar-brand flex items-center" href="{% url 'Quizzes:profile' %}" style="padding-left:40px;">
+              <i class="bi bi-person-circle"></i> Profile
+            </a>
+          </li>
+        {% endif %}
+
+        <li class="nav-item">
+          <a class="navbar-brand flex items-center" style="padding-left:40px;" href="{% url 'Quizzes:blog' %}">
+            <i class="bi bi-journal-text me-1"></i> Blog
+          </a>
+        </li>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             {% if not user.is_authenticated %}
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'signup'%}" role="button">
-                  <i class="fas fa-user-plus me-1"></i> Sign up
+                  <i class="fas fa-user-plus me-1" style="padding-left: 40px";></i> Sign up
                 </a>
               </li>
             {% endif %}
@@ -498,6 +622,63 @@
     </nav>
 
     <main role="main">
+
+      {% if user.is_authenticated %}
+      <div class="container mt-5 mb-5">
+
+       
+
+       <!-- All Topics AI Card -->
+        <div class="card shadow-sm p-5 mb-5 text-white border-0 ai-card position-relative overflow-hidden"
+            style="background: linear-gradient(135deg, #0a2540, #1e3a8a); border-radius: 16px;">
+
+          <!-- Decorative glowing light effects -->
+          <div class="ai-glow ai-glow-top"></div>
+          <div class="ai-glow ai-glow-bottom"></div>
+
+          <!-- Animated shimmer overlay -->
+          <div class="ai-shimmer"></div>
+
+          <div class="position-relative">
+            <h3 class="fw-bold mb-2 text-white">
+              <i class="bi bi-cpu me-2"></i>All Topics (AI Mode)
+            </h3>
+            <p class="mb-4" style="color: #cbd5e1; font-size: 1.05rem;">
+              Let our all-new <strong>AI algorithm</strong> curate a custom quiz for you —
+              balancing question weights across every topic just like the real FRCOphth exam.
+            </p>
+            <a href="#" class="btn btn-light btn-lg fw-semibold px-5 rounded-pill shadow-sm"
+              style="color:#0a2540; background-color:#ffffff; border: none;">
+              <i class="bi bi-stars me-1"></i> Start Smart Quiz
+            </a>
+          </div>
+        </div>
+
+        <!-- Topic Cards -->
+        <div class="row mt-4">
+          {% for quiz in quizzes %}
+            <div class="col-md-4 mb-4 d-flex">
+              <div class="card course-card h-100 w-100">
+                {% if quiz.image %}
+                  <img src="{{ quiz.image.url }}" class="card-img-top" alt="{{ quiz.title }}">
+                {% else %}
+                  <img src="{% static 'img/placeholder.jpg' %}" class="card-img-top" alt="{{ quiz.title }}">
+                {% endif %}
+                <div class="card-body text-center">
+                  <h5 class="card-title">{{ quiz.title }}</h5>
+                  <p class="card-text">{{ quiz.description|truncatechars:250 }}</p>
+                  <a href="{% url 'Quizzes:select_questions' quiz.id %}" class="btn btn-primary w-100">Start Quiz</a>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+
+
+
+{% if not user.is_authenticated %} 
       <!-- Hero Section -->
       <section class="jumbotron";>
         <div class="container">
@@ -517,26 +698,15 @@
         </div>
       </section>
 
-      <!-- Rest of the content remains the same -->
-      <!-- Stats Section -->
-      <section class="stats-section">
+            <!-- ✅ STATS SECTION (Updated) -->
+      <section class="py-5 text-center bg-light">
         <div class="container">
-          <div class="row text-center">
-            <div class="col-md-3 col-6 stat-item">
-              <span class="stat-number">1,500+</span>
-              <span class="stat-label">Medical Questions</span>
-            </div>
-            <div class="col-md-3 col-6 stat-item">
-              <span class="stat-number">95%</span>
-              <span class="stat-label">Pass Rate</span>
-            </div>
-            <div class="col-md-3 col-6 stat-item">
-              <span class="stat-number">11+</span>
-              <span class="stat-label">Medical Exams</span>
-            </div>
-            <div class="col-md-3 col-6 stat-item">
-              <span class="stat-number">5+</span>
-              <span class="stat-label">Years Experience</span>
+          <div class="row justify-content-center">
+            <div class="col-md-4">
+              <div class="stat-item">
+                <span class="stat-number">1,500+</span>
+                <span class="stat-label">Questions</span>
+              </div>
             </div>
           </div>
         </div>
@@ -553,8 +723,8 @@
       <section class="album py-5">
         <div class="container">
           <div class="section-title">
-            <h2>Comprehensive Medical Courses</h2>
-            <p>Choose from our extensive range of medical revision courses designed to help you succeed in your exams</p>
+            <h2>Divide And Conquer</h2>
+            <p>Tackle each topic of the exam separately, or let our all-new AI algorithm give you a selection of questions based on the weight of each topic in the real exam.</p>
           </div>
           
           <div class="row" id="course-cards">
@@ -568,7 +738,7 @@
                   {% endif %}
                   <div class="card-body text-center">
                     <h5 class="card-title">{{ quiz.title }}</h5>
-                    <p class="card-text">{{ quiz.description|truncatechars:120 }}</p>
+                    <p class="card-text">{{ quiz.description|truncatechars:250 }}</p>
                     <p class="text-muted small mb-2">
                       {% if quiz.category %}{{ quiz.category }}{% endif %}
                     </p>
@@ -601,12 +771,11 @@
           
           <div class="row feature-box align-items-center">
             <div class="col-md-6">
-              <h2 class="featurette-heading">Focused Learning <span class="text-muted">Maximize Your Study Time</span></h2>
-              <p class="lead">Our questions are continuously updated based on the latest exam patterns. Each question comes with detailed explanations and references to deepen your understanding of complex medical concepts.</p>
+              <h2 class="featurette-heading">Focused Learning <p class="text-muted">Maximize Your Study Time</p></h2>
+              <p class="lead"> Our questions are continuously updated after every FRCOphth diet. Each question comes with detailed explanations and references to simplify complex ophthalmology concepts.</p>
               <ul class="list-unstyled">
-                <li><i class="fas fa-check text-success me-2"></i> Updated question bank aligned with current exams</li>
+                <li><i class="fas fa-check text-success me-2"></i> Updated question bank aligned with latest FRCOphth diet</li>
                 <li><i class="fas fa-check text-success me-2"></i> Detailed explanations and references</li>
-                <li><i class="fas fa-check text-success me-2"></i> Focus on high-yield topics</li>
               </ul>
             </div>
             <div class="col-md-6">
@@ -632,109 +801,158 @@
         </div>
       </section>
 
-      <!-- Testimonials Section -->
-      <section class="testimonial-section">
-        <div class="container">
-          <div class="section-title">
-            <h2>What Our Users Say</h2>
-            <p>Hear from medical professionals who have succeeded with our platform</p>
+              <section class="py-5 bg-light">
+      <div class="container">
+        <h2 class="text-center mb-4 fw-bold">What Our Users Say</h2>
+
+        <div id="testimonialCarousel" class="carousel slide" data-ride="carousel" data-interval="5000">
+          <div class="carousel-inner">
+
+            <div class="carousel-item active text-center">
+              <div class="p-4 mx-auto" style="max-width: 800px;">
+                <div class="text-warning mb-2">
+                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                </div>
+                <p class="lead fst-italic">
+                  “Passed on my second attempt. I wish I’d used FRCOphth Pro for my first attempt — would have saved a lot of time and money!”
+                </p>
+                <h6 class="font-weight-semibold mt-3 mb-0">Amina Noor</h6>
+              </div>
+            </div>
+
+            <div class="carousel-item text-center">
+              <div class="p-4 mx-auto" style="max-width: 800px;">
+                <div class="text-warning mb-2">
+                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                </div>
+                <p class="lead fst-italic">
+                  “The textbooks people recommend are way too overwhelming. Just use FRCOphth Pro and you’re good to go. It felt like having a personal tutor guiding me through everything.”
+                </p>
+                <h6 class="font-weight-semibold mt-3 mb-0">Yusuf Khan</h6>
+              </div>
+            </div>
+
+            <div class="carousel-item text-center">
+              <div class="p-4 mx-auto" style="max-width: 800px;">
+                <div class="text-warning mb-2">
+                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                </div>
+                <p class="lead fst-italic">
+                  “I was juggling a full-time rota and barely had time to revise properly. The explanations on FRCOphth Pro are so to the point — I don’t think I would’ve passed without it.”
+                </p>
+                <h6 class="font-weight-semibold mt-3 mb-0">Amira Siddiqui — ST1</h6>
+              </div>
+            </div>
+
+            <div class="carousel-item text-center">
+              <div class="p-4 mx-auto" style="max-width: 800px;">
+                <div class="text-warning mb-2">
+                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                </div>
+                <p class="lead fst-italic">
+                  “Closest bank to the actual exam — some questions came up almost word for word! Thank you guys!”
+                </p>
+                <h6 class="font-weight-semibold mt-3 mb-0">Rizwan Ali</h6>
+              </div>
+            </div>
+
+            <div class="carousel-item text-center">
+              <div class="p-4 mx-auto" style="max-width: 800px;">
+                <div class="text-warning mb-2">
+                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                </div>
+                <p class="lead fst-italic">
+                  “I was hesitant to spend more money after failing my first attempt, but this question bank was on another level. Worth every penny.”
+                </p>
+                <h6 class="font-weight-semibold mt-3 mb-0">Lily Chen</h6>
+              </div>
+            </div>
+
+            <div class="carousel-item text-center">
+              <div class="p-4 mx-auto" style="max-width: 800px;">
+                <div class="text-warning mb-2">
+                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                </div>
+                <p class="lead fst-italic">
+                  “Best thing that’s happened in my life — literally a Godsend. I knew nothing, but the explanations broke everything down so simply. Passed first time!”
+                </p>
+                <h6 class="font-weight-semibold mt-3 mb-0">Helena True — F2</h6>
+              </div>
+            </div>
+
           </div>
-          <div class="row">
-            <div class="col-md-4">
-              <div class="testimonial-card">
-                <p class="testimonial-text">"FRCOphth Pro helped me pass my FRCOphth exam on the first attempt. The question bank was comprehensive and the explanations were incredibly helpful."</p>
-                <p class="testimonial-author">Dr. Sarah Johnson</p>
-                <p class="testimonial-role">Junior Doctor, London</p>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="testimonial-card">
-                <p class="testimonial-text">"The preparation course was excellent. The practice questions closely mirrored the actual exam, and the performance tracking helped me identify my weak areas."</p>
-                <p class="testimonial-author">James Wilson</p>
-                <p class="testimonial-role">Medical Student, Manchester</p>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="testimonial-card">
-                <p class="testimonial-text">"As an international medical graduate, the preparation materials were absolutely invaluable. I passed both parts on my first try thanks to this platform."</p>
-                <p class="testimonial-author">Dr. Anika Patel</p>
-                <p class="testimonial-role">IMG, now working in NHS</p>
-              </div>
-            </div>
-          </div>
+
+          <!-- v4 controls -->
+          <a class="carousel-control-prev" href="#testimonialCarousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#testimonialCarousel" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
         </div>
-      </section>
+      </div>
+    </section>
+
+
     </main>
 
-    <!-- Footer -->
-    <footer class="footer-wrapper">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="footer-brand">
-              <img src="{% static 'img/logo.png' %}" alt="FRCOphth Pro" style="height: 60px; width: auto;" />
-              <span class="ml-2 text-white font-semibold text-xl">FRCOphth Pro</span>
+        <!-- ✅ FOOTER -->
+    <footer class="footer-wrapper py-4" style="background: var(--gradient); color: #fff;">
+      <div class="container-fluid px-md-5">
+        <div class="row align-items-start">
+
+          <!-- 1️⃣ Logo / Brand Column -->
+          <div class="col-md-4 mb-4 d-flex flex-column align-items-start gap-2">
+            <div class="d-flex align-items-center">
+              <img src="{% static 'img/logo.png' %}" alt="FRCOphth Pro" style="height: 50px; width: auto;" />
+              <span class="ms-2 fw-semibold fs-5">FRCOphth Pro</span>
             </div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-3">
-            <p>&copy; 2025 FRCOphth Pro Ltd</p>
-            <a target="_blank" href="{% url 'Quizzes:terms' %}">Terms and conditions</a>
-            <br>
-            <a target="_blank" href="{% url 'Quizzes:privacy' %}">Privacy policy</a>
+            <p class="mt-2 mb-0">&copy; 2025 FRCOphth Pro Ltd</p>
           </div>
 
-          <div class="col-md-3">
-            <ul class="list-unstyled">
-              <li>FRCOphth Pro Ltd</li>
-              <li>100 Green Street</li>
-              <li>Green Avenue</li>
-              <li>Manchester</li>
+          <!-- 2️⃣ Terms / Privacy Column -->
+          <div class="col-md-4 mb-4 d-flex flex-column align-items-start gap-2">
+            <ul class="list-unstyled mb-0">
+              <li class="mb-2">
+                <a href="{% url 'Quizzes:terms' %}" class="text-white text-decoration-none">Terms and Conditions</a>
+              </li>
+              <li>
+                <a href="{% url 'Quizzes:privacy' %}" class="text-white text-decoration-none">Privacy Policy</a>
+              </li>
             </ul>
           </div>
 
-          <div class="col-md-3">
-            <ul class="list-unstyled">
-              <li><a href="{% url 'Quizzes:about' %}">About FRCOphth Pro Ltd</a></li>
-              <li><a href="#">Contact us</a></li>
+          <!-- 3️⃣ About / Contact Column -->
+          <div class="col-md-4 mb-4 d-flex flex-column align-items-start gap-2">
+            <ul class="list-unstyled mb-0">
+              <li class="mb-2">
+                <a href="{% url 'Quizzes:about' %}" class="text-white text-decoration-none">About</a>
+              </li>
+              <li>
+                <a href="mailto:support@frcophthpro.com" class="text-white text-decoration-none">Contact Us</a>
+              </li>
             </ul>
           </div>
 
-          <div class="col-md-3">
-            <ul class="list-unstyled">
-              <li><a href="https://www.mrcpuk.org/mrcpuk-examinations">MRCP UK Examinations guidance</a></li>
-              <li><a href="http://www.rcgp.org.uk/training-exams/mrcgp-exams-overview/mrcgp-applied-knowledge-test-akt.aspx">MRCGP AKT examination guidance</a></li>
-              <li><a href="https://gprecruitment.hee.nhs.uk/Recruitment/Applicant-Guidance/MSRA">MSRA exam guidance</a></li>
-              <li><a href="https://www.medschools.ac.uk/our-work/assessment/msc-assessment-alliance">UK Medical School Alliance</a></li>
-              <li><a href="http://www.foundationprogramme.nhs.uk/content/epm-sjt">SJT guidance</a></li>
-              <li><a href="https://prescribingsafetyassessment.ac.uk/">PSA guidance</a></li>
-            </ul>
-          </div>
         </div>
       </div>
     </footer>
 
-    <!-- External Site Modal -->
-    <div class="modal fade" id="extsite" tabindex="-1" role="dialog" aria-labelledby="extsite-title" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="extsite-title">External Site</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body" id="extsite-content">
-            <!-- Content will be loaded here -->
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          </div>
-        </div>
-      </div>
-    </div>
+
 
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -784,3 +1002,4 @@ $(function () {
   </body>
 </html>
 
+{% endif %}

@@ -629,102 +629,105 @@
 </div>
 
 <script>
-const form = document.getElementById("filter-form");
-const spinner = document.getElementById("spinner");
-const matchCount = document.getElementById("match-count");
-const startQuizBtn = document.getElementById("start-quiz-btn");
+  const form = document.getElementById("filter-form");
+  const spinner = document.getElementById("spinner");
+  const matchCount = document.getElementById("match-count");
+  const startQuizBtn = document.getElementById("start-quiz-btn");
 
-const cbWrong = document.getElementById("only_wrong");
-const cbFlagged = document.getElementById("only_flagged");
-const cbUnattempted = document.getElementById("only_unattempted");
-const topicSelect = document.getElementById("topic");
+  const cbWrong = document.getElementById("only_wrong");
+  const cbFlagged = document.getElementById("only_flagged");
+  const cbUnattempted = document.getElementById("only_unattempted");
+  const topicSelect = document.getElementById("topic");
 
-// prevent navigation if disabled
-startQuizBtn.addEventListener("click", (e) => {
-  if (startQuizBtn.classList.contains("disabled")) {
-    e.preventDefault();
-    e.stopPropagation();
-  }
-});
-
-function buildParams() {
-  // If any “other” filter is active, auto-uncheck “Only Unattempted”
-  const othersActive = cbWrong.checked || cbFlagged.checked || topicSelect.value !== "";
-  if (othersActive && cbUnattempted.checked) {
-    cbUnattempted.checked = false;
-  }
-
-  const fd = new FormData(form);
-  // Unchecked checkboxes won’t be sent — that’s what we want.
-  return new URLSearchParams(fd);
-}
-
-async function updateFilters() {
-  const params = buildParams();
-
-  spinner.style.display = "block";
-  matchCount.style.display = "none";
-
-  try {
-    const res = await fetch("{% url 'Quizzes:ajax_filter_preview' quiz.id %}?" + params.toString(), { cache: "no-store" });
-    const data = await res.json();
-
-    const total = data.total || 1;
-    const attemptedPct = Math.round((data.attempted / total) * 100);
-    const wrongPct = Math.round((data.wrong / total) * 100);
-    const flaggedPct = Math.round((data.flagged / total) * 100);
-    const unattemptedPct = Math.max(0, 100 - attemptedPct);
-
-    setBar("attempted-bar", attemptedPct);
-    setBar("wrong-bar", wrongPct);
-    setBar("flagged-bar", flaggedPct);
-    setBar("unattempted-bar", unattemptedPct);
-
-    document.getElementById("total-count").textContent = data.total;
-    document.getElementById("attempted-count").textContent = data.attempted;
-    document.getElementById("wrong-count").textContent = data.wrong;
-    document.getElementById("flagged-count").textContent = data.flagged;
-    document.getElementById("unattempted-count").textContent = data.unattempted;
-
-    matchCount.textContent = `Matching questions: ${data.filtered_count}`;
-
-    if (data.filtered_count === 0) {
-      matchCount.classList.add("zero");
-      startQuizBtn.classList.add("disabled");
-      startQuizBtn.setAttribute("aria-disabled", "true");
-      startQuizBtn.href = "#";
-    } else {
-      matchCount.classList.remove("zero");
-      startQuizBtn.classList.remove("disabled");
-      startQuizBtn.removeAttribute("aria-disabled");
-      startQuizBtn.href = "{% url 'Quizzes:start_quiz' quiz.id %}?" + params.toString();
+  // prevent navigation if disabled
+  startQuizBtn.addEventListener("click", (e) => {
+    if (startQuizBtn.classList.contains("disabled")) {
+      e.preventDefault();
+      e.stopPropagation();
     }
-    matchCount.style.display = "block";
-  } catch (e) {
-    console.error("Filter update failed", e);
-  } finally {
-    spinner.style.display = "none";
+  });
+
+  function buildParams() {
+    // If any "other" filter is active, auto-uncheck "Only Unattempted"
+    const othersActive = cbWrong.checked || cbFlagged.checked || topicSelect.value !== "";
+    if (othersActive && cbUnattempted.checked) {
+      cbUnattempted.checked = false;
+    }
+
+    const fd = new FormData(form);
+    // Unchecked checkboxes won't be sent – that's what we want.
+    return new URLSearchParams(fd);
   }
-}
 
-// wire once
-form.addEventListener("change", updateFilters);
-document.addEventListener("DOMContentLoaded", updateFilters);
+  async function updateFilters() {
+    const params = buildParams();
 
-function setBar(id, widthPct) {
-  const el = document.getElementById(id);
-  el.style.width = Math.max(0, Math.min(100, widthPct)) + "%";
-}
+    spinner.style.display = "block";
+    matchCount.style.display = "none";
 
-// reset modal helpers remain unchanged…
-function openResetModal(){ document.getElementById("resetModal").classList.add("show"); }
-function closeResetModal(){ document.getElementById("resetModal").classList.remove("show"); }
-document.getElementById("resetModal").addEventListener("click", e => { if (e.target === e.currentTarget) closeResetModal(); });
+    try {
+      const res = await fetch("{% url 'Quizzes:ajax_filter_preview' quiz.id %}?" + params.toString(), { cache: "no-store" });
+      const data = await res.json();
 
-function openResetFlagsModal(){ document.getElementById("resetFlagsModal").classList.add("show"); }
-function closeResetFlagsModal(){ document.getElementById("resetFlagsModal").classList.remove("show"); }
-document.getElementById("resetFlagsModal").addEventListener("click", e => { if (e.target === e.currentTarget) closeResetFlagsModal(); });
-</script>
+      const total = data.total || 1;
+      
+      // Calculate percentages with proper priority
+      const wrongPct = Math.round((data.wrong / total) * 100);
+      const flaggedPct = Math.round((data.flagged / total) * 100);
+      const unattemptedPct = Math.round((data.unattempted / total) * 100);
+      
+      // Correct (attempted - wrong) gets the remaining space
+      const correctPct = Math.max(0, 100 - wrongPct - flaggedPct - unattemptedPct);
 
+      setBar("attempted-bar", correctPct);  // Only show CORRECT answers in blue
+      setBar("wrong-bar", wrongPct);
+      setBar("flagged-bar", flaggedPct);
+      setBar("unattempted-bar", unattemptedPct);
+
+      document.getElementById("total-count").textContent = data.total;
+      document.getElementById("attempted-count").textContent = data.attempted;
+      document.getElementById("wrong-count").textContent = data.wrong;
+      document.getElementById("flagged-count").textContent = data.flagged;
+      document.getElementById("unattempted-count").textContent = data.unattempted;
+
+      matchCount.textContent = `Matching questions: ${data.filtered_count}`;
+
+      if (data.filtered_count === 0) {
+        matchCount.classList.add("zero");
+        startQuizBtn.classList.add("disabled");
+        startQuizBtn.setAttribute("aria-disabled", "true");
+        startQuizBtn.href = "#";
+      } else {
+        matchCount.classList.remove("zero");
+        startQuizBtn.classList.remove("disabled");
+        startQuizBtn.removeAttribute("aria-disabled");
+        startQuizBtn.href = "{% url 'Quizzes:start_quiz' quiz.id %}?" + params.toString();
+      }
+      matchCount.style.display = "block";
+    } catch (e) {
+      console.error("Filter update failed", e);
+    } finally {
+      spinner.style.display = "none";
+    }
+  }
+
+  // wire once
+  form.addEventListener("change", updateFilters);
+  document.addEventListener("DOMContentLoaded", updateFilters);
+
+  function setBar(id, widthPct) {
+    const el = document.getElementById(id);
+    el.style.width = Math.max(0, Math.min(100, widthPct)) + "%";
+  }
+
+  // reset modal helpers remain unchanged…
+  function openResetModal(){ document.getElementById("resetModal").classList.add("show"); }
+  function closeResetModal(){ document.getElementById("resetModal").classList.remove("show"); }
+  document.getElementById("resetModal").addEventListener("click", e => { if (e.target === e.currentTarget) closeResetModal(); });
+
+  function openResetFlagsModal(){ document.getElementById("resetFlagsModal").classList.add("show"); }
+  function closeResetFlagsModal(){ document.getElementById("resetFlagsModal").classList.remove("show"); }
+  document.getElementById("resetFlagsModal").addEventListener("click", e => { if (e.target === e.currentTarget) closeResetFlagsModal(); });
+  </script>
 
 {% endblock %}

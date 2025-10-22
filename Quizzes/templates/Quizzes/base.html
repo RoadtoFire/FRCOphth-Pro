@@ -391,6 +391,10 @@
       .form-check-label {
         font-size: 1.05rem;
       }
+      .nav-item {
+        list-style-type: none !important;
+      }
+
     </style>
 
     {% block extra_head %}{% endblock %}
@@ -404,6 +408,20 @@
           <img src="{% static 'img/logo.png' %}" alt="FRCOphth Pro" style="height: 60px; width: auto;" />
           <span class="ml-2 text-white font-semibold text-xl">FRCOphth Pro</span>
       </a>
+
+      <li class="nav-item">
+        <a class="navbar-brand flex items-center" href="{% url 'Quizzes:profile' %}" style="padding-left:40px;">
+          <i class="bi bi-person-circle"></i> Profile
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="navbar-brand flex items-center" style="padding-left:40px;" href="{% url 'Quizzes:blog' %}">
+          <i class="bi bi-journal-text me-1"></i> Blog
+        </a>
+      </li>
+
+
 
 
         <div class="ml-auto text-white-50">

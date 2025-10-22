@@ -13,10 +13,13 @@
       <p class="lead mb-1">Score: <strong>{{ total_correct }}</strong> / {{ total_attempted }}</p>
       <p class="fs-4 mb-4">Percentage: <strong>{{ percentage }}%</strong></p>
 
-      <a class="btn btn-primary btn-lg me-3"
-         href="{% url 'Quizzes:start_quiz' quiz.id %}?refresh=1">
-         🔁 Try the Quiz Again
+
+      <!-- New: back to this topic's selection hub -->
+      <a class="btn btn-outline-primary btn-lg me-3"
+         href="{% url 'Quizzes:select_questions' quiz.id %}">
+         📚 Back to {{ quiz.title }}
       </a>
+
       <a class="btn btn-outline-secondary btn-lg" href="{% url 'Quizzes:home' %}">
          🏠 Back to Home
       </a>

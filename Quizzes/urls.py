@@ -19,6 +19,10 @@ urlpatterns = [
     path("about/", views.about, name="about"),
     path("terms/", views.terms, name="terms"),
     path("privacy/", views.privacy, name="privacy"),
+    path("profile/", views.profile_view, name="profile"),
+    path("blog/", views.blog_view, name="blog"),
+
+
 
 
 
