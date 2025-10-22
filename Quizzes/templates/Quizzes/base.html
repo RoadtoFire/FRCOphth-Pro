@@ -275,7 +275,29 @@
         border-color: var(--primary);
         box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
       }
+      
+      
+      .footer-wrapper {
+        background: var(--dark);
+        color: white;
+        padding: 4rem 0 2rem;
+      }
 
+      .footer-wrapper a {
+        color: #cbd5e1;
+        transition: color 0.3s ease;
+      }
+
+      .footer-wrapper a:hover {
+        color: white;
+        text-decoration: none;
+      }
+
+      .footer-brand {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1.5rem;
+      }
       .section-title {
         text-align: center;
         margin-bottom: 3rem;
@@ -440,63 +462,53 @@
       {% endblock %}
     </main>
 
-    <!-- ✅ FOOTER -->
-     <footer class="footer-wrapper">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="footer-brand">
-              <img src="{% static 'img/logo.png' %}" alt="FRCOphth Pro" style="height: 60px; width: auto;" />
-              <span class="ml-2 text-white font-semibold text-xl">FRCOphth Pro</span>
+
+    
+
+          <!-- ✅ FOOTER -->
+          <footer class="footer-wrapper py-4" style="background: var(--gradient); color: #fff;">
+            <div class="container-fluid px-md-5">
+              <div class="row align-items-start">
+
+                <!-- 1️⃣ Logo / Brand Column -->
+                <div class="col-md-4 mb-4 d-flex flex-column align-items-start gap-2">
+                  <div class="d-flex align-items-center">
+                    <img src="{% static 'img/logo.png' %}" alt="FRCOphth Pro" style="height: 50px; width: auto;" />
+                    <span class="ms-2 fw-semibold fs-5">FRCOphth Pro</span>
+                  </div>
+                  <p class="mt-2 mb-0">&copy; 2025 FRCOphth Pro Ltd</p>
+                </div>
+
+                <!-- 2️⃣ Terms / Privacy Column -->
+                <div class="col-md-4 mb-4 d-flex flex-column align-items-start gap-2">
+                  <ul class="list-unstyled mb-0">
+                    <li class="mb-2">
+                      <a href="{% url 'Quizzes:terms' %}" class="text-white text-decoration-none">Terms and Conditions</a>
+                    </li>
+                    <li>
+                      <a href="{% url 'Quizzes:privacy' %}" class="text-white text-decoration-none">Privacy Policy</a>
+                    </li>
+                  </ul>
+                </div>
+
+                <!-- 3️⃣ About / Contact Column -->
+                <div class="col-md-4 mb-4 d-flex flex-column align-items-start gap-2">
+                  <ul class="list-unstyled mb-0">
+                    <li class="mb-2">
+                      <a href="{% url 'Quizzes:about' %}" class="text-white text-decoration-none">About</a>
+                    </li>
+                    <li>
+                      <a href="mailto:support@frcophthpro.com" class="text-white text-decoration-none">Contact Us</a>
+                    </li>
+                  </ul>
+                </div>
+
+              </div>
             </div>
-          </div>
-        </div>
+          </footer>
 
 
-      
           
-      
-
-
-
-
-        <div class="row">
-          <div class="col-md-3">
-            <p>&copy; 2025 FRCOphth Pro Ltd</p>
-            <a target="_blank" href="{% url 'Quizzes:terms' %}">Terms and conditions</a>
-            <br>
-            <a target="_blank" href="{% url 'Quizzes:privacy' %}">Privacy policy</a>
-          </div>
-
-          <div class="col-md-3">
-            <ul class="list-unstyled">
-              <li>FRCOphth Pro Ltd</li>
-              <li>100 Green Street</li>
-              <li>Green Avenue</li>
-              <li>Manchester</li>
-            </ul>
-          </div>
-
-          <div class="col-md-3">
-            <ul class="list-unstyled">
-              <li><a href="{% url 'Quizzes:about' %}">About FRCOphth Pro Ltd</a></li>
-              <li><a href="#">Contact us</a></li>
-            </ul>
-          </div>
-
-          <div class="col-md-3">
-            <ul class="list-unstyled">
-              <li><a href="https://www.mrcpuk.org/mrcpuk-examinations">MRCP UK Examinations guidance</a></li>
-              <li><a href="http://www.rcgp.org.uk/training-exams/mrcgp-exams-overview/mrcgp-applied-knowledge-test-akt.aspx">MRCGP AKT examination guidance</a></li>
-              <li><a href="https://gprecruitment.hee.nhs.uk/Recruitment/Applicant-Guidance/MSRA">MSRA exam guidance</a></li>
-              <li><a href="https://www.medschools.ac.uk/our-work/assessment/msc-assessment-alliance">UK Medical School Alliance</a></li>
-              <li><a href="http://www.foundationprogramme.nhs.uk/content/epm-sjt">SJT guidance</a></li>
-              <li><a href="https://prescribingsafetyassessment.ac.uk/">PSA guidance</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </footer>
     <!-- ✅ GLOBAL JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
