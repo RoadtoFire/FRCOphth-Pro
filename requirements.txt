@@ -16,6 +16,7 @@ gunicorn==23.0.0
 idna==3.11
 packaging==25.0
 pillow==12.0.0
+psycopg2-binary==2.9.11
 pycparser==2.23
 PyJWT==2.10.1
 python-slugify==8.0.4
