@@ -1,0 +1,19 @@
+/* Fix CKEditor background and font color */
+.ck.ck-content {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    font-family: "Inter", "Segoe UI", Arial, sans-serif !important;
+    font-size: 15px !important;
+    line-height: 1.6 !important;
+}
+
+/* Make the editor taller */
+.ck.ck-editor__editable_inline {
+    min-height: 400px !important;
+}
+
+/* Improve toolbar visibility */
+.ck.ck-toolbar {
+    background-color: #f8f9fa !important;
+    border: 1px solid #dee2e6 !important;
+}

@@ -39,9 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_ckeditor_5',
     'Quizzes',
     'accounts',
-    'adminsortable2',
+    'adminsortable2', 
 ]
 
 MIDDLEWARE = [
@@ -149,3 +150,85 @@ LOGOUT_REDIRECT_URL = "/accounts/login/"
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+
+CKEDITOR_5_UPLOAD_PATH = "uploads/"
+
+CKEDITOR_5_CONFIGS = {
+    'default': {
+        'toolbar': [
+            'heading', '|',
+            'bold', 'italic', 'underline', 'link', '|',
+            'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', '|',
+            'alignment', 'bulletedList', 'numberedList', '|',
+            'imageUpload', 'blockQuote', 'insertTable', 'mediaEmbed', 'codeBlock', '|',
+            'undo', 'redo'
+        ],
+        'height': 500,
+        'width': '100%',
+        'image': {
+            'toolbar': [
+                'imageTextAlternative', 
+                'toggleImageCaption', 
+                'imageStyle:inline', 
+                'imageStyle:block', 
+                'imageStyle:side'
+            ],
+            'styles': ['inline', 'block', 'side']
+        },
+        'table': {
+            'contentToolbar': [
+                'tableColumn', 
+                'tableRow', 
+                'mergeTableCells', 
+                'tableProperties', 
+                'tableCellProperties'
+            ]
+        },
+        'fontSize': {
+            'options': [10, 12, 14, 16, 18, 20, 22, 24, 'default'],
+            'supportAllValues': True
+        },
+        'fontFamily': {
+            'options': [
+                'default',
+                'Inter, sans-serif',
+                'Arial, sans-serif',
+                'Georgia, serif',
+                'Times New Roman, serif'
+            ],
+            'supportAllValues': True
+        },
+        'fontColor': {
+            'colors': [
+                {'color': 'hsl(0, 0%, 0%)', 'label': 'Black'},
+                {'color': 'hsl(0, 0%, 30%)', 'label': 'Dark Gray'},
+                {'color': 'hsl(0, 0%, 60%)', 'label': 'Gray'},
+                {'color': 'hsl(240, 100%, 50%)', 'label': 'Blue'},
+                {'color': 'hsl(0, 75%, 60%)', 'label': 'Red'},
+                {'color': 'hsl(120, 60%, 40%)', 'label': 'Green'},
+            ]
+        },
+        'fontBackgroundColor': {
+            'colors': [
+                {'color': 'hsl(0, 0%, 100%)', 'label': 'White'},
+                {'color': 'hsl(0, 0%, 90%)', 'label': 'Light Gray'},
+                {'color': 'hsl(60, 75%, 85%)', 'label': 'Light Yellow'},
+                {'color': 'hsl(0, 75%, 85%)', 'label': 'Light Red'},
+                {'color': 'hsl(240, 75%, 85%)', 'label': 'Light Blue'},
+            ]
+        },
+        'alignment': {
+            'options': ['left', 'center', 'right', 'justify']
+        },
+        'mediaEmbed': {
+            'previewsInData': True,
+            'toolbar': ['mediaEmbed']
+        },
+    }
+}
+
+
+STRIPE_PUBLIC_KEY = "pk_test_51SM2rYKPRXR2L86t8fE3oUdnwnJe0au8nYCXTmLbsP4J59ZHfV4LLqD07rXXEpH5F64b290x8OyOXPJNyOgp7P9l00TvrXKH9n"
+STRIPE_SECRET_KEY = "sk_test_51SM2rYKPRXR2L86ty7hl9He10sz33WQOY06GYGTkfoA3o7mI9WTmPgG3srdihPAONe24kfeNtVXbQiGdOO3tqDLI00piX0JpnU"
+STRIPE_WEBHOOK_SECRET = ""

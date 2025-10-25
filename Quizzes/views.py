@@ -5,6 +5,190 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from .models import Quiz, Question, Attempt
 import random
+from django.urls import reverse
+from .models import BlogPost
+
+
+import random
+from .models import Question
+
+# Example topic weights (adjust yours accordingly)
+TOPIC_WEIGHTS = {
+    "Optics" : 24,
+    "Epidemiology and Biostatistics" : 16,
+    "Anatomy" : 9,
+    "Instruments and Investigations" : 8,
+    "Pathology" : 7,
+    "Immunology" : 7,
+    "Embryology" : 7,
+    "Microbiology" : 7,
+    "Pharmacology" : 2,
+    "Genetics" : 2,
+    "Biochemistry" : 4,
+    "Cell Biology" : 3,
+    "Physiology" : 3,
+    "Genetics" : 1,
+    
+}
+
+def get_weighted_questions(total_questions):
+    """
+    Selects questions proportionally to topic weights.
+    Ensures rounding errors never reduce total question count.
+    """
+    questions_by_topic = {topic: Question.objects.filter(category__name=topic) for topic in TOPIC_WEIGHTS.keys()}
+
+    # Step 1: Base allocation by weight
+    allocation = {topic: int(total_questions * weight) for topic, weight in TOPIC_WEIGHTS.items()}
+
+    # Step 2: Fix rounding errors (ensure total matches exactly)
+    current_total = sum(allocation.values())
+    if current_total < total_questions:
+        # Add leftover questions to heaviest topics first
+        sorted_topics = sorted(TOPIC_WEIGHTS.items(), key=lambda x: x[1], reverse=True)
+        for topic, _ in sorted_topics:
+            if current_total >= total_questions:
+                break
+            allocation[topic] += 1
+            current_total += 1
+    elif current_total > total_questions:
+        # Reduce excess from lowest-weight topics
+        sorted_topics = sorted(TOPIC_WEIGHTS.items(), key=lambda x: x[1])
+        for topic, _ in sorted_topics:
+            if current_total <= total_questions:
+                break
+            if allocation[topic] > 0:
+                allocation[topic] -= 1
+                current_total -= 1
+
+    # Step 3: Randomly sample from each category
+    selected_questions = []
+    for topic, count in allocation.items():
+        available = list(questions_by_topic[topic])
+        if available:
+            sample_size = min(len(available), count)
+            selected_questions.extend(random.sample(available, sample_size))
+
+    # Step 4: Shuffle the final question list
+    random.shuffle(selected_questions)
+    return selected_questions
+
+
+@login_required
+def ai_quiz_select_view(request):
+    return render(request, "Quizzes/ai_quiz_select.html")
+
+
+@login_required
+def ai_quiz_start_view(request):
+    if request.method == "POST":
+        total_questions = int(request.POST.get("total_questions"))
+        selected_questions = get_weighted_questions(total_questions)
+
+        ids = [q.id for q in selected_questions]
+        request.session["ai_quiz_queue"] = ids
+        request.session["ai_quiz_fresh"] = ids[:]
+        request.session.modified = True
+
+        print("Selected questions:", selected_questions)
+        print("Count:", len(selected_questions))
+
+
+        return redirect("Quizzes:ai_quiz_question", question_number=1)
+    return redirect("Quizzes:ai_quiz_select")
+
+
+@login_required
+def ai_quiz_question_view(request, question_number):
+    """Handles AI Quiz questions with proper submit disabling and last-question protection."""
+    queue = request.session.get("ai_quiz_queue", [])
+    if not queue:
+        messages.warning(request, "Your AI quiz has expired or not started.")
+        return redirect("Quizzes:ai_quiz_select")
+
+    total_in_run = len(queue)
+    if question_number < 1 or question_number > total_in_run:
+        return redirect("Quizzes:ai_quiz_complete")
+
+    qid = queue[question_number - 1]
+    question = get_object_or_404(Question, id=qid)
+
+    # Get stored answers
+    answers = request.session.get("ai_quiz_answers", {})
+    selected_answer = answers.get(str(qid), {}).get("selected")
+    already_answered = str(qid) in answers
+    feedback = answers.get(str(qid), {}).get("feedback")
+    explanation = answers.get(str(qid), {}).get("explanation")
+
+    # Handle POST
+    if request.method == "POST" and not already_answered:
+        selected_choice = request.POST.get("selected_choice")
+        if selected_choice:
+            is_correct = (selected_choice == question.correct_answer)
+            feedback = "✅ Correct!" if is_correct else "❌ Not correct."
+            explanation = getattr(question, "explanation", None)
+
+            answers[str(qid)] = {
+                "selected": selected_choice,
+                "is_correct": is_correct,
+                "feedback": feedback,
+                "explanation": explanation,
+            }
+            request.session["ai_quiz_answers"] = answers
+            request.session.modified = True
+            selected_answer = selected_choice
+            already_answered = True
+
+    # Progress tracking
+    correct = sum(1 for q in answers.values() if q.get("is_correct"))
+    attempted = len(answers)
+    progress = round((attempted / total_in_run) * 100, 1)
+
+    prev_index = question_number - 1 if question_number > 1 else None
+    next_index = question_number + 1 if question_number < total_in_run else None
+    is_last_question = (question_number == total_in_run)
+    last_question_answered = str(qid) in answers if is_last_question else False
+
+    context = {
+        "question": question,
+        "question_number": question_number,
+        "total_in_run": total_in_run,
+        "choices": question.get_choices(),
+        "selected_answer": selected_answer,
+        "feedback": feedback,
+        "explanation": explanation,
+        "already_answered": already_answered,
+        "progress": progress,
+        "prev_index": prev_index,
+        "next_index": next_index,
+        "is_last_question": is_last_question,
+        "last_question_answered": last_question_answered,
+    }
+
+    return render(request, "Quizzes/ai_quiz_question.html", context)
+
+
+@login_required
+def ai_quiz_complete_view(request):
+    """Show results and clear AI quiz session."""
+    queue = request.session.get("ai_quiz_queue", [])
+    answers = request.session.get("ai_quiz_answers", {})
+
+    total_attempted = len(queue)
+    correct = sum(1 for qid in queue if str(qid) in answers and answers[str(qid)]["is_correct"])
+    percentage = round((correct / total_attempted) * 100, 1) if total_attempted > 0 else 0
+
+    # Clean up
+    for key in ["ai_quiz_queue", "ai_quiz_fresh", "ai_quiz_answers"]:
+        request.session.pop(key, None)
+
+    context = {
+        "quiz": {"title": "AI Quiz"},
+        "total_correct": correct,
+        "total_attempted": total_attempted,
+        "percentage": percentage,
+    }
+    return render(request, "Quizzes/ai_quiz_complete.html", context)
 
 
 # ──────────────────────────────────────────────────────────────
@@ -556,5 +740,14 @@ def profile_view(request):
     return render(request, "Quizzes/profile.html", context)
 
 
-def blog_view(request):
-    return render(request, "Quizzes/blog.html")
+
+
+
+def blog_index(request):
+    posts = BlogPost.objects.all().order_by('-created_at')
+    print("DEBUG → Posts count:", posts.count())  # TEMP debug line
+    return render(request, "Quizzes/blog.html", {"posts": posts})
+
+def blog_detail(request, slug):
+    post = get_object_or_404(BlogPost, slug=slug)
+    return render(request, "Quizzes/blog_detail.html", {"post": post})

@@ -3,12 +3,6 @@
 
 {% block content %}
 <style>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
   body {
     background: #f5f7fa;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -17,17 +11,17 @@
 
   .container-main {
     max-width: 1000px;
-    margin: 0 auto;
+    margin: 40px auto;
     padding: 20px;
     display: grid;
-    grid-template-columns: 1fr 250px;
-    gap: 20px;
+    grid-template-columns: 1fr 280px;
+    gap: 25px;
   }
 
   .main-content {
     background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     padding: 30px;
   }
 
@@ -39,636 +33,197 @@
 
   .sidebar-card {
     background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    padding: 20px;
   }
 
-  .header-section {
-    margin-bottom: 25px;
+  .quiz-header {
     border-bottom: 1px solid #e0e0e0;
-    padding-bottom: 15px;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
   }
 
   .quiz-title {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 700;
     color: #1a1a1a;
-    margin-bottom: 5px;
-  }
-
-  .question-counter {
-    font-size: 13px;
-    color: #666;
-  }
-
-  .question-section {
-    margin-bottom: 30px;
   }
 
   .question-text {
     font-size: 16px;
-    font-weight: 600;
-    line-height: 1.6;
-    color: #1a1a1a;
+    font-weight: 500;
     margin-bottom: 20px;
+    line-height: 1.6;
   }
 
   .question-image {
     max-width: 100%;
-    max-height: 300px;
-    border-radius: 6px;
+    border-radius: 8px;
     margin-bottom: 20px;
-    display: block;
-  }
-
-  .options-container {
-    margin-bottom: 25px;
-  }
-
-  .feedback-explanation-container {
-    min-height: 80px;
-    margin-bottom: 25px;
   }
 
   .option-item {
     border: 1px solid #ddd;
-    border-radius: 6px;
+    border-radius: 8px;
     padding: 12px 15px;
     margin-bottom: 10px;
     cursor: pointer;
+    background: #fff;
     transition: all 0.2s ease;
-    background: white;
   }
 
   .option-item:hover {
-    border-color: #007bff;
     background: #f8f9ff;
+    border-color: #007bff;
   }
 
-  .option-item.disabled {
-    cursor: not-allowed;
-    opacity: 0.7;
-  }
-
-  .option-item.disabled:hover {
-    border-color: #ddd;
-    background: white;
-  }
-
-  .option-item input[type="radio"] {
-    margin-right: 10px;
-    cursor: pointer;
-    accent-color: #007bff;
-  }
-
-  .option-item.disabled input[type="radio"] {
-    cursor: not-allowed;
-  }
-
-  .option-item label {
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    font-size: 15px;
-    margin: 0;
-  }
-
-  .option-item.disabled label {
-    cursor: not-allowed;
-  }
-
-  .option-key {
-    font-weight: 700;
-    color: #007bff;
-    margin-right: 8px;
-    min-width: 25px;
-  }
-
-  .option-item.correct {
-    border-color: #28a745;
-    background: #f0fdf4;
-  }
-
-  .option-item.incorrect {
-    border-color: #dc3545;
-    background: #fef2f2;
-  }
-
-  .feedback-box {
-    padding: 12px 15px;
-    border-radius: 6px;
-    margin-bottom: 15px;
-    font-size: 14px;
-    font-weight: 600;
-  }
-
-  .feedback-success {
-    background: #f0fdf4;
-    color: #28a745;
-    border-left: 4px solid #28a745;
-  }
-
-  .feedback-error {
-    background: #fef2f2;
-    color: #dc3545;
-    border-left: 4px solid #dc3545;
-  }
-
-  .explanation-box {
-    background: #f0f7ff;
-    border-left: 4px solid #007bff;
-    padding: 12px 15px;
-    border-radius: 6px;
-    margin-bottom: 20px;
-    font-size: 14px;
-    line-height: 1.6;
-  }
-
-  .explanation-box strong {
-    color: #007bff;
-  }
-
-  .navigation {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    margin-top: 30px;
-    padding-top: 20px;
-    border-top: 1px solid #e0e0e0;
-  }
-
-  .nav-left {
-    display: flex;
-    gap: 10px;
-  }
-
-  .nav-right {
-    display: flex;
-    gap: 10px;
+  .option-item.selected {
+    background: #e9f2ff;
+    border-color: #007bff;
   }
 
   .btn {
-    padding: 8px 16px;
-    border: none;
     border-radius: 6px;
-    font-size: 14px;
     font-weight: 600;
-    cursor: pointer;
     transition: all 0.2s ease;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
   }
 
-  .btn-previous {
+  .btn-primary {
+    background: #007bff;
+    color: white;
+    border: none;
+  }
+
+  .btn-primary:hover {
+    background: #0056b3;
+  }
+
+  .btn-secondary {
     background: #e9ecef;
     color: #333;
   }
 
-  .btn-previous:hover {
+  .btn-secondary:hover {
     background: #dee2e6;
   }
 
-  .btn-submit {
-    background: #007bff;
-    color: white;
-  }
-
-  .btn-submit:hover:not(:disabled) {
-    background: #0056b3;
-  }
-
-  .btn-submit:disabled {
-    background: #ccc;
-    color: #999;
-    cursor: not-allowed;
-    opacity: 0.6;
-  }
-
-  .btn-next {
-    background: #007bff;
-    color: white;
-  }
-
-  .btn-next:hover:not(.disabled) {
-    background: #0056b3;
-  }
-
-  .btn-next.disabled {
-    background: #ccc;
-    color: #999;
-    cursor: not-allowed;
-    opacity: 0.6;
-    pointer-events: none;
-  }
-
-  .btn-finish {
+  .btn-success {
     background: #28a745;
     color: white;
   }
 
-  .btn-finish:hover:not(.disabled) {
+  .btn-success:hover {
     background: #218838;
   }
 
-  .btn-finish.disabled {
-    background: #ccc;
-    color: #999;
-    cursor: not-allowed;
-    opacity: 0.6;
-    pointer-events: none;
-  }
-
-  .btn-quit {
-    background: #dc3545;
-    color: white;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 6px;
-    font-size: 14px;
+  .feedback-box {
+    padding: 12px 15px;
+    border-radius: 8px;
+    margin-top: 15px;
     font-weight: 600;
-    cursor: pointer;
-    width: 100%;
   }
 
-  .btn-quit:hover {
-    background: #c82333;
+  .feedback-correct {
+    background: #f0fdf4;
+    border-left: 5px solid #28a745;
+    color: #28a745;
+  }
+
+  .feedback-wrong {
+    background: #fef2f2;
+    border-left: 5px solid #dc3545;
+    color: #dc3545;
   }
 
   .progress-bar-container {
     background: #e9ecef;
-    border-radius: 4px;
-    height: 20px;
+    border-radius: 5px;
+    height: 18px;
     overflow: hidden;
-    display: flex;
     margin-bottom: 8px;
   }
 
-  .progress-segment {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 11px;
-    font-weight: 600;
-  }
-
-  .progress-attempted {
+  .progress-fill {
     background: #007bff;
-  }
-
-  .progress-wrong {
-    background: #dc3545;
-  }
-
-  .progress-unattempted {
-    background: #adb5bd;
-  }
-
-  .progress-legend {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    font-size: 12px;
-  }
-
-  .legend-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .legend-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 2px;
-    flex-shrink: 0;
-  }
-
-  .sidebar-title {
-    font-size: 13px;
-    font-weight: 700;
-    color: #666;
-    text-transform: uppercase;
-    margin-bottom: 12px;
-  }
-
-  .flag-button {
-    width: 100%;
-    padding: 8px 12px;
-    border: 1px solid #ddd;
-    background: white;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 13px;
-    font-weight: 600;
-    color: #666;
-    transition: all 0.2s ease;
-  }
-
-  .flag-button:hover {
-    border-color: #ffc107;
-    background: #fffbf0;
-    color: #ffc107;
-  }
-
-  .flag-button.flagged {
-    border-color: #ffc107;
-    background: #fffbf0;
-    color: #ffc107;
-  }
-
-  .modal-custom {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
-
-  .modal-custom.show {
-    display: flex;
-  }
-
-  .modal-content-custom {
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-    max-width: 350px;
-    width: 90%;
-    overflow: hidden;
-  }
-
-  .modal-header-custom {
-    background: #dc3545;
-    color: white;
-    padding: 15px 20px;
-    font-size: 16px;
-    font-weight: 700;
-  }
-
-  .modal-body-custom {
-    padding: 20px;
-    font-size: 14px;
-    line-height: 1.6;
-  }
-
-  .modal-footer-custom {
-    padding: 15px 20px;
-    display: flex;
-    gap: 10px;
-    justify-content: flex-end;
-    border-top: 1px solid #e0e0e0;
-  }
-
-  .btn-modal {
-    padding: 8px 16px;
-    border: none;
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-  }
-
-  .btn-modal-cancel {
-    background: #e9ecef;
-    color: #333;
-  }
-
-  .btn-modal-quit {
-    background: #dc3545;
-    color: white;
+    transition: width 0.3s ease;
   }
 
   @media (max-width: 768px) {
     .container-main {
       grid-template-columns: 1fr;
     }
-
-    .main-content {
-      padding: 20px;
-    }
-
-    .navigation {
-      flex-direction: column;
-    }
-
-    .nav-left,
-    .nav-right {
-      width: 100%;
-      flex-direction: column;
-    }
-
-    .btn {
-      width: 100%;
-    }
   }
 </style>
 
 <div class="container-main">
+  <!-- Main quiz area -->
   <div class="main-content">
-    <div class="header-section">
-      <div class="quiz-title">{{ quiz.title }}</div>
-      <div class="question-counter">Question {{ question_number }} of {{ total_in_run }}</div>
+    <div class="quiz-header">
+      <div class="quiz-title">AI Exam</div>
+      <div class="text-muted small">Question {{ question_number }} of {{ total_in_run }}</div>
     </div>
 
     <div class="question-section">
       <div class="question-text">{{ question.text|safe }}</div>
       {% if question.image %}
-        <img src="{{ question.image.url }}" alt="" class="question-image">
+        <img src="{{ question.image.url }}" class="question-image" alt="">
       {% endif %}
     </div>
 
     <form method="post">
       {% csrf_token %}
-
-      <div class="options-container">
-        {% for key, text in choices %}
-          {% if text %}
-            <div class="option-item {% if already_answered %}disabled{% endif %} {% if selected_answer %}{% if key == correct_answer %}correct{% elif key == selected_answer %}incorrect{% endif %}{% endif %}">
-              <label>
-                <input type="radio" 
-                       name="selected_choice" 
-                       value="{{ key }}" 
-                       {% if selected_answer == key %}checked{% endif %}
-                       {% if already_answered %}disabled{% endif %}>
-                <span class="option-key">{{ key }}</span>
-                <span>{{ text|safe }}</span>
-              </label>
-            </div>
-          {% endif %}
-        {% endfor %}
-      </div>
-
-      <div class="feedback-explanation-container">
-        {% if feedback %}
-          <div class="feedback-box {% if feedback == 'Correct!' %}feedback-success{% else %}feedback-error{% endif %}">
-            {{ feedback }}
+      {% for key, text in choices %}
+        {% if text %}
+          <div class="option-item {% if selected_answer == key %}selected{% endif %}">
+            <label class="w-100">
+              <input type="radio" name="selected_choice" value="{{ key }}" 
+                     {% if selected_answer == key %}checked{% endif %} 
+                     style="margin-right: 10px;">
+              <strong>{{ key }}.</strong> {{ text|safe }}
+            </label>
           </div>
-          {% if question.explanation %}
-            <div class="explanation-box">
-              <strong>Explanation:</strong><br>
-              {{ question.explanation|linebreaks }}
-            </div>
-          {% endif %}
         {% endif %}
-      </div>
-
-      <div class="navigation">
-        <div class="nav-left">
-          {% if prev_index %}
-            <a href="{% url 'Quizzes:quiz_question' quiz.id prev_index %}" class="btn btn-previous">← Previous</a>
-          {% endif %}
-        </div>
-        <div class="nav-right">
-          <button type="submit" 
-                  class="btn btn-submit" 
-                  {% if already_answered %}disabled{% endif %}>
-            Submit
-          </button>
-          {% if next_index %}
-            <a href="{% url 'Quizzes:quiz_question' quiz.id next_index %}" 
-               class="btn btn-next {% if not feedback %}disabled{% endif %}">
-               Next →
-            </a>
-          {% else %}
-            <a href="{% url 'Quizzes:quiz_complete' quiz.id %}" 
-               class="btn btn-finish {% if not last_question_answered %}disabled{% endif %}">
-               Finish
-            </a>
-          {% endif %}
-        </div>
-      </div>
+      {% endfor %}
+      <button type="submit" class="btn btn-primary w-100 mt-3">Submit Answer</button>
     </form>
-  </div>
 
-  <div class="sidebar-card">
-    <div class="sidebar-title">Progress</div>
-
-    <div class="progress-bar-container">
-      {% if progress_correct > 0 %}
-        <div class="progress-segment" style="background:#28a745; width:{{ progress_correct }}%;"></div>
-      {% endif %}
-      {% if progress_wrong > 0 %}
-        <div class="progress-segment" style="background:#dc3545; width:{{ progress_wrong }}%;"></div>
-      {% endif %}
-      {% if progress_unattempted > 0 %}
-        <div class="progress-segment" style="background:#adb5bd; width:{{ progress_unattempted }}%;"></div>
-      {% endif %}
-    </div>
-
-    <div class="progress-text" style="text-align:center; font-size:13px; color:#333; margin-top:6px;">
-      {{ attempted_in_run }} / {{ total_in_run }} ({{ progress_attempted }}%)
-    </div>
-
-    <div class="progress-legend" style="margin-top:10px; font-size:12px;">
-      <div style="display:flex; align-items:center; gap:6px; margin-bottom:3px;">
-        <div style="width:12px; height:12px; background:#28a745; border-radius:2px;"></div> <span>Correct</span>
+    {% if feedback %}
+      <div class="feedback-box {% if 'Correct' in feedback %}feedback-correct{% else %}feedback-wrong{% endif %}">
+        {{ feedback }}
       </div>
-      <div style="display:flex; align-items:center; gap:6px; margin-bottom:3px;">
-        <div style="width:12px; height:12px; background:#dc3545; border-radius:2px;"></div> <span>Wrong</span>
-      </div>
-      <div style="display:flex; align-items:center; gap:6px;">
-        <div style="width:12px; height:12px; background:#adb5bd; border-radius:2px;"></div> <span>Unattempted</span>
-      </div>
+    {% endif %}
+
+    <div class="d-flex justify-content-between mt-4">
+      {% if prev_index %}
+        <a href="{% url 'Quizzes:ai_quiz_question' prev_index %}" class="btn btn-secondary">← Previous</a>
+      {% else %}
+        <span></span>
+      {% endif %}
+
+      {% if is_last_question %}
+        <a href="{% url 'Quizzes:ai_quiz_complete' %}" class="btn btn-success">Finish Exam →</a>
+      {% else %}
+        <a href="{% url 'Quizzes:ai_quiz_question' next_index %}" class="btn btn-primary">Next →</a>
+      {% endif %}
     </div>
   </div>
 
-  <div class="sidebar-card">
-    <form method="post" action="{% url 'Quizzes:toggle_flag' quiz.id question.id %}">
-      {% csrf_token %}
-      <button type="submit" class="flag-button {% if is_flagged %}flagged{% endif %}">
-        {% if is_flagged %}★ Unflag{% else %}☆ Flag{% endif %}
-      </button>
-    </form>
-  </div>
-
-  <div class="sidebar-card">
-    <button type="button" class="btn-quit" onclick="openQuitModal()">Quit Quiz</button>
-  </div>
-</div>
-
-<div class="modal-custom" id="quitModal">
-  <div class="modal-content-custom">
-    <div class="modal-header-custom">Quit Quiz?</div>
-    <div class="modal-body-custom">
-      <p>Are you sure you want to quit?</p>
-      <p><strong>Your progress will not be saved.</strong></p>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-card text-center">
+      <h6 class="mb-3 text-uppercase text-muted" style="font-size: 12px;">Progress</h6>
+      <div class="progress-bar-container">
+        <div class="progress-fill" style="width: {{ progress }}%;"></div>
+      </div>
+      <p class="mb-1"><strong>{{ progress }}%</strong> completed</p>
+      <p class="text-muted small">{{ question_number }} / {{ total_in_run }} questions</p>
     </div>
-    <div class="modal-footer-custom">
-      <button type="button" class="btn-modal btn-modal-cancel" onclick="closeQuitModal()">Cancel</button>
-      <a href="{% url 'Quizzes:home' %}" class="btn-modal btn-modal-quit">Quit</a>
+
+    <div class="sidebar-card text-center">
+      <a href="{% url 'Quizzes:ai_quiz_select' %}" class="btn btn-outline-danger w-100">Quit AI Exam</a>
     </div>
   </div>
 </div>
-
-<script>
-  function openQuitModal() {
-    document.getElementById('quitModal').classList.add('show');
-  }
-
-  function closeQuitModal() {
-    document.getElementById('quitModal').classList.remove('show');
-  }
-
-  document.getElementById('quitModal').addEventListener('click', function(e) {
-    if (e.target === this) {
-      closeQuitModal();
-    }
-  });
-</script>
-
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  const quizForm = document.querySelector("form");
-  const progressText = document.querySelector(".progress-text");
-  const progressBar = document.querySelector(".progress-bar-container");
-
-  if (!quizForm || !progressText || !progressBar) return;
-
-  // Correctly interpret the Python boolean value
-  const isFreshRun = {{ is_fresh_run|yesno:"true,false" }};
-
-  // Parse current progress
-  const text = progressText.textContent.trim();
-  const match = text.match(/(\d+)\s*\/\s*(\d+)\s*\(([\d.]+)%\)/);
-  let attempted = 0;
-  let total = 0;
-
-  if (match) total = parseInt(match[2]);
-
-  // ✅ Reset visible progress text for a new run
-  if (isFreshRun) {
-    progressText.textContent = `0 / ${total} (0%)`;
-    // Also reset the progress bar to show all unattempted
-    progressBar.innerHTML = '<div class="progress-segment" style="background:#adb5bd; width:100%;"></div>';
-  }
-
-  // Increment progress text visually on submit
-  quizForm.addEventListener("submit", function () {
-    const text = progressText.textContent.trim();
-    const match = text.match(/(\d+)\s*\/\s*(\d+)\s*\(([\d.]+)%\)/);
-    if (!match) return;
-
-    let attempted = parseInt(match[1]);
-    const total = parseInt(match[2]);
-
-    if (attempted < total) attempted += 1;
-    const percent = ((attempted / total) * 100).toFixed(1);
-
-    // Update text immediately
-    progressText.textContent = `${attempted} / ${total} (${percent}%)`;
-    
-    // Let the page reload handle the progress bar color update
-  });
-});
-</script>
-
 {% endblock %}

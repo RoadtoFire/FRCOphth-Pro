@@ -1,0 +1,32 @@
+{% extends "Quizzes/base.html" %}
+{% block content %}
+<div class="container text-center mt-5">
+  <h3 class="mb-3">AI Exam Generator</h3>
+  <p>Choose the number of questions you’d like to attempt.</p>
+
+  <form method="POST" action="{% url 'Quizzes:ai_quiz_start' %}">
+  {% csrf_token %}
+  <div class="form-group mb-3">
+    <label for="total_questions" class="form-label">Select Number of Questions:</label>
+    <select name="total_questions" id="total_questions" class="form-select" required>
+      <option value="5">5 Questions</option>
+      <option value="10" selected>10 Questions</option>
+      <option value="25">25 Questions</option>
+      <option value="50">50 Questions</option>
+    </select>
+  </div>
+
+  <button type="submit" class="btn btn-primary w-100 py-2">
+    🚀 Generate AI Exam
+  </button>
+</form>
+
+
+  <hr class="my-5">
+
+  <p class="text-muted small">
+    The AI Exam intelligently selects questions across all FRCOphth topics 
+    according to their official weightage, ensuring realistic exam-style balance.
+  </p>
+</div>
+{% endblock %}

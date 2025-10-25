@@ -577,7 +577,7 @@
         <div id="match-count" class="match-count"></div>
 
         <div class="action-buttons">
-          <a href="#" id="start-quiz-btn" class="btn-primary">Start Quiz →</a>
+          <a href="#" id="start-quiz-btn" class="btn-primary">Start Exam →</a>
           {% if has_queue %}
           <a href="{% url 'Quizzes:quiz_question' quiz.id 1 %}" class="btn-secondary">Continue</a>
           {% endif %}
@@ -588,7 +588,7 @@
 
   <!-- Footer -->
   <div class="footer-section">
-    <a href="{% url 'Quizzes:home' %}" class="back-btn">← Back to Quizzes</a>
+    <a href="{% url 'Quizzes:home' %}" class="back-btn">← Back to Exams</a>
   </div>
 </div>
 
@@ -597,7 +597,7 @@
   <div class="modal-content-custom">
     <div class="modal-header-custom">Reset Progress?</div>
     <div class="modal-body-custom">
-      <p>Are you sure you want to reset all progress for this quiz?</p>
+      <p>Are you sure you want to reset all progress for this exam?</p>
       <p><strong>This action cannot be undone.</strong></p>
     </div>
     <div class="modal-footer-custom">
@@ -615,7 +615,7 @@
   <div class="modal-content-custom">
     <div class="modal-header-custom">Reset All Flags?</div>
     <div class="modal-body-custom">
-      <p>Are you sure you want to remove all flags from this quiz?</p>
+      <p>Are you sure you want to remove all flags from this exam?</p>
       <p><strong>This action cannot be undone.</strong></p>
     </div>
     <div class="modal-footer-custom">

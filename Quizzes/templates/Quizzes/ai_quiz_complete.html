@@ -1,0 +1,159 @@
+{% extends "Quizzes/base.html" %}
+{% load static %}
+
+{% block content %}
+<style>
+  body {
+    background: #f5f7fa;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    color: #333;
+  }
+
+  .container-main {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 25px;
+  }
+
+  .main-content {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    padding: 40px;
+    text-align: center;
+  }
+
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .sidebar-card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    padding: 20px;
+    text-align: center;
+  }
+
+  .quiz-header {
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 10px;
+    margin-bottom: 25px;
+  }
+
+  .quiz-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1a1a1a;
+  }
+
+  .score-box {
+    background: #f8f9ff;
+    border-radius: 10px;
+    padding: 25px;
+    margin: 30px 0;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05);
+  }
+
+  .score-number {
+    font-size: 48px;
+    font-weight: 700;
+    color: #007bff;
+  }
+
+  .score-label {
+    font-size: 18px;
+    color: #555;
+  }
+
+  .btn {
+    border-radius: 6px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+  }
+
+  .btn-outline-primary {
+    border: 1px solid #007bff;
+    color: #007bff;
+  }
+
+  .btn-outline-primary:hover {
+    background: #007bff;
+    color: white;
+  }
+
+  .btn-secondary {
+    background: #e9ecef;
+    color: #333;
+  }
+
+  .btn-secondary:hover {
+    background: #dee2e6;
+  }
+
+  .progress-bar-container {
+    background: #e9ecef;
+    border-radius: 5px;
+    height: 18px;
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+
+  .progress-fill {
+    background: #007bff;
+    height: 100%;
+    transition: width 0.3s ease;
+  }
+
+  @media (max-width: 768px) {
+    .container-main {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<div class="container-main">
+  <!-- Main result card -->
+  <div class="main-content">
+    <div class="quiz-header">
+      <div class="quiz-title">🎉 AI Exam Complete!</div>
+    </div>
+
+    <div class="score-box">
+      <div class="score-number">{{ percentage }}%</div>
+      <div class="score-label">Your Score</div>
+    </div>
+
+    <p class="fs-5 mb-1">
+      You answered <strong>{{ correct }}</strong> out of 
+      <strong>{{ total }}</strong> questions correctly.
+    </p>
+
+    <div class="d-flex justify-content-center gap-3 mt-4">
+      <a href="{% url 'Quizzes:ai_quiz_select' %}" class="btn btn-outline-primary px-4">Try Again</a>
+      <a href="{% url 'Quizzes:home' %}" class="btn btn-secondary px-4">Back to Home</a>
+    </div>
+  </div>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-card">
+      <h6 class="mb-3 text-uppercase text-muted" style="font-size: 12px;">Performance</h6>
+      <div class="progress-bar-container">
+        <div class="progress-fill" style="width: {{ percentage }}%;"></div>
+      </div>
+      <p class="mb-1"><strong>{{ percentage }}%</strong> achieved</p>
+      <p class="text-muted small">{{ correct }} / {{ total }} correct</p>
+    </div>
+
+    <div class="sidebar-card">
+      <a href="{% url 'Quizzes:ai_quiz_select' %}" class="btn btn-outline-danger w-100">Restart AI Exam</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

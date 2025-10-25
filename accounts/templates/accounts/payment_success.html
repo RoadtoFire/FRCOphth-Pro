@@ -1,0 +1,8 @@
+{% extends "Quizzes/base.html" %}
+{% block content %}
+<div class="container text-center mt-5">
+  <h2 class="text-success">✅ Payment Successful!</h2>
+  <p>Your payment has been confirmed.</p>
+  <a href="{% url 'login' %}" class="btn btn-primary mt-3">Please login to Access the Site</a>
+</div>
+{% endblock %}

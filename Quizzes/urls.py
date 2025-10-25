@@ -20,11 +20,15 @@ urlpatterns = [
     path("terms/", views.terms, name="terms"),
     path("privacy/", views.privacy, name="privacy"),
     path("profile/", views.profile_view, name="profile"),
-    path("blog/", views.blog_view, name="blog"),
 
 
+    path("ai-quiz/", views.ai_quiz_select_view, name="ai_quiz_select"),
+    path("ai-quiz/start/", views.ai_quiz_start_view, name="ai_quiz_start"),
+    path("ai-quiz/question/<int:question_number>/", views.ai_quiz_question_view, name="ai_quiz_question"),
+    path("ai-quiz/complete/", views.ai_quiz_complete_view, name="ai_quiz_complete"),
 
-
+    path("blog/", views.blog_index, name="blog_index"),
+    path("blog/<slug:slug>/", views.blog_detail, name="blog_detail"),
 
 
 ]

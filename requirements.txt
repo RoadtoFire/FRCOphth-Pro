@@ -8,3 +8,4 @@ crispy-bootstrap4>=2024.1
 django-admin-sortable2>=2.1
 setuptools<81
 whitenoise>=6.6.0
+stripe>=13.0.1

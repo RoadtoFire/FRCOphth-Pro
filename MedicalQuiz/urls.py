@@ -17,6 +17,8 @@ urlpatterns = [
     path("Quizzes/", include("Quizzes.urls")),
     path("accounts/", include("accounts.urls")),
     path("", home, name="home"),  # 👈 public landing page
+    path('ckeditor5/', include('django_ckeditor_5.urls')),
+    
 ]
 
 if settings.DEBUG:

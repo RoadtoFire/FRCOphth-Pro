@@ -1,0 +1,9 @@
+.ck-editor__editable {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    font-size: 15px !important;
+}
+
+.ck.ck-content.ck-editor__editable.ck-rounded-corners.ck-editor__editable_inline {
+    min-height: 350px;
+}

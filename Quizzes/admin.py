@@ -2,8 +2,9 @@ from django.contrib import admin, messages
 from adminsortable2.admin import SortableAdminMixin
 from django.template.response import TemplateResponse
 from django.db.models import Count, Avg
-from .models import Quiz, Question, Attempt, Category
-
+from .models import Quiz, Question, Attempt, Category, BlogPost
+from django.contrib.staticfiles.storage import staticfiles_storage
+from django.utils.html import format_html
 
 class FRCOphthAdminSite(admin.AdminSite):
     site_header = "FRCOphth Dashboard"
@@ -119,3 +120,23 @@ class AttemptAdmin(admin.ModelAdmin):
     list_display = ("user", "quiz", "score", "started_at")
     search_fields = ("user__username", "quiz__title")
     list_filter = ("quiz", "started_at")
+
+
+
+
+
+
+
+@admin.register(BlogPost)
+class BlogPostAdmin(admin.ModelAdmin):
+    list_display = ('title', 'author', 'created_at')
+    prepopulated_fields = {'slug': ('title',)}
+    search_fields = ('title', 'short_description', 'content')
+
+class CustomAdminSite(admin.AdminSite):
+    class Media:
+        css = {
+            'all': ('Quizzes/admin_override.css',)
+        }
+
+admin.site.__class__.Media = CustomAdminSite.Media

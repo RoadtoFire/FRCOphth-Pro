@@ -1,0 +1,48 @@
+{% extends "Quizzes/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container my-5">
+  <h2 class="text-center mb-5 fw-bold">Choose Your Subscription Plan</h2>
+
+  <div class="row justify-content-center">
+    <!-- 3-Month Plan -->
+    <div class="col-md-4">
+      <div class="card shadow-lg border-0 text-center">
+        <div class="card-body py-5">
+          <h4 class="card-title mb-3 fw-semibold">3-Month Plan</h4>
+          <p class="card-text text-muted mb-4">Perfect for short-term learners.</p>
+          <h2 class="fw-bold mb-4">$XX</h2>
+
+          <form action="{% url 'create_checkout_session' %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="plan" value="3_month">
+            <button type="submit" class="btn btn-primary btn-lg px-4 py-2 rounded-pill">
+              Subscribe
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6-Month Plan -->
+    <div class="col-md-4">
+      <div class="card shadow-lg border-0 text-center">
+        <div class="card-body py-5">
+          <h4 class="card-title mb-3 fw-semibold">6-Month Plan</h4>
+          <p class="card-text text-muted mb-4">Best value for dedicated learners.</p>
+          <h2 class="fw-bold mb-4">$XX</h2>
+
+          <form action="{% url 'create_checkout_session' %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="plan" value="6_month">
+            <button type="submit" class="btn btn-success btn-lg px-4 py-2 rounded-pill">
+              Subscribe
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

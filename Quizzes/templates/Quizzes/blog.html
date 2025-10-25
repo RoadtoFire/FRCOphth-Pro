@@ -5,48 +5,34 @@
 <div class="container mt-5 mb-5">
   <h2 class="text-center mb-4 fw-bold">FRCOphth Insights & Articles</h2>
   <p class="text-center text-muted mb-5">
-    Expert strategies, exam-day tips, and guidance from successful candidates.
+    Expert strategies, exam-day tips and guidance from successful candidates.
   </p>
 
   <div class="row">
+    {% for post in posts %}
     <div class="col-md-4 mb-4">
       <div class="card shadow-sm h-100 border-0">
-        <img src="{% static 'img/blog1.jpg' %}" class="card-img-top" alt="Blog 1">
+        {% if post.thumbnail %}
+          <img src="{{ post.thumbnail.url }}" class="card-img-top" alt="{{ post.title }}">
+        {% else %}
+          <img src="{% static 'img/blog_placeholder.jpg' %}" class="card-img-top" alt="{{ post.title }}">
+        {% endif %}
         <div class="card-body">
-          <h5 class="card-title fw-semibold">Mastering Optics in FRCOphth Part 1</h5>
+          <h5 class="card-title fw-semibold">{{ post.title }}</h5>
           <p class="card-text text-muted">
-            A focused breakdown of the most commonly tested optics questions — and how to simplify them.
+            {{ post.short_description|truncatewords:25 }}
           </p>
-          <a href="#" class="btn btn-outline-primary btn-sm">Read More</a>
+          <a href="{% url 'Quizzes:blog_detail' post.slug %}" class="btn btn-outline-primary btn-sm">
+            Read More →
+          </a>
         </div>
       </div>
     </div>
-
-    <div class="col-md-4 mb-4">
-      <div class="card shadow-sm h-100 border-0">
-        <img src="{% static 'img/blog2.jpg' %}" class="card-img-top" alt="Blog 2">
-        <div class="card-body">
-          <h5 class="card-title fw-semibold">Flag, Revise, Succeed</h5>
-          <p class="card-text text-muted">
-            How to use flagged questions efficiently to boost your weak areas, a strategic revision approach.
-          </p>
-          <a href="#" class="btn btn-outline-primary btn-sm">Read More</a>
-        </div>
-      </div>
+    {% empty %}
+    <div class="col-12 text-center text-muted py-5">
+      <p>No blog posts available yet. Check back soon!</p>
     </div>
-
-    <div class="col-md-4 mb-4">
-      <div class="card shadow-sm h-100 border-0">
-        <img src="{% static 'img/blog3.jpg' %}" class="card-img-top" alt="Blog 3">
-        <div class="card-body">
-          <h5 class="card-title fw-semibold">Exam Day Psychology</h5>
-          <p class="card-text text-muted">
-            Mental preparation tips from ophthalmology trainees who passed on their first attempt.
-          </p>
-          <a href="#" class="btn btn-outline-primary btn-sm">Read More</a>
-        </div>
-      </div>
-    </div>
+    {% endfor %}
   </div>
 </div>
 {% endblock %}

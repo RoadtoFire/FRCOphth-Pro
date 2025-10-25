@@ -1,0 +1,39 @@
+{% extends 'Quizzes/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container my-5" style="max-width: 900px;">
+
+  <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
+    {% if post.thumbnail %}
+      <img src="{{ post.thumbnail.url }}" alt="{{ post.title }}" class="card-img-top">
+    {% endif %}
+
+    <div class="card-body px-4 py-4">
+      <h1 class="fw-bold mb-3">{{ post.title }}</h1>
+      <p class="text-muted mb-4" style="font-size: 0.95rem;">
+        Published on {{ post.created_at|date:"F j, Y" }} by {{ post.author }}
+      </p>
+
+      <hr class="my-4">
+
+      <div class="post-content mb-4" style="line-height: 1.8; font-size: 1.05rem;">
+        {{ post.content|safe }}
+      </div>
+
+      <hr class="my-4">
+
+      <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <a href="{% url 'Quizzes:blog_index' %}" class="btn btn-outline-primary">
+          ← Back to Blog
+        </a>
+
+        <div class="text-muted small">
+          <i class="bi bi-eye"></i> {{ post.created_at|date:"M j, Y" }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
