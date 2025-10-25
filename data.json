@@ -1,0 +1,1798 @@
+[
+{
+  "model": "auth.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$Q2kLZxWPIyRgNJFgbwaU42$s4SXU7D4QG6jpE/4oUlO+MhVlbCTxqVCr9VyhD42nHU=",
+    "last_login": "2025-10-25T12:59:31.733Z",
+    "is_superuser": true,
+    "username": "demo_admin",
+    "first_name": "",
+    "last_name": "",
+    "email": "Jawwad123@gmail.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2025-10-17T18:25:10Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 2,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$XOw1wvHvNETHpy2FFdgaxG$DBSE19MmLCQo2NVfxP05blD/d8kT3/plFWGAVxcMxlU=",
+    "last_login": "2025-10-21T19:22:51.800Z",
+    "is_superuser": false,
+    "username": "demo_user",
+    "first_name": "",
+    "last_name": "",
+    "email": "Hammad@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-10-17T19:38:55Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 1,
+  "fields": {
+    "app_label": "admin",
+    "model": "logentry"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 2,
+  "fields": {
+    "app_label": "auth",
+    "model": "permission"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 3,
+  "fields": {
+    "app_label": "auth",
+    "model": "group"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 4,
+  "fields": {
+    "app_label": "auth",
+    "model": "user"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 5,
+  "fields": {
+    "app_label": "contenttypes",
+    "model": "contenttype"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 6,
+  "fields": {
+    "app_label": "sessions",
+    "model": "session"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 7,
+  "fields": {
+    "app_label": "Quizzes",
+    "model": "quiz"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 8,
+  "fields": {
+    "app_label": "Quizzes",
+    "model": "question"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 9,
+  "fields": {
+    "app_label": "Quizzes",
+    "model": "attempt"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 10,
+  "fields": {
+    "app_label": "Quizzes",
+    "model": "subscription"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 11,
+  "fields": {
+    "app_label": "Quizzes",
+    "model": "category"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 12,
+  "fields": {
+    "app_label": "accounts",
+    "model": "subscription"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 13,
+  "fields": {
+    "app_label": "Quizzes",
+    "model": "blogpost"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "m9zojv602rnxn1mgu1afbo4xjdz6o59p",
+  "fields": {
+    "session_data": ".eJxVjDEOgzAMAP_iuYpISFLC2J03IDu2C20VJAJT1b9XSAztene6N4y4b9O4V1nHmaEHC5dfRpifUg7BDyz3xeSlbOtM5kjMaasZFpbX7Wz_BhPWCXpAajQGUs2dtd42jN6FKFFD5lYVOakm9U0i4dZ17JMNQpZciyLdNcLnCw76OPc:1v9p8s:hy3VS1o5rKNEhDQLPpSDfuvnvQ3PYERtB3XmeI_MsfQ",
+    "expire_date": "2025-10-31T18:25:30.702Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "qfwwiu9kvz7ttpo4qgku909ty46kk9dz",
+  "fields": {
+    "session_data": "eyJxdWl6XzFfcHJvZ3Jlc3MiOnsiY29ycmVjdCI6MCwiYXR0ZW1wdGVkIjoxfX0:1v9pyJ:obe-ofccIukOuc6gwV2EsFSET2h4jz94uhGXby2BThA",
+    "expire_date": "2025-10-31T19:18:39.615Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "8b6ls72k5c5565ulr3qfpgh6jqhwo5v5",
+  "fields": {
+    "session_data": ".eJxVjLsOgzAMAP_FM0IEAoWM3fsNkRPbQB-kTcJS1H-vkFhY7063wWedv1bZdwxj5JTAbOBDjOwzmLoAzJlf78wERv8KsLjmya6Jo50JDCg4MYf-wcsu6I7LGEoflhxnV-5JedhU3gLx83q0p8GEaQID6CrpWifie6W0qgh13XbcSeupEUEaRAbR1eCYmronPaiWnXJ1g8z9pYPfH1y9SQ4:1v9q2C:pnqE6YuXaMTcwUQE27F03l65i30qcPbI8qAWQDQUy3s",
+    "expire_date": "2025-10-31T19:22:40.364Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "4iwlztb1b4dnyss5rqnvp970yvpsi5of",
+  "fields": {
+    "session_data": "eyJxdWl6XzFfcHJvZ3Jlc3MiOnsiY29ycmVjdCI6MSwiYXR0ZW1wdGVkIjoyfX0:1v9q5I:zyUVPUjbBlG0rnkTLJKYoGIg3uF6lQTVUH0Kuc59yD0",
+    "expire_date": "2025-10-31T19:25:52.619Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "ppwu6fars08oflbj362q40ku7n9qyac1",
+  "fields": {
+    "session_data": ".eJxVjDEOgzAMAP_iuYoSmoDN2J03oMR2Cm0VJAJT1b9XSAztene6N4xx36Zxr7qOs0APDVx-WYr81HIIecRyXwwvZVvnZI7EnLaaYRF93c72bzDFOkEPyOSzaGLV4JE4NI7Ix-CdELbXiJ3XnKTjzMqUxXXaUkBpyNqQLMLnCwGxOGI:1vAxP4:R1Bx-lsFH912U6q70ehUKtHeTB1o8QC7ThPTxEDitdY",
+    "expire_date": "2025-11-03T21:26:54.806Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "ihjjldaqjs323qhkc3yy0d359nye505k",
+  "fields": {
+    "session_data": ".eJxVzMtqwzAQheF3mbUwHlvj2lp23ycoRYykUew2sRJdNg159xAIpN2e_-NcwXKrq21Fst0CGEBQfzfH_kf2RwjfvB9S59Ne8-a6B-metXQfKcjx_Wn_HaxcVjDAro8TuRj9jKixD6wHmmSK5MMYI4clxiXqfnESxmEOekESh24YWWR-m0DBpW2_FtFemjQB80moaFA0KtKK6OsFzjkdspQC5go-5Sy-gukVcK1yOlcJYFBBTZWPYOh2uwP4QVVl:1vAbxM:GVhI-0F4tw23dTF0EIwqggCZYBtxjA0KwPCpdv2V-6M",
+    "expire_date": "2025-11-02T22:32:52.985Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "0fuhbismw0x1m8i2cdrl0w1q40sib5fz",
+  "fields": {
+    "session_data": ".eJyNUsGS2zYM_RWUp90ZxmN7LXntY9Nre-qt2_FAJGShpkgFIL11MvvvHcpO6k166EUzAh4eHh_eF3PAkodDUZIDe7M3K2Pvax26E8Xa8H9hPKaFSzELd4sKWdy6uvg1eQo_37DvCAbUwezNc7ttdku_7ttVs2s2627zvHZ-u-27Jfa7FTXPm6an9dPOr3fr3VOz66nDbtniptmuNls01iAfPhX-fPhUqJDZ_9G0ttnadmPbtW2fbLuy7dI2z7ZtbLP78198L1Ql_G88Rn0lUbP_Ypq2fpUCuUzVhI_GGtaDSyLkstlnKWRNT-SrFWZvXsp6u2zg4xXwk7GG_p4CRsycotmb3wcCcjl5khFYIQ8EqWSSMWmGY60GvJBAHjDDkc-kIKwEOc1YRzELBogk51QU9KKZRnjoBDkCRg86ccQALol_tDCR8DTQjyMWaOKqgtVe5yhqkgskOWLUBfxShOMRIhUpYZYPD69EJ4WnD5tHO6upTQwwBcwEfQpeq84-yXjfzqUjC68DuwE8nSmkSYHj7UX_qXwB74zCoOk7M7RIj-4O86AnjhYGZLEQkYNaGHEcUS5wDBi9Ps5bbqKckGZwFIIu4LcfahY0jZR5JAWHIZCfxb6YPhXJw92l7IsBFAKdyDEG_kz-m6gPnoTP5K-c15uOfJRq11ejvrsQVdkUMCZ3yfXHCUZOPVZy0CzF5SK1UR-DXqh6NpIvIeDVtpH0aknlVxiLuhKSnihQxmDBoXhOZ6xllCtRkXSkyLnumPOh88UCzc-m6O8Za-mImiVxzKR5PlsWdNmCkE4smGuUviZtVqqaHGMm_y1hN9drPMBTTy4rPAQ-VS85InTcs8frdKToaBowXB7rihIy9JJG4OjSOAXK79IGLiQtQvOswwgdgZAvjjx0Fxgxk1TNfQrsAB170DJNgUaKec76wry9vf0DZ-bL9Q:1vChzS:KuVX1BEy6APUs55LAJTHIueqCu1IXORu6ezrbrvzxVc",
+    "expire_date": "2025-11-08T17:23:42.290Z"
+  }
+},
+{
+  "model": "Quizzes.category",
+  "pk": 1,
+  "fields": {
+    "name": "Optics",
+    "display_order": 1
+  }
+},
+{
+  "model": "Quizzes.category",
+  "pk": 2,
+  "fields": {
+    "name": "Anatomy",
+    "display_order": 2
+  }
+},
+{
+  "model": "Quizzes.category",
+  "pk": 3,
+  "fields": {
+    "name": "Epidemiology and Biostatistics",
+    "display_order": 3
+  }
+},
+{
+  "model": "Quizzes.category",
+  "pk": 4,
+  "fields": {
+    "name": "Instruments and Investigations",
+    "display_order": 4
+  }
+},
+{
+  "model": "Quizzes.category",
+  "pk": 5,
+  "fields": {
+    "name": "Pathology",
+    "display_order": 5
+  }
+},
+{
+  "model": "Quizzes.category",
+  "pk": 6,
+  "fields": {
+    "name": "Immunology",
+    "display_order": 6
+  }
+},
+{
+  "model": "Quizzes.category",
+  "pk": 7,
+  "fields": {
+    "name": "Microbiology",
+    "display_order": 7
+  }
+},
+{
+  "model": "Quizzes.category",
+  "pk": 8,
+  "fields": {
+    "name": "Embryology",
+    "display_order": 8
+  }
+},
+{
+  "model": "Quizzes.category",
+  "pk": 9,
+  "fields": {
+    "name": "Pharmacology",
+    "display_order": 9
+  }
+},
+{
+  "model": "Quizzes.category",
+  "pk": 10,
+  "fields": {
+    "name": "Biochemistry",
+    "display_order": 10
+  }
+},
+{
+  "model": "Quizzes.category",
+  "pk": 11,
+  "fields": {
+    "name": "Cell Biology",
+    "display_order": 11
+  }
+},
+{
+  "model": "Quizzes.category",
+  "pk": 12,
+  "fields": {
+    "name": "Physiology",
+    "display_order": 12
+  }
+},
+{
+  "model": "Quizzes.category",
+  "pk": 13,
+  "fields": {
+    "name": "Genetics",
+    "display_order": 13
+  }
+},
+{
+  "model": "Quizzes.quiz",
+  "pk": 1,
+  "fields": {
+    "title": "Optics",
+    "slug": "optics-quiz",
+    "description": "Master the principles of geometrical and visual optics, refraction, lenses, and image formation relevant to ophthalmic instruments and refractive errors.",
+    "time_limit": null,
+    "image": "quiz_images/optics.jpg",
+    "created_at": "2025-10-17T18:37:09.525Z",
+    "display_order": 0
+  }
+},
+{
+  "model": "Quizzes.quiz",
+  "pk": 5,
+  "fields": {
+    "title": "Anatomy",
+    "slug": "anatomy",
+    "description": "Review ocular and orbital anatomy, extraocular muscles, cranial nerves, and key structural relationships essential for ophthalmic surgery and examination.",
+    "time_limit": null,
+    "image": "quiz_images/Anatomy_yThlY4z.jpg",
+    "created_at": "2025-10-18T17:20:20.481Z",
+    "display_order": 1
+  }
+},
+{
+  "model": "Quizzes.quiz",
+  "pk": 3,
+  "fields": {
+    "title": "Epidemiology and Biostatistics",
+    "slug": "epidemiology-and-biostatistics",
+    "description": "Understand study design, data interpretation, and statistical methods applied in ophthalmic research and clinical trials.",
+    "time_limit": null,
+    "image": "quiz_images/Epidemiology-and-Biostatistics_kF7uapp.avif",
+    "created_at": "2025-10-18T17:09:13.231Z",
+    "display_order": 2
+  }
+},
+{
+  "model": "Quizzes.quiz",
+  "pk": 2,
+  "fields": {
+    "title": "Instruments and Investigations",
+    "slug": "instruments-and-investigations",
+    "description": "Learn how ophthalmic instruments function, from slit lamps to OCT and fundus imaging, and interpret key diagnostic findings.",
+    "time_limit": null,
+    "image": "quiz_images/Instruments-and-investigations_YP1SDsK.jpg",
+    "created_at": "2025-10-18T17:02:19.289Z",
+    "display_order": 3
+  }
+},
+{
+  "model": "Quizzes.quiz",
+  "pk": 8,
+  "fields": {
+    "title": "Pathology",
+    "slug": "pathology",
+    "description": "Explore the microscopic and macroscopic pathology of ocular tissues, including inflammatory, degenerative, and neoplastic eye diseases",
+    "time_limit": null,
+    "image": "quiz_images/Pathology_nrWs7Fq.jpg",
+    "created_at": "2025-10-18T17:36:43.332Z",
+    "display_order": 4
+  }
+},
+{
+  "model": "Quizzes.quiz",
+  "pk": 9,
+  "fields": {
+    "title": "Immunology",
+    "slug": "immunology",
+    "description": "Focus on ocular immune privilege, hypersensitivity reactions, and autoimmune mechanisms involved in eye disease.",
+    "time_limit": null,
+    "image": "quiz_images/Immunology_7GAEASX.avif",
+    "created_at": "2025-10-18T17:42:04.551Z",
+    "display_order": 5
+  }
+},
+{
+  "model": "Quizzes.quiz",
+  "pk": 10,
+  "fields": {
+    "title": "Microbiology",
+    "slug": "microbiology",
+    "description": "Study the pathogens responsible for ocular infections and understand sterilisation and antimicrobial principles in ophthalmology.",
+    "time_limit": null,
+    "image": "quiz_images/Microbiology_GxFEHHv.avif",
+    "created_at": "2025-10-18T17:47:22.450Z",
+    "display_order": 6
+  }
+},
+{
+  "model": "Quizzes.quiz",
+  "pk": 12,
+  "fields": {
+    "title": "Embryology",
+    "slug": "embryology",
+    "description": "Trace the embryological development of the eye and orbit, highlighting anomalies that lead to congenital ophthalmic disorders.",
+    "time_limit": null,
+    "image": "quiz_images/embryology_lRvymgB.jpg",
+    "created_at": "2025-10-21T17:39:07.748Z",
+    "display_order": 7
+  }
+},
+{
+  "model": "Quizzes.quiz",
+  "pk": 11,
+  "fields": {
+    "title": "Pharmacology",
+    "slug": "pharmacology",
+    "description": "Learn the pharmacodynamics and pharmacokinetics of ophthalmic drugs, including mydriatics, miotics, and antiglaucoma agents.",
+    "time_limit": null,
+    "image": "quiz_images/Pharmacology_xqPlMrG.avif",
+    "created_at": "2025-10-18T17:52:25.285Z",
+    "display_order": 8
+  }
+},
+{
+  "model": "Quizzes.quiz",
+  "pk": 13,
+  "fields": {
+    "title": "Biochemistry",
+    "slug": "biochemistry",
+    "description": "Understand cellular mechanisms underlying ocular function, wound healing, and degenerative processes within the eye.",
+    "time_limit": null,
+    "image": "quiz_images/Biochemistry_2XutnhE.jpg",
+    "created_at": "2025-10-21T17:44:55.349Z",
+    "display_order": 9
+  }
+},
+{
+  "model": "Quizzes.quiz",
+  "pk": 7,
+  "fields": {
+    "title": "Cell Biology",
+    "slug": "cell-biology",
+    "description": "Learn the fundamentals of cell structure, signaling, organelles, and molecular mechanisms of life.",
+    "time_limit": null,
+    "image": "quiz_images/Cell-Biology_JzsmpYp.jpg",
+    "created_at": "2025-10-18T17:31:16.273Z",
+    "display_order": 10
+  }
+},
+{
+  "model": "Quizzes.quiz",
+  "pk": 6,
+  "fields": {
+    "title": "Physiology",
+    "slug": "physiology",
+    "description": "Study the physiology of vision, accommodation, intraocular pressure regulation, and tear film dynamics.",
+    "time_limit": null,
+    "image": "quiz_images/Physiology_Syadan0.webp",
+    "created_at": "2025-10-18T17:25:33.814Z",
+    "display_order": 11
+  }
+},
+{
+  "model": "Quizzes.quiz",
+  "pk": 4,
+  "fields": {
+    "title": "Genetics",
+    "slug": "genetics",
+    "description": "Examine the genetic basis of ocular diseases, inheritance patterns, and recent advances in molecular ophthalmology.",
+    "time_limit": null,
+    "image": "quiz_images/Genetics_IOKbViz.jpg",
+    "created_at": "2025-10-18T17:14:24.148Z",
+    "display_order": 12
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 1,
+  "fields": {
+    "quiz": 1,
+    "category": null,
+    "text": "A patient presents with myopia (nearsightedness). Which type of lens is used to correct this refractive error?",
+    "option_a": "Concave lens (diverging)",
+    "option_b": "Cylindrical lens",
+    "option_c": "Bifocal lens",
+    "option_d": "Convex lens (converging)",
+    "option_e": "Trifocal lens",
+    "correct_answer": "A",
+    "explanation": "Myopia occurs when light rays converge anterior to the retina, causing distant objects to appear blurry. A concave (diverging) lens spreads light rays outward before they enter the eye, moving the focal point posteriorly onto the retina and correcting the refractive error.",
+    "order": 1
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 2,
+  "fields": {
+    "quiz": 1,
+    "category": null,
+    "text": "A patient with astigmatism requires a specialized lens to correct vision at different meridians of the cornea. What is this lens called?",
+    "option_a": "Spherical lens",
+    "option_b": "Prism lens",
+    "option_c": "Toric lens",
+    "option_d": "Meniscus lens",
+    "option_e": "Achromatic lens",
+    "correct_answer": "C",
+    "explanation": "Astigmatism results from unequal curvature of the cornea in different meridians. A toric lens has two different radii of curvature in perpendicular meridians, allowing correction of refractive error at all meridians and providing clear vision across the visual field.",
+    "order": 2
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 3,
+  "fields": {
+    "quiz": 1,
+    "category": null,
+    "text": "Which principle does Optical Coherence Tomography (OCT) use to obtain high-resolution cross-sectional images of the retina?",
+    "option_a": "X-ray absorption",
+    "option_b": "Ultrasound reflection",
+    "option_c": "Interferometry using near-infrared light",
+    "option_d": "Magnetic resonance",
+    "option_e": "Radioactive isotope uptake",
+    "correct_answer": "C",
+    "explanation": "OCT uses low-coherence interferometry with near-infrared light to measure depth-resolved light scattering from retinal tissue. This allows non-invasive, high-resolution cross-sectional imaging of the retina and optic nerve, making it invaluable for diagnosing retinal diseases like macular degeneration and diabetic retinopathy.",
+    "order": 3
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 4,
+  "fields": {
+    "quiz": 1,
+    "category": null,
+    "text": "Question: A 52-year-old patient complains of difficulty reading small print while distance vision remains normal. This age-related condition is caused by decreased elasticity of which structure?",
+    "option_a": "Cornea",
+    "option_b": "Aqueous humor",
+    "option_c": "Crystalline lens",
+    "option_d": "Vitreous humor",
+    "option_e": "Retina",
+    "correct_answer": "C",
+    "explanation": "Presbyopia occurs due to age-related sclerosis and loss of elasticity of the crystalline lens. This reduces the lens's ability to accommodate (change shape) for near vision. The ciliary muscles cannot sufficiently change the lens curvature needed for clear focus at near distances, resulting in the need for reading glasses.",
+    "order": 4
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 5,
+  "fields": {
+    "quiz": 1,
+    "category": null,
+    "text": "Light passes from the cornea (refractive index ≈ 1.38) into the aqueous humor (refractive index ≈ 1.33). At an incident angle of 40°, what will happen to the light ray at this interface?",
+    "option_a": "The light will bend away from the normal",
+    "option_b": "The light will bend toward the normal",
+    "option_c": "The light will pass straight through without bending",
+    "option_d": "The light will be completely reflected",
+    "option_e": "The light will diffuse equally in all directions",
+    "correct_answer": "A",
+    "explanation": "According to Snell's Law (n₁ sin θ₁ = n₂ sin θ₂), when light travels from a denser medium (cornea, n=1.38) to a less dense medium (aqueous humor, n=1.33), the light bends away from the normal. This bending reduces the converging power at the cornea-aqueous humor interface, which is clinically important in understanding corneal optics and refractive surgery outcomes.",
+    "order": 5
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 6,
+  "fields": {
+    "quiz": 2,
+    "category": null,
+    "text": "During a 12-lead ECG, which lead records the electrical activity of the lateral wall of the left ventricle?",
+    "option_a": "Lead I",
+    "option_b": "Lead II",
+    "option_c": "Lead aVF",
+    "option_d": "Lead V5",
+    "option_e": "Lead V1",
+    "correct_answer": "D",
+    "explanation": "The precordial leads (V1-V6) record the electrical activity across the chest wall. Specifically, leads V5 and V6 represent the lateral wall of the left ventricle. Lead V5 is positioned at the anterior axillary line at the fifth intercostal space and captures lateral wall activity. Myocardial infarction or ischemia of the lateral wall produces characteristic ST-segment changes in these leads.",
+    "order": 0
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 7,
+  "fields": {
+    "quiz": 2,
+    "category": null,
+    "text": "A spirometer is used to measure various lung volumes. Which of the following represents the maximum amount of air a patient can exhale after maximum inspiration?",
+    "option_a": "Tidal volume",
+    "option_b": "Inspiratory reserve volume",
+    "option_c": "Vital capacity",
+    "option_d": "Residual volume",
+    "option_e": "Functional residual capacity",
+    "correct_answer": "C",
+    "explanation": "Vital capacity is the maximum volume of air that can be exhaled after a maximum inspiration. It equals the sum of tidal volume, inspiratory reserve volume, and expiratory reserve volume (approximately 4.8 L in males and 3.1 L in females). Vital capacity is an important indicator of respiratory muscle strength and lung function. Residual volume cannot be measured by spirometry as it remains in the lungs after maximal expiration.",
+    "order": 1
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 8,
+  "fields": {
+    "quiz": 2,
+    "category": null,
+    "text": "Which frequency range of ultrasound is most commonly used in clinical medical imaging?",
+    "option_a": "1-2 MHz",
+    "option_b": "2-15 MHz",
+    "option_c": "15-30 MHz",
+    "option_d": "30-50 MHz",
+    "option_e": "50-100 MHz",
+    "correct_answer": "B",
+    "explanation": "Clinical ultrasound typically uses frequencies between 2-15 MHz. Lower frequencies (2-5 MHz) penetrate deeper tissues and are used for abdominal and cardiac imaging, while higher frequencies (7-15 MHz) provide better resolution but limited penetration, used for superficial structures like the thyroid, carotid arteries, and musculoskeletal tissues. This frequency range balances tissue penetration with image resolution.",
+    "order": 2
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 9,
+  "fields": {
+    "quiz": 2,
+    "category": null,
+    "text": "In computed tomography (CT), the Hounsfield unit (HU) scale is calibrated such that water has a value of 0 HU and air has a value of -1000 HU. What is the approximate Hounsfield unit value for bone?",
+    "option_a": "+100 to +300 HU",
+    "option_b": "+300 to +500 HU",
+    "option_c": "+500 to +1000 HU",
+    "option_d": "+1000 to +2000 HU",
+    "option_e": "+2000 to +3000 HU",
+    "correct_answer": "D",
+    "explanation": "The Hounsfield scale is a standardized radiodensity scale where water = 0 HU and air = -1000 HU. Bone typically ranges from +1000 to +2000 HU depending on bone density (cortical bone is denser than trabecular bone). Different tissue types have characteristic HU ranges: fat (-100 to -50 HU), soft tissue (30-40 HU), and dense structures have higher values. This allows radiologists to identify tissue types on CT imaging.",
+    "order": 3
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 10,
+  "fields": {
+    "quiz": 2,
+    "category": null,
+    "text": "An automated oscillometric blood pressure cuff measures arterial pressure by detecting oscillations in cuff pressure during deflation. At which point are the oscillations in the cuff at their maximum amplitude?",
+    "option_a": "When systolic pressure is first reached",
+    "option_b": "When diastolic pressure is first reached",
+    "option_c": "At the mean arterial pressure (MAP)",
+    "option_d": "When the cuff pressure exceeds systolic pressure",
+    "option_e": "When the cuff pressure falls below diastolic pressure",
+    "correct_answer": "C",
+    "explanation": "In oscillometric blood pressure measurement, oscillations begin when cuff pressure drops below systolic pressure and continue until it falls below diastolic pressure. The maximum oscillation amplitude occurs approximately at the mean arterial pressure (MAP). Modern automated devices use sophisticated algorithms to detect these oscillation patterns and calculate systolic, mean, and diastolic pressures. This method is less dependent on observer technique compared to auscultatory methods but can be affected by patient movement and irregular heart rhythms.",
+    "order": 4
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 11,
+  "fields": {
+    "quiz": 3,
+    "category": null,
+    "text": "A new screening test for diabetes has a sensitivity of 85% and a specificity of 90%. What does a sensitivity of 85% indicate?",
+    "option_a": "The test correctly identifies 85% of people without diabetes",
+    "option_b": "The test correctly identifies 85% of people with diabetes",
+    "option_c": "The test has an 85% probability of being positive in the general population",
+    "option_d": "The test produces 85% true positives and 15% false negatives combined",
+    "option_e": "The test is 85% accurate in all patients",
+    "correct_answer": "B",
+    "explanation": "Sensitivity measures the ability of a test to correctly identify people with the disease (true positive rate). A sensitivity of 85% means that of all patients who actually have diabetes, the test will correctly identify 85% of them. The remaining 15% would be false negatives (people with diabetes whom the test misses). High sensitivity is crucial for screening tests to avoid missing disease cases.",
+    "order": 0
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 12,
+  "fields": {
+    "quiz": 3,
+    "category": null,
+    "text": "In a cohort study, researchers found that smokers have a relative risk (RR) of 4.5 for developing lung cancer compared to non-smokers. What does this mean?",
+    "option_a": "Smokers are 4.5 times more likely to have lung cancer than non-smokers",
+    "option_b": "Smokers have a 450% absolute risk increase",
+    "option_c": "The odds of lung cancer in smokers is 4.5 to 1",
+    "option_d": "4.5% of smokers will develop lung cancer",
+    "option_e": "Non-smokers have a 1/4.5 chance of lung cancer",
+    "correct_answer": "A",
+    "explanation": "Relative risk (RR) is the ratio of the probability of disease in the exposed group to the probability in the unexposed group. An RR of 4.5 means smokers are 4.5 times more likely to develop lung cancer compared to non-smokers. This is a measure of association in cohort studies. RR > 1 indicates increased risk, RR = 1 indicates no association, and RR < 1 indicates reduced risk.",
+    "order": 1
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 13,
+  "fields": {
+    "quiz": 3,
+    "category": null,
+    "text": "A diagnostic test for tuberculosis has a positive predictive value (PPV) of 75% in a certain population. Which statement best explains what this means?",
+    "option_a": "75% of people who test positive actually have tuberculosis",
+    "option_b": "75% of people who test negative do not have tuberculosis",
+    "option_c": "The test correctly identifies 75% of all tuberculosis cases",
+    "option_d": "75% of tuberculosis cases will test positive",
+    "option_e": "The test is 75% accurate in the overall population",
+    "correct_answer": "A",
+    "explanation": "Positive predictive value (PPV) is the probability that a person with a positive test result actually has the disease. A PPV of 75% means that among all patients who test positive, 75% truly have tuberculosis while 25% are false positives. PPV depends not only on the test's sensitivity and specificity, but also on the disease prevalence in the population—higher prevalence increases PPV. This is clinically crucial for interpreting positive test results.",
+    "order": 2
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 14,
+  "fields": {
+    "quiz": 3,
+    "category": null,
+    "text": "During 2024, a city has a population of 1 million. At the beginning of the year, 500 people had hypertension. During the year, 5,000 new cases of hypertension were diagnosed. What is the incidence rate of hypertension?",
+    "option_a": "5 per 1,000 population per year",
+    "option_b": "5.5 per 1,000 population per year",
+    "option_c": "0.5 per 1,000 population per year",
+    "option_d": "50 per 1,000 population per year",
+    "option_e": "500 per 1,000 population per year",
+    "correct_answer": "A",
+    "explanation": "Incidence is the number of new cases of disease occurring in a population during a specific time period, expressed as a rate. In this case, there were 5,000 new cases in a population of 1 million over one year, giving an incidence rate of 5,000/1,000,000 = 5 per 1,000 per year (or 0.005 or 0.5%). Incidence measures risk and is useful for studying disease etiology, while prevalence (the 500 existing cases at year start) measures the burden of disease in the population at a specific point in time.",
+    "order": 3
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 15,
+  "fields": {
+    "quiz": 3,
+    "category": null,
+    "text": "A randomized controlled trial comparing a new antihypertensive drug with a placebo reports a p-value of 0.03 for the primary outcome. Assuming an alpha level of 0.05, which interpretation is correct?",
+    "option_a": "There is a 3% probability that the new drug is effective",
+    "option_b": "There is a 97% probability that the results are due to chance",
+    "option_c": "If the null hypothesis were true, there would be a 3% probability of observing results this extreme or more extreme by chance alone",
+    "option_d": "The new drug is definitely effective in 97% of patients",
+    "option_e": "The results are clinically significant with no possibility of error",
+    "correct_answer": "C",
+    "explanation": "A p-value represents the probability of observing the study results (or more extreme results) if the null hypothesis is true, given random chance alone. A p-value of 0.03 means if there were truly no difference between the drug and placebo, there would be only a 3% probability of observing results this extreme by chance. Since 0.03 < 0.05, the result is considered statistically significant and the null hypothesis is rejected. However, this does not mean the drug is definitely effective or that the probability of the drug working is 97%—it only reflects the strength of evidence against the null hypothesis.",
+    "order": 4
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 16,
+  "fields": {
+    "quiz": 4,
+    "category": null,
+    "text": "A patient with familial hypercholesterolemia (an autosomal dominant disorder) has one affected parent. What is the probability that each of their children will inherit the disorder?",
+    "option_a": "25%",
+    "option_b": "50%",
+    "option_c": "75%",
+    "option_d": "100%",
+    "option_e": "0%",
+    "correct_answer": "B",
+    "explanation": "In autosomal dominant inheritance, an affected individual with a heterozygous genotype (Aa) has a 50% chance of passing the dominant allele to each offspring. Since one parent is affected (Aa) and the other is unaffected (aa), each child has a 50% probability of inheriting the dominant disease allele and manifesting the disorder. If both parents were affected, the probability would increase to 75% for heterozygous × heterozygous crosses, or 100% if one parent were homozygous dominant.",
+    "order": 0
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 17,
+  "fields": {
+    "quiz": 4,
+    "category": null,
+    "text": "A woman is a carrier of hemophilia A (an X-linked recessive disorder). She has children with an unaffected man. What percentage of their sons will have hemophilia A?",
+    "option_a": "0%",
+    "option_b": "25%",
+    "option_c": "50%",
+    "option_d": "75%",
+    "option_e": "100%",
+    "correct_answer": "C",
+    "explanation": "Hemophilia A is an X-linked recessive disorder. The carrier mother has the genotype X^H X^h (one normal allele and one affected allele), while the unaffected father has X^H Y. For sons: 50% will inherit X^H Y (unaffected) and 50% will inherit X^h Y (affected with hemophilia). Daughters have a 50% chance of being carriers and 50% of being unaffected. Males with X-linked recessive disorders are more frequently affected because they have only one X chromosome.",
+    "order": 1
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 18,
+  "fields": {
+    "quiz": 4,
+    "category": null,
+    "text": "In a population of 10,000 individuals, the frequency of the recessive allele for cystic fibrosis is 0.02. Assuming Hardy-Weinberg equilibrium, what is the expected frequency of carriers (heterozygotes) in the population?",
+    "option_a": "0.0004",
+    "option_b": "0.04",
+    "option_c": "0.039",
+    "option_d": "0.0396",
+    "option_e": "0.98",
+    "correct_answer": "D",
+    "explanation": "According to Hardy-Weinberg equilibrium, p² + 2pq + q² = 1, where p is the dominant allele frequency and q is the recessive allele frequency. Given q = 0.02, then p = 0.98. The frequency of carriers (heterozygotes) is 2pq = 2(0.98)(0.02) = 0.0392 ≈ 0.0396. This means approximately 3.96% of the population are carriers. The frequency of affected individuals (q²) would be (0.02)² = 0.0004 or 0.04%.",
+    "order": 2
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 19,
+  "fields": {
+    "quiz": 4,
+    "category": null,
+    "text": "A pregnant woman undergoes prenatal screening and receives a high-risk result for Down syndrome (Trisomy 21). Which chromosomal abnormality characterizes this condition?",
+    "option_a": "Monosomy 21",
+    "option_b": "Trisomy 18",
+    "option_c": "Trisomy 21",
+    "option_d": "Tetrasomy 21",
+    "option_e": "Deletion of chromosome 21",
+    "correct_answer": "C",
+    "explanation": "Down syndrome (Trisomy 21) is characterized by the presence of three copies of chromosome 21 instead of the normal two copies. This results from nondisjunction during meiosis, most commonly in maternal meiosis I. The extra genetic material causes intellectual disability, distinctive facial features, cardiac defects, and other clinical manifestations. Maternal age is a significant risk factor, with risk increasing substantially after age 35. Prenatal screening includes maternal serum markers and ultrasound findings.",
+    "order": 3
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 20,
+  "fields": {
+    "quiz": 4,
+    "category": null,
+    "text": "A genetic mutation in a gene coding for a protein results in the codon changing from CAG (glutamine) to UAG (stop codon). What type of mutation is this?",
+    "option_a": "Silent mutation",
+    "option_b": "Missense mutation",
+    "option_c": "Nonsense mutation",
+    "option_d": "Frameshift mutation",
+    "option_e": "Insertion mutation",
+    "correct_answer": "C",
+    "explanation": "A nonsense mutation occurs when a single nucleotide change converts a normal codon into a stop codon (UAA, UAG, or UGA), resulting in premature termination of translation and a truncated, usually nonfunctional protein. In this case, CAG (glutamine) changes to UAG (stop), causing premature protein synthesis termination. This is different from a missense mutation (codon change resulting in a different amino acid), silent mutation (no change in amino acid), or frameshift mutation (insertion/deletion causing a shift in reading frame). Nonsense mutations typically have severe clinical consequences.",
+    "order": 4
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 21,
+  "fields": {
+    "quiz": 5,
+    "category": null,
+    "text": "During a lumbar puncture procedure, the needle is typically inserted between the spinous processes of the L3 and L4 vertebrae. At what vertebral level does the spinal cord normally terminate in adults?",
+    "option_a": "L1 vertebra",
+    "option_b": "L2 vertebra",
+    "option_c": "L3 vertebra",
+    "option_d": "L4 vertebra",
+    "option_e": "S1 vertebra",
+    "correct_answer": "B",
+    "explanation": "The spinal cord (medulla spinalis) normally terminates at the level of the L2 vertebra in adults, forming a tapered structure called the conus medullaris. Below this point lies the cauda equina (a bundle of nerve roots). The lumbar puncture is performed at L3-L4 or L4-L5 to avoid damaging the spinal cord. In infants, the spinal cord extends lower (approximately L3), but ascends to the adult level by age 1 year. This anatomical landmark is critical for safe cerebrospinal fluid collection.",
+    "order": 0
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 22,
+  "fields": {
+    "quiz": 5,
+    "category": null,
+    "text": "A patient suffers a stroke affecting the left middle cerebral artery (MCA) distribution. Which of the following would most likely be spared?",
+    "option_a": "Motor cortex of the right face and hand",
+    "option_b": "Visual cortex of the right occipital lobe",
+    "option_c": "Broca's area (language production)",
+    "option_d": "Primary sensory cortex of the right upper extremity",
+    "option_e": "Caudate nucleus",
+    "correct_answer": "B",
+    "explanation": "The middle cerebral artery supplies the lateral cerebral hemisphere, including motor and sensory cortices, Broca's and Wernicke's language areas, and deep structures like the caudate nucleus. The visual cortex of the occipital lobe is supplied by the posterior cerebral artery, not the MCA. Therefore, an MCA stroke would spare the visual cortex. An MCA stroke would typically produce contralateral motor and sensory deficits (particularly affecting the face and upper extremity) and, if in the dominant hemisphere, language disturbances.",
+    "order": 1
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 23,
+  "fields": {
+    "quiz": 5,
+    "category": null,
+    "text": "During cardiac auscultation, the mitral valve closure is best heard at which anatomical location on the chest wall?",
+    "option_a": "Left sternal border at the 2nd intercostal space",
+    "option_b": "Left midclavicular line at the 5th intercostal space",
+    "option_c": "Right sternal border at the 2nd intercostal space",
+    "option_d": "Right midaxillary line at the 5th intercostal space",
+    "option_e": "Xiphoid process",
+    "correct_answer": "B",
+    "explanation": "The mitral (bicuspid) valve, located at the left atrioventricular orifice, produces the first heart sound (S1) when it closes. This sound is best heard at the apex of the heart, which corresponds to the left midclavicular line at the 5th intercostal space. This location is also called the mitral area or apex beat. The aortic valve closure is best heard at the right sternal border at the 2nd intercostal space, while the pulmonary valve is heard at the left sternal border at the 2nd intercostal space.",
+    "order": 2
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 24,
+  "fields": {
+    "quiz": 5,
+    "category": null,
+    "text": "The recurrent laryngeal nerve has a different course on the right and left sides. On which side does it have a longer course before reaching the larynx?",
+    "option_a": "Right side (shorter course)",
+    "option_b": "Left side (longer course)",
+    "option_c": "Both sides have equal length",
+    "option_d": "The course varies depending on individual anatomy",
+    "option_e": "Neither side has a fixed anatomical course",
+    "correct_answer": "B",
+    "explanation": "The recurrent laryngeal nerve on the left side has a longer course than the right side. On the left, it loops under the aortic arch before ascending to the larynx, whereas on the right, it loops under the subclavian artery. This anatomical difference is clinically significant because the longer left recurrent laryngeal nerve is more susceptible to injury from aortic pathology (aneurysm, dissection) or cardiac enlargement. Thyroid surgery must carefully identify and preserve both recurrent laryngeal nerves to prevent vocal cord paralysis and voice changes.",
+    "order": 3
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 25,
+  "fields": {
+    "quiz": 5,
+    "category": null,
+    "text": "An abscess develops in the infratemporal fossa. Which of the following structures would NOT be at risk of direct involvement by this infection?",
+    "option_a": "Mandibular nerve (CN V3)",
+    "option_b": "Maxillary artery",
+    "option_c": "Temporal lobe of the brain",
+    "option_d": "Styloid process",
+    "option_e": "Medial pterygoid muscle",
+    "correct_answer": "C",
+    "explanation": "The infratemporal fossa is a space below the middle cranial fossa, bounded superiorly by the temporal bone and base of skull. It contains the mandibular nerve (CN V3), branches of the maxillary artery, the styloid process, and muscles like the medial pterygoid. While an infection in the infratemporal fossa is in close proximity to the middle cranial fossa and could potentially spread intracranially, the temporal lobe itself is not directly contained within the infratemporal fossa—it lies superior to it within the cranial vault. However, ascending infection could potentially affect intracranial structures. The temporal lobe would be at risk only through potential complications, not direct anatomical involvement.",
+    "order": 4
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 26,
+  "fields": {
+    "quiz": 6,
+    "category": null,
+    "text": "A neuron at rest has a resting membrane potential of approximately -70 mV. During the repolarization phase of an action potential, which ionic movement is primarily responsible for returning the membrane potential toward the resting value?",
+    "option_a": "Influx of sodium ions (Na+)",
+    "option_b": "Efflux of potassium ions (K+)",
+    "option_c": "Influx of calcium ions (Ca2+)",
+    "option_d": "Efflux of chloride ions (Cl-)",
+    "option_e": "Influx of magnesium ions (Mg2+)",
+    "correct_answer": "B",
+    "explanation": "During repolarization, voltage-gated potassium channels open while sodium channels close. The efflux (outward movement) of potassium ions through K+ channels returns the membrane potential from the depolarized state (+30 mV at peak) back toward the resting potential of -70 mV. Potassium is more permeable during repolarization due to delayed closing of K+ channels. This hyperpolarizes the membrane initially (undershoot phase) before K+ channels close and the resting potential is restored. This sequence is essential for neuronal excitability and action potential propagation.",
+    "order": 0
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 27,
+  "fields": {
+    "quiz": 6,
+    "category": null,
+    "text": "A patient with metabolic acidosis arrives at the hospital. How will the decreased pH affect the oxygen-hemoglobin dissociation curve and oxygen delivery to tissues?",
+    "option_a": "The curve shifts left, reducing oxygen release to tissues",
+    "option_b": "The curve shifts right, increasing oxygen release to tissues",
+    "option_c": "The curve remains unchanged regardless of pH",
+    "option_d": "The curve shifts left, increasing oxygen release to tissues",
+    "option_e": "The curve shifts right, reducing oxygen release to tissues",
+    "correct_answer": "B",
+    "explanation": "Decreased pH (acidosis) causes a rightward shift of the oxygen-hemoglobin dissociation curve, known as the Bohr effect. This shift decreases hemoglobin's affinity for oxygen, causing hemoglobin to release oxygen more readily at tissue level. This is physiologically beneficial because metabolically active tissues produce lactic acid and CO2, lowering local pH and promoting oxygen unloading where it is needed most. Conversely, respiratory alkalosis (increased pH) shifts the curve left, increasing hemoglobin's oxygen affinity and reducing oxygen delivery. Other factors causing rightward shift include increased temperature and increased 2,3-DPG levels.",
+    "order": 1
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 28,
+  "fields": {
+    "quiz": 6,
+    "category": null,
+    "text": "A patient's glomerular filtration rate (GFR) is determined by the balance of pressures in the glomerulus. If the afferent arteriolar resistance increases while efferent arteriolar resistance remains constant, what will happen to the GFR?",
+    "option_a": "GFR will increase",
+    "option_b": "GFR will decrease",
+    "option_c": "GFR will remain unchanged",
+    "option_d": "GFR will initially increase then decrease",
+    "option_e": "GFR will become zero",
+    "correct_answer": "B",
+    "explanation": "The glomerular filtration rate is determined by the net filtration pressure (NFP), which equals the glomerular hydrostatic pressure minus the opposing pressures (plasma colloid osmotic pressure and Bowman's capsule hydrostatic pressure). If afferent arteriolar resistance increases, less blood enters the glomerulus, reducing glomerular hydrostatic pressure and thus decreasing the net filtration pressure. This results in decreased GFR. Conversely, increased efferent resistance would increase glomerular pressure and GFR. This mechanism is important in conditions like renal artery stenosis or during renal vasoconstriction by agents like NSAIDs.",
+    "order": 2
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 29,
+  "fields": {
+    "quiz": 6,
+    "category": null,
+    "text": "During exercise, a patient's venous return increases significantly. According to the Frank-Starling mechanism, how will this increased venous return affect cardiac output?",
+    "option_a": "Cardiac output will decrease due to increased afterload",
+    "option_b": "Cardiac output will increase due to increased myocardial fiber stretch",
+    "option_c": "Cardiac output will remain constant due to autoregulation",
+    "option_d": "Cardiac output will initially decrease then increase",
+    "option_e": "Cardiac output will increase due to decreased preload",
+    "correct_answer": "B",
+    "explanation": "The Frank-Starling mechanism states that cardiac output is directly proportional to the degree of myocardial fiber stretch at the end of diastole (preload). Increased venous return increases left ventricular end-diastolic volume (LVEDV), which stretches the myocardial fibers. This increased stretch enhances the overlap of thick and thin filaments, increasing the force of myocardial contraction and thus stroke volume and cardiac output. This is an intrinsic property of the heart that allows it to automatically adjust output to match venous return, preventing blood pooling in the venous system. This mechanism is essential during exercise and other states of increased metabolic demand.",
+    "order": 3
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 30,
+  "fields": {
+    "quiz": 6,
+    "category": null,
+    "text": "Which of the following chemoreceptors is most sensitive to changes in arterial CO2 concentration and is primarily responsible for controlling ventilation in response to hypercapnia?",
+    "option_a": "Peripheral chemoreceptors in the carotid body",
+    "option_b": "Peripheral chemoreceptors in the aortic arch",
+    "option_c": "Central chemoreceptors in the medulla oblongata",
+    "option_d": "Pulmonary stretch receptors",
+    "option_e": "Proprioceptors in respiratory muscles",
+    "correct_answer": "C",
+    "explanation": "Central chemoreceptors located on the ventral surface of the medulla oblongata are highly sensitive to changes in arterial CO2 and cerebrospinal fluid (CSF) pH. CO2 diffuses across the blood-brain barrier and forms carbonic acid, decreasing CSF pH and stimulating these receptors. Central chemoreceptors are the primary regulators of ventilation in response to hypercapnia (elevated CO2) and account for approximately 70-80% of the respiratory response to CO2 changes. Peripheral chemoreceptors (in carotid and aortic bodies) also respond to CO2 changes but are less sensitive; they primarily respond to hypoxia and acidosis. This is why CO2 is a more potent respiratory stimulus than oxygen changes.",
+    "order": 4
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 31,
+  "fields": {
+    "quiz": 7,
+    "category": null,
+    "text": "A patient presents with recurrent muscle weakness and fatigue due to a mitochondrial disorder affecting oxidative phosphorylation. Which process in mitochondria is primarily responsible for generating the majority of ATP in aerobic conditions?",
+    "option_a": "Glycolysis in the cytoplasm",
+    "option_b": "Krebs cycle (citric acid cycle) in the mitochondrial matrix",
+    "option_c": "Electron transport chain and chemiosmosis in the inner mitochondrial membrane",
+    "option_d": "Pentose phosphate pathway",
+    "option_e": "Fatty acid synthesis",
+    "correct_answer": "C",
+    "explanation": "While the Krebs cycle generates some ATP directly and produces electron carriers (NADH and FADH2), the electron transport chain and chemiosmosis in the inner mitochondrial membrane are responsible for generating approximately 90% of ATP in aerobic respiration. The electron transport chain uses the reducing power from NADH and FADH2 to pump protons across the inner mitochondrial membrane, creating a proton gradient. ATP synthase then uses this gradient to phosphorylate ADP to ATP. Dysfunction in any component of this system (mitochondrial genes, respiratory complexes, or ATP synthase) results in severe energy deficiency, explaining symptoms like muscle weakness and fatigue in mitochondrial disorders.",
+    "order": 0
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 32,
+  "fields": {
+    "quiz": 7,
+    "category": null,
+    "text": "A cell checkpoint is activated during the G1 phase of the cell cycle when DNA damage is detected. Which tumor suppressor protein is primarily responsible for blocking cell cycle progression at this point?",
+    "option_a": "Cyclin D1",
+    "option_b": "Retinoblastoma (Rb) protein",
+    "option_c": "p53 (tumor suppressor protein)",
+    "option_d": "CDK2 (cyclin-dependent kinase 2)",
+    "option_e": "E2F transcription factor",
+    "correct_answer": "C",
+    "explanation": "p53, known as the \"guardian of the genome,\" is a crucial tumor suppressor that halts cell cycle progression when DNA damage is detected. Upon sensing damage, p53 accumulates and activates transcription of p21, a CDK inhibitor that blocks cyclin-dependent kinases and prevents phosphorylation of Rb protein. This stops progression from G1 to S phase, allowing time for DNA repair. If damage is irreparable, p53 triggers apoptosis. Mutations in the p53 gene are among the most common genetic alterations in human cancers (>50%), allowing damaged cells to proliferate unchecked. The Rb protein functions downstream by binding and inactivating E2F transcription factor, blocking S-phase genes.",
+    "order": 1
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 33,
+  "fields": {
+    "quiz": 7,
+    "category": null,
+    "text": "A patient's biopsy reveals abnormal accumulation of misfolded proteins in the endoplasmic reticulum (ER). This triggers the unfolded protein response (UPR). Which of the following is NOT a direct consequence of UPR activation?",
+    "option_a": "Upregulation of heat shock proteins (chaperones) for protein refolding",
+    "option_b": "Inhibition of general protein translation",
+    "option_c": "Degradation of misfolded proteins through the proteasome pathway",
+    "option_d": "Increased ATP production through oxidative phosphorylation",
+    "option_e": "Potential activation of apoptosis if stress is unresolved",
+    "correct_answer": "D",
+    "explanation": "The unfolded protein response (UPR) is triggered when misfolded proteins accumulate in the ER. UPR mechanisms include: (1) upregulation of molecular chaperones like heat shock proteins to assist in protein refolding, (2) phosphorylation of eIF2α to reduce global protein translation and decrease the ER protein load, and (3) activation of ERAD (ER-associated degradation) to eliminate irreversibly misfolded proteins through the proteasome. If these adaptive mechanisms fail, pro-apoptotic signals are activated. However, UPR does NOT increase ATP production; in fact, it typically reduces energy consumption by limiting protein synthesis. UPR-associated chronic stress is implicated in diseases like diabetes, neurodegeneration, and cystic fibrosis.",
+    "order": 2
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 34,
+  "fields": {
+    "quiz": 7,
+    "category": null,
+    "text": "A cancer patient undergoes chemotherapy, which triggers apoptosis in tumor cells. Which of the following is a characteristic feature of apoptosis that distinguishes it from necrosis?",
+    "option_a": "Cell swelling and rupture of cell membrane",
+    "option_b": "Release of inflammatory mediators into surrounding tissue",
+    "option_c": "Fragmentation of DNA and formation of apoptotic bodies",
+    "option_d": "Tissue inflammation and damage to surrounding cells",
+    "option_e": "Loss of ATP and necrotic cell death",
+    "correct_answer": "C",
+    "explanation": "Apoptosis is a programmed, controlled form of cell death characterized by distinct morphological and biochemical changes: DNA fragmentation into regular-sized fragments (180-200 base pairs), formation of apoptotic bodies (membrane-bound fragments), chromatin condensation, and cell shrinkage. Importantly, the cell membrane remains intact until late stages, preventing leakage of cellular contents and inflammation. This contrasts sharply with necrosis, which involves uncontrolled cell death resulting in cell swelling, membrane rupture, release of inflammatory mediators, and tissue damage. Apoptosis is energy-dependent and requires ATP, whereas necrosis occurs when cells lack energy. The \"clean\" nature of apoptosis makes it preferable therapeutically, and many cancer treatments work by inducing apoptosis through p53 activation or direct mitochondrial dysfunction.",
+    "order": 3
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 35,
+  "fields": {
+    "quiz": 7,
+    "category": null,
+    "text": "A drug molecule is highly lipophilic (fat-soluble) and has a molecular weight of 450 Da. Which transport mechanism would most likely facilitate its movement across the cell membrane without requiring energy?",
+    "option_a": "Active transport via ATP-dependent pumps",
+    "option_b": "Receptor-mediated endocytosis",
+    "option_c": "Simple diffusion across the lipid bilayer",
+    "option_d": "Facilitated diffusion through channel proteins",
+    "option_e": "Exocytosis from intracellular vesicles",
+    "correct_answer": "C",
+    "explanation": "Simple diffusion across the lipid bilayer is the primary mechanism for transport of small, lipophilic (hydrophobic) molecules like the described drug. Lipophilic molecules can dissolve in the nonpolar interior of the phospholipid bilayer and move across the membrane without requiring energy or transport proteins. The rate of simple diffusion depends on the concentration gradient and the molecule's lipophilicity. Larger or hydrophilic molecules require facilitated diffusion (through channel or carrier proteins), which is passive but may be selective. Active transport requires energy and is used against concentration gradients. The drug's molecular weight (450 Da) is small enough to diffuse, and its lipophilicity is the key factor allowing passive membrane crossing. This principle underlies oral drug absorption and drug bioavailability in pharmacology.",
+    "order": 4
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 36,
+  "fields": {
+    "quiz": 8,
+    "category": null,
+    "text": "During acute inflammation, neutrophils migrate to the site of injury through a process called diapedesis. In what order do the molecular events occur during this process?",
+    "option_a": "Rolling → adhesion → transmigration → chemotaxis",
+    "option_b": "Adhesion → rolling → chemotaxis → transmigration",
+    "option_c": "Rolling → adhesion → chemotaxis → transmigration",
+    "option_d": "Chemotaxis → rolling → adhesion → transmigration",
+    "option_e": "Transmigration → rolling → adhesion → chemotaxis",
+    "correct_answer": "C",
+    "explanation": "The sequence of neutrophil recruitment involves: (1) Rolling—selectin-mediated weak binding allows neutrophils to roll along endothelium; (2) Adhesion—integrin-ICAM interactions cause firm adhesion; (3) Chemotaxis—neutrophils detect chemotactic gradients (C5a, IL-8, bacterial products); (4) Transmigration (diapedesis)—neutrophils squeeze between endothelial cells to enter tissue. Chemotactic signals activate integrins, enhancing the transition from rolling to firm adhesion. This orchestrated sequence ensures efficient recruitment of neutrophils to sites of infection or injury. Defects in this process (like in leukocyte adhesion deficiency) result in impaired immune response and recurrent infections.",
+    "order": 0
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 37,
+  "fields": {
+    "quiz": 8,
+    "category": null,
+    "text": "A pathologist examines a biopsy of an adenocarcinoma and assigns a Gleason score of 8 based on glandular architecture and cellular pleomorphism. What does this score indicate about the tumor's prognosis?",
+    "option_a": "Well-differentiated tumor with excellent prognosis",
+    "option_b": "Moderately differentiated tumor with intermediate prognosis",
+    "option_c": "Poorly differentiated tumor with poor prognosis",
+    "option_d": "Undifferentiated tumor with variable prognosis",
+    "option_e": "Benign tumor requiring observation only",
+    "correct_answer": "C",
+    "explanation": "The Gleason score for prostate cancer ranges from 2 to 10, with scores derived from the sum of two components representing the most common and second most common histological patterns. A Gleason score of 8 (typically ranging 7-10) indicates a poorly differentiated, high-grade tumor with poor prognosis and aggressive biological behavior. Higher Gleason scores correlate with increased risk of metastasis, biochemical recurrence, and reduced overall survival. Scores 2-4 indicate well-differentiated (low-grade) tumors with favorable prognosis, while 5-6 indicate intermediate-grade tumors. Gleason score is one of the most important prognostic factors in prostate cancer, used alongside PSA levels and TNM staging for treatment planning and risk stratification.",
+    "order": 1
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 38,
+  "fields": {
+    "quiz": 8,
+    "category": null,
+    "text": "A patient suffered an acute myocardial infarction (MI) three days ago. Upon autopsy, which type of necrosis would be most commonly observed in the infarcted myocardium?",
+    "option_a": "Liquefactive necrosis",
+    "option_b": "Coagulative necrosis",
+    "option_c": "Caseous necrosis",
+    "option_d": "Fibrinoid necrosis",
+    "option_e": "Fat necrosis",
+    "correct_answer": "B",
+    "explanation": "Coagulative necrosis is the most common type of necrosis and occurs in most organs following ischemic injury, including myocardial infarction. The tissue architecture is initially preserved despite cell death, giving a \"ghost-like\" appearance where the general outline of cells and tissue structure remain intact but cellular detail is lost. This occurs because ischemia denatures proteins, preventing enzymatic digestion. In contrast, liquefactive necrosis (seen in brain ischemia and bacterial infections) results in complete tissue dissolution due to enzymatic digestion, leaving a liquid cavity. Caseous necrosis is characteristic of tuberculosis with granulomatous inflammation. Fibrinoid necrosis occurs in blood vessels with immune-mediated injury, while fat necrosis follows pancreatic injury or trauma.",
+    "order": 2
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 39,
+  "fields": {
+    "quiz": 8,
+    "category": null,
+    "text": "A chronic smoker develops Barrett's esophagus, where the normal squamous epithelium of the distal esophagus is replaced by columnar intestinal-type epithelium. What is this cellular adaptation called?",
+    "option_a": "Dysplasia",
+    "option_b": "Metaplasia",
+    "option_c": "Anaplasia",
+    "option_d": "Hyperplasia",
+    "option_e": "Hypertrophy",
+    "correct_answer": "B",
+    "explanation": "Metaplasia is the reversible replacement of one differentiated cell type with another differentiated cell type. In Barrett's esophagus, chronic gastroesophageal reflux (GERD) causes the protective stratified squamous epithelium to be replaced by columnar mucin-secreting intestinal epithelium (intestinal metaplasia), a change mediated by altered transcription factors and signaling pathways. While metaplasia is initially reversible if the stimulus is removed, Barrett's esophagus carries increased risk of adenocarcinoma development. This differs from dysplasia (disordered growth with loss of differentiation), anaplasia (lack of differentiation in malignant cells), hyperplasia (increased cell number), and hypertrophy (increased cell size). Metaplasia represents an adaptation to chronic injury but may predispose to malignancy if the inciting stimulus persists.",
+    "order": 3
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 40,
+  "fields": {
+    "quiz": 8,
+    "category": null,
+    "text": "A patient presents with acute bacterial pneumonia. Which of the following inflammatory markers would be expected to increase most rapidly in response to tissue injury and bacterial infection?",
+    "option_a": "C-reactive protein (CRP)",
+    "option_b": "Erythrocyte sedimentation rate (ESR)",
+    "option_c": "Interleukin-6 (IL-6)",
+    "option_d": "Tumor necrosis factor-alpha (TNF-α)",
+    "option_e": "Procalcitonin",
+    "correct_answer": "C",
+    "explanation": "Interleukin-6 (IL-6) is one of the earliest and most rapidly produced pro-inflammatory cytokines in response to infection and tissue injury, increasing within 1-2 hours of acute bacterial infection. IL-6 is primarily produced by macrophages, endothelial cells, and T cells, and acts as a central mediator of the acute phase response by stimulating hepatic synthesis of acute phase proteins like C-reactive protein (CRP) and fibrinogen. C-reactive protein rises within 6-8 hours and peaks at 48 hours, making it valuable for monitoring inflammation but not the earliest marker. ESR is slower to rise due to dependence on fibrinogen levels and RBC aggregation. TNF-α and IL-1 are other early cytokines but typically measured less frequently. Procalcitonin is more specific for bacterial infection but rises slightly later than IL-6. IL-6 measurement is useful for early detection of sepsis and bacterial infection.",
+    "order": 4
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 41,
+  "fields": {
+    "quiz": 9,
+    "category": null,
+    "text": "During thymic selection, T cells undergo both positive and negative selection. What is the purpose of positive selection in the thymic cortex?",
+    "option_a": "To eliminate T cells that recognize self-antigens",
+    "option_b": "To eliminate T cells that do not recognize self-MHC molecules",
+    "option_c": "To promote T cells that recognize foreign antigens",
+    "option_d": "To increase the number of autoreactive T cells",
+    "option_e": "To select T cells with high-affinity TCR for all antigens",
+    "correct_answer": "B",
+    "explanation": "Positive selection in the thymic cortex ensures that developing T cells (thymocytes) can recognize and bind to self-MHC molecules (MHC restriction). T cells that fail to interact with thymic epithelial cells presenting self-MHC die by neglect. This is essential because mature T cells must be able to recognize antigen-presenting cells (APCs) in the context of self-MHC. Only thymocytes with moderate-affinity TCRs for self-MHC survive positive selection. Subsequently, negative selection in the thymic medulla eliminates thymocytes with high-affinity TCRs for self-antigens on dendritic cells, preventing autoimmunity. Together, these processes generate a functional T cell repertoire that is self-MHC restricted but self-antigen tolerant.",
+    "order": 0
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 42,
+  "fields": {
+    "quiz": 9,
+    "category": null,
+    "text": "A patient receives a tetanus toxoid vaccine (protein antigen) and develops an IgM response initially, followed by an IgG response. Which cytokine produced by T helper cells is primarily responsible for directing B cells to switch to IgG production?",
+    "option_a": "IL-4 (promotes IgE switching)",
+    "option_b": "IL-10 (promotes IgA switching)",
+    "option_c": "IFN-γ (promotes IgG switching)",
+    "option_d": "IL-5 (promotes IgA switching)",
+    "option_e": "TGF-β (promotes IgA switching)",
+    "correct_answer": "C",
+    "explanation": "Interferon-gamma (IFN-γ) is the primary Th1-derived cytokine responsible for promoting class switch recombination (CSR) to IgG, particularly IgG2a and IgG3 in mice (IgG1 and IgG3 in humans). IFN-γ acts on B cells to initiate the germinal center response and drive IgG production, which is important for opsonization and complement activation in response to protein antigens. Different Th cell subsets promote different isotype switches: Th2 cells produce IL-4, promoting IgE and IgG4 switching; IL-5 promotes IgA switching; and TGF-β (from regulatory T cells) promotes IgA switching. This isotype selection is crucial for generating appropriate antibody responses—IgG for systemic protein antigens, IgA for mucosal pathogens, and IgE for parasites and allergens.",
+    "order": 1
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 43,
+  "fields": {
+    "quiz": 9,
+    "category": null,
+    "text": "A patient with recurrent bacterial infections is found to have a deficiency in C3, a central component of the complement cascade. Which of the following functions would be most significantly impaired?",
+    "option_a": "Only the classical pathway would be affected",
+    "option_b": "Only the alternative pathway would be affected",
+    "option_c": "Both classical and alternative pathways would be equally affected",
+    "option_d": "Only the lectin pathway would be affected",
+    "option_e": "All three pathways (classical, alternative, and lectin) would be affected",
+    "correct_answer": "E",
+    "explanation": "C3 is a crucial convergence point in all three complement activation pathways (classical, alternative, and lectin). C3 cleavage generates C3a (anaphylatoxin) and C3b (opsonin), which are essential for: (1) opsonization and phagocytosis of pathogens, (2) recruitment of inflammatory cells via C3a, and (3) formation of the C5 convertase for terminal complement cascade. The classical pathway (antibody-antigen complexes), alternative pathway (pathogen surfaces), and lectin pathway (mannose-binding lectin) all converge at C3. Deficiency in C3 causes severe immunodeficiency with recurrent pyogenic infections (especially Streptococcus pneumoniae, Neisseria species), demonstrating the critical role of C3 in innate immunity. In contrast, deficiencies in early classical pathway components (C1, C2, C4) primarily impair the classical pathway while alternative and lectin pathways remain functional.",
+    "order": 2
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 44,
+  "fields": {
+    "quiz": 9,
+    "category": null,
+    "text": "A patient develops severe anaphylaxis within minutes of receiving penicillin, characterized by sudden hypotension, bronchospasm, and angioedema. Which type of hypersensitivity reaction is responsible for this acute response?",
+    "option_a": "Type I hypersensitivity (IgE-mediated)",
+    "option_b": "Type II hypersensitivity (cytotoxic)",
+    "option_c": "Type III hypersensitivity (immune complex)",
+    "option_d": "Type IV hypersensitivity (cell-mediated)",
+    "option_e": "Type V hypersensitivity (stimulating antibodies)",
+    "correct_answer": "A",
+    "explanation": "Anaphylaxis is a classic Type I hypersensitivity reaction mediated by IgE antibodies and mast cell/basophil degranulation. Upon re-exposure to antigen (penicillin), cross-linking of IgE receptors on mast cells triggers rapid degranulation, releasing pre-formed mediators (histamine, tryptase, heparin) and newly synthesized mediators (prostaglandins, leukotrienes, platelet-activating factor). These mediators cause vasodilation, increased vascular permeability, smooth muscle contraction, and mucus secretion—producing the characteristic symptoms within minutes. Anaphylaxis is a medical emergency requiring immediate intramuscular epinephrine to reverse these effects. Type II reactions involve IgG or IgM antibodies against cell antigens, Type III involves immune complex deposition, Type IV involves T cell-mediated responses (delayed-type hypersensitivity), and Type V involves stimulating antibodies mimicking hormone effects.",
+    "order": 3
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 45,
+  "fields": {
+    "quiz": 9,
+    "category": null,
+    "text": "Regulatory T cells (Tregs) maintain immune homeostasis and prevent autoimmunity through multiple mechanisms. Which transcription factor is essential for Treg differentiation and function?",
+    "option_a": "T-bet (Th1 differentiation)",
+    "option_b": "GATA-3 (Th2 differentiation)",
+    "option_c": "Foxp3 (Treg differentiation and maintenance)",
+    "option_d": "RORγt (Th17 differentiation)",
+    "option_e": "Eomesodermin (cytotoxic T cell differentiation)",
+    "correct_answer": "C",
+    "explanation": "Foxp3 (forkhead box protein 3) is the master transcription factor for regulatory T cell (Treg) development and function. Foxp3 is induced in CD4+ T cells in the thymus and peripheral lymphoid tissues (particularly in the presence of TGF-β and IL-2) and is essential for expressing characteristic Treg markers including CD25 (IL-2 receptor alpha), CTLA-4, and GITR. Foxp3 mutations cause IPEX syndrome (immunodysregulation polyendocrinopathy enteropathy X-linked), characterized by severe autoimmunity, diarrhea, and early mortality due to loss of Treg function. Tregs suppress immune responses through multiple mechanisms: secretion of inhibitory cytokines (IL-10, TGF-β), expression of inhibitory surface molecules (CTLA-4, PD-1), and metabolic disruption of effector T cells. Approximately 5-10% of circulating CD4+ T cells are Tregs, and dysfunction or depletion of Tregs contributes to autoimmune diseases and cancer development.",
+    "order": 4
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 46,
+  "fields": {
+    "quiz": 10,
+    "category": null,
+    "text": "During B cell development in the bone marrow, developing B cells undergo negative selection to eliminate autoreactive cells. Which receptor interaction is critical for determining if an immature B cell should be eliminated during this process?",
+    "option_a": "TCR-MHC interaction on thymic epithelial cells",
+    "option_b": "BCR-self-antigen interaction on bone marrow stromal cells",
+    "option_c": "CD40-CD40L interaction on dendritic cells",
+    "option_d": "B7-CD28 interaction on follicular dendritic cells",
+    "option_e": "TLR-pathogen-associated pattern interaction",
+    "correct_answer": "B",
+    "explanation": "During negative selection in the bone marrow, immature B cells are exposed to self-antigens presented by bone marrow stromal cells and dendritic cells. If the B cell receptor (BCR) binds strongly to self-antigen, the immature B cell receives signals that trigger apoptosis or receptor editing. This process eliminates potentially autoreactive B cells and reduces the risk of autoimmune disease. Receptor editing allows some B cells to survive by rearranging their light chain genes to generate a non-self-reactive BCR. Approximately 30-50% of developing B cells are eliminated through negative selection. This contrasts with T cell selection in the thymus, where TCR-MHC interactions on thymic epithelial cells and medullary dendritic cells determine T cell fate. Defects in B cell negative selection contribute to autoimmune diseases like systemic lupus erythematosus (SLE).",
+    "order": 0
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 47,
+  "fields": {
+    "quiz": 10,
+    "category": null,
+    "text": "A patient with allergic asthma has elevated levels of Group 2 Innate Lymphoid Cells (ILC2s) in the airway. Which cytokine is primarily produced by ILC2s and promotes Th2 differentiation and IgE production?",
+    "option_a": "IFN-γ (promotes Th1 responses)",
+    "option_b": "IL-17 (promotes Th17 responses)",
+    "option_c": "IL-2 (promotes T cell proliferation)",
+    "option_d": "IL-5 (promotes eosinophil recruitment)",
+    "option_e": "IL-13 (promotes Type 2 immunity)",
+    "correct_answer": "E",
+    "explanation": "Group 2 innate lymphoid cells (ILC2s) produce IL-5 and IL-13, key cytokines in Type 2 immune responses. IL-13 promotes Th2 differentiation, B cell class switching to IgE, and airway inflammation characteristic of allergic asthma. IL-5 specifically recruits and activates eosinophils, which contribute to tissue damage in allergic and parasitic infections. ILC2s are activated by alarmins (IL-25, IL-33, TSLP) released from epithelial cells following allergen exposure or parasitic infection. ILC2s provide an early source of IL-5 and IL-13 before adaptive Th2 responses fully develop, making them important in initiating allergic inflammation. Blocking IL-13 or IL-5 signaling is therapeutically beneficial in allergic asthma and eosinophilic diseases. In contrast, Group 1 ILCs (ILC1s) produce IFN-γ, and Group 3 ILCs (ILC3s) produce IL-17.",
+    "order": 1
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 48,
+  "fields": {
+    "quiz": 10,
+    "category": null,
+    "text": "A dendritic cell has phagocytosed necrotic tumor cells containing tumor antigens. Which mechanism allows this dendritic cell to present exogenous tumor antigens on MHC Class I molecules to activate cytotoxic T lymphocytes (CTLs)?",
+    "option_a": "Classical endosomal processing of exogenous antigens",
+    "option_b": "Direct presentation via endosomal MHC I molecules",
+    "option_c": "Cross-presentation via a vacuolar pathway",
+    "option_d": "MHC-peptide loading in the trans-Golgi network",
+    "option_e": "TAP-independent proteasomal processing",
+    "correct_answer": "C",
+    "explanation": "Cross-presentation (also called cross-priming) is the ability of professional antigen-presenting cells (APCs), particularly dendritic cells, to present exogenous antigens (from phagocytosed material) on MHC Class I molecules. This activates CD8+ cytotoxic T lymphocytes against intracellular pathogens and tumor antigens that were not produced by the APC itself. The mechanism involves a vacuolar pathway where phagocytosed antigens are processed in endosomes/phagosomes and are either directly presented from these compartments or transported to the cytosol for proteasomal processing. This is crucial for anti-tumor immunity because tumor-specific antigens are exogenous to dendritic cells yet must trigger CTL responses. Defects in cross-presentation compromise CTL responses to cancer and some intracellular pathogens. This contrasts with the classical endosomal pathway (MHC II presentation) where exogenous antigens activate CD4+ T cells.",
+    "order": 2
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 49,
+  "fields": {
+    "quiz": 10,
+    "category": null,
+    "text": "A patient receives a booster dose of tetanus toxoid vaccine 10 years after primary vaccination. The secondary immune response following the booster is characterized by which of the following?",
+    "option_a": "Predominantly IgM antibodies with delayed kinetics",
+    "option_b": "Predominantly IgG antibodies with rapid kinetics and higher affinity",
+    "option_c": "Increased number of naive B cells specific for tetanus antigen",
+    "option_d": "Activation of complement through the alternative pathway",
+    "option_e": "Reduced antibody-mediated protection compared to primary response",
+    "correct_answer": "B",
+    "explanation": "The secondary immune response to booster vaccination is mediated by long-lived memory B and T cells generated during primary immunization. Memory B cells rapidly differentiate into plasma cells upon antigen re-exposure, producing predominantly IgG antibodies with faster kinetics (peak response within days rather than weeks). These IgG antibodies have higher affinity due to somatic hypermutation and affinity maturation that occurred during the primary germinal center response. Memory T cells also provide enhanced cellular immunity. The secondary response is stronger, faster, and more protective than the primary response—a phenomenon called immunological memory. This is the basis for booster vaccinations, which enhance and maintain protective immunity over years or decades. In contrast, the primary response is dominated by IgM initially, with slower kinetics and lower affinity. This explains why boosters provide superior protection and contribute to vaccination strategies for tetanus, diphtheria, and other vaccines.",
+    "order": 3
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 50,
+  "fields": {
+    "quiz": 10,
+    "category": null,
+    "text": "Many viruses, including HIV and measles, produce proteins that degrade MHC Class I molecules on infected cells, preventing antigen presentation to cytotoxic T lymphocytes (CTLs). What immune consequence results from this viral immune evasion strategy?",
+    "option_a": "Enhanced activation of Th1 helper cells",
+    "option_b": "Impaired CTL recognition and killing of infected cells",
+    "option_c": "Increased opsonization and complement activation",
+    "option_d": "Enhanced antibody production by B cells",
+    "option_e": "Activation of innate lymphoid cells (ILCs)",
+    "correct_answer": "B",
+    "explanation": "Many viruses have evolved immune evasion mechanisms including MHC Class I downregulation, which impairs CTL recognition and killing of infected cells. CTLs recognize viral antigens presented on MHC Class I molecules via T cell receptor (TCR) engagement with co-stimulation through CD8-ligand interactions. When viruses (like HIV, cytomegalovirus, and measles) produce viral proteins that degrade, internalize, or prevent surface expression of MHC Class I molecules, infected cells become \"invisible\" to CTLs. This allows viruses to replicate and evade the most direct form of adaptive immune control. However, this strategy triggers an alternative immune response: Natural Killer (NK) cells recognize \"missing self\"—the absence of MHC Class I—and kill these infected cells through the \"missing self\" hypothesis. Other viral immune evasion mechanisms include producing homologs of immune modulatory proteins, expressing immunoinhibitory ligands, or producing cytokine antagonists. Understanding these evasion strategies is critical for vaccine design and immunotherapy.",
+    "order": 4
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 51,
+  "fields": {
+    "quiz": 11,
+    "category": null,
+    "text": "A patient is prescribed warfarin (anticoagulant) and subsequently started on rifampin (antibiotic). The INR drops significantly despite stable warfarin dosing. Which mechanism best explains this drug interaction?",
+    "option_a": "Rifampin inhibits warfarin absorption in the GI tract",
+    "option_b": "Rifampin induces CYP2C9, increasing warfarin metabolism",
+    "option_c": "Rifampin competitively inhibits warfarin protein binding",
+    "option_d": "Warfarin inhibits rifampin metabolism, increasing its levels",
+    "option_e": "Rifampin directly antagonizes warfarin's anticoagulant effects",
+    "correct_answer": "B",
+    "explanation": "Rifampin is a potent inducer of hepatic cytochrome P450 enzymes, particularly CYP2C9 and CYP3A4. Warfarin is metabolized by CYP2C9, so rifampin induction increases warfarin metabolism, reducing its plasma concentration and anticoagulant effect. This leads to decreased INR (International Normalized Ratio) and reduced anticoagulation, increasing thrombotic risk. The warfarin dose must be increased to maintain therapeutic INR. This is a classic example of enzyme induction causing loss of drug efficacy. Other P450 inducers include phenytoin, carbamazepine, and St. John's Wort. In contrast, CYP2C9 inhibitors (like fluconazole and NSAIDs) decrease warfarin metabolism, increasing INR and bleeding risk. Understanding P450 interactions is crucial for preventing adverse drug interactions and adjusting dosing appropriately.",
+    "order": 0
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 52,
+  "fields": {
+    "quiz": 11,
+    "category": null,
+    "text": "A drug has a volume of distribution (Vd) of 500 liters in a 70 kg patient. Which conclusion about this drug is most accurate?",
+    "option_a": "The drug is highly water-soluble and confined to intravascular space",
+    "option_b": "The drug extensively distributes into tissue compartments beyond plasma",
+    "option_c": "The drug cannot cross the blood-brain barrier",
+    "option_d": "The drug is rapidly eliminated by the kidneys",
+    "option_e": "The drug has low protein binding in plasma",
+    "correct_answer": "B",
+    "explanation": "Volume of distribution (Vd) is calculated as Vd = Dose/C0 (initial plasma concentration) and represents the theoretical volume in which a drug would need to be distributed to achieve the observed plasma concentration. A Vd of 500 liters in a 70 kg patient (total body water ~42 liters) is much larger than total body water, indicating extensive distribution beyond the intravascular and interstitial compartments into tissue reservoirs. This suggests the drug is lipophilic, crosses membranes easily, and has high tissue binding. Such drugs include digoxin, chloroquine, and lipophilic beta-blockers. Conversely, a small Vd (close to plasma volume of 3-4 liters) indicates water-soluble drugs confined to the intravascular space, such as contrast agents. Vd influences drug half-life (t½ = 0.693 × Vd/CL) and is essential for calculating loading doses. A large Vd also suggests drugs may not be effectively removed by dialysis.",
+    "order": 1
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 53,
+  "fields": {
+    "quiz": 11,
+    "category": null,
+    "text": "A selective beta-2 adrenergic receptor agonist like albuterol is used to treat acute asthma. Which pharmacological property of beta-2 agonists allows them to preferentially affect airways over the heart?",
+    "option_a": "Beta-2 agonists are full agonists while beta-1 agonists are partial agonists",
+    "option_b": "Beta-2 receptors are present only in airways, not in the heart",
+    "option_c": "Beta-2 agonists have higher affinity and selectivity for beta-2 receptors than beta-1 receptors",
+    "option_d": "Beta-2 agonists block beta-1 receptors competitively",
+    "option_e": "Beta-2 receptors have lower threshold for activation than beta-1 receptors",
+    "correct_answer": "C",
+    "explanation": "Selective beta-2 agonists like albuterol have high affinity and selectivity for beta-2 adrenergic receptors compared to beta-1 receptors. This selectivity allows them to preferentially activate airway smooth muscle relaxation (mediated by beta-2 receptors) while minimizing cardiac effects (mediated by beta-1 receptors). However, selectivity is not absolute—at high doses, beta-2 agonists can cause tachycardia and tremor through beta-1 activation. Both beta-1 and beta-2 receptors are present in various tissues; airways are rich in beta-2 receptors while the heart contains predominantly beta-1 receptors. Receptor selectivity is determined by drug structure and binding affinity for specific receptor subtypes. Non-selective beta-agonists like epinephrine activate both beta-1 and beta-2 receptors, causing both bronchodilation and cardiac stimulation. Understanding receptor selectivity is crucial for maximizing therapeutic effects while minimizing adverse effects.",
+    "order": 2
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 54,
+  "fields": {
+    "quiz": 11,
+    "category": null,
+    "text": "Drug A has a therapeutic dose of 100 mg and a toxic dose of 200 mg. Drug B has a therapeutic dose of 100 mg and a toxic dose of 1000 mg. Which statement accurately compares the safety profiles of these drugs?",
+    "option_a": "Drug A is safer because it requires a higher absolute dose",
+    "option_b": "Drug B is safer because it has a wider margin between therapeutic and toxic doses",
+    "option_c": "Both drugs have equal safety since they share the same therapeutic dose",
+    "option_d": "Drug A is safer because toxicity occurs at lower absolute doses",
+    "option_e": "Safety cannot be determined without knowing elimination half-lives",
+    "correct_answer": "B",
+    "explanation": "The therapeutic index is defined as the ratio of the toxic dose to the therapeutic dose (TD50/ED50). For Drug A: TI = 200/100 = 2; for Drug B: TI = 1000/100 = 10. A higher therapeutic index indicates a wider margin of safety between therapeutic efficacy and toxicity. Drug B has a therapeutic index of 10, providing a much larger safety window than Drug A's index of 2. This means Drug B can tolerate greater variability in plasma levels due to differences in metabolism, absorption, or dosing without approaching toxic levels. Drugs with low therapeutic indices (like digoxin, warfarin, and theophylline) require careful monitoring and narrow therapeutic ranges to maintain efficacy while avoiding toxicity. The therapeutic index guides dosing strategies, monitoring requirements, and risk assessment. Drugs with low TI require therapeutic drug monitoring, dose adjustments, and patient compliance to minimize adverse effects.",
+    "order": 3
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 55,
+  "fields": {
+    "quiz": 11,
+    "category": null,
+    "text": "A patient with normal renal function receives a single intravenous dose of a drug with a half-life of 4 hours. What percentage of the original drug dose remains in the body after 16 hours?",
+    "option_a": "50%",
+    "option_b": "25%",
+    "option_c": "12.5%",
+    "option_d": "6.25%",
+    "option_e": "3.125%",
+    "correct_answer": "D",
+    "explanation": "Half-life (t½) is the time required for the plasma concentration of a drug to decrease by 50%. After each half-life, the remaining concentration is halved: After 1 half-life (4 hours): 50% remains; After 2 half-lives (8 hours): 25% remains; After 3 half-lives (12 hours): 12.5% remains; After 4 half-lives (16 hours): 6.25% remains. The relationship between dose and time is exponential: Remaining dose = Initial dose × (0.5)^(t/t½). Half-life is a critical pharmacokinetic parameter because it determines dosing intervals, time to steady state, and drug accumulation with repeated dosing. Steady state is typically reached after 4-5 half-lives. Understanding half-life is essential for designing appropriate dosing regimens, particularly for drugs with narrow therapeutic indices or in patients with altered clearance (renal or hepatic impairment) where half-lives are prolonged, requiring dose adjustments or interval changes to prevent toxicity.",
+    "order": 4
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 56,
+  "fields": {
+    "quiz": 12,
+    "category": 8,
+    "text": "A patient presents with a congenital defect affecting the neural tube. Which embryonic germ layer gives rise to the central nervous system?",
+    "option_a": "Endoderm",
+    "option_b": "Mesoderm",
+    "option_c": "Ectoderm",
+    "option_d": "Neural crest cells (fourth germ layer)",
+    "option_e": "Extraembryonic mesoderm",
+    "correct_answer": "C",
+    "explanation": "The ectoderm is the outermost germ layer that gives rise to the central nervous system (brain and spinal cord), peripheral nervous system, epidermis, and sensory organs. During neurulation (weeks 3-4), the neural plate folds to form the neural tube, which develops into the brain and spinal cord. The ectoderm also gives rise to surface ectoderm (skin, hair, nails, mammary glands) and neural crest cells. Neural crest cells, sometimes called the \"fourth germ layer,\" are specialized ectoderm-derived cells that migrate to form peripheral nerves, melanocytes, craniofacial structures, and adrenal medulla. The mesoderm forms musculoskeletal, cardiovascular, and urogenital systems, while the endoderm forms the gastrointestinal tract, respiratory system, and associated organs. Neural tube defects (like spina bifida and anencephaly) result from incomplete neural tube closure and can be reduced by maternal folic acid supplementation.",
+    "order": 0
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 57,
+  "fields": {
+    "quiz": 12,
+    "category": 8,
+    "text": "In fetal circulation, the ductus arteriosus connects the pulmonary artery to the aorta, allowing blood to bypass the non-functional lungs. What structure does the ductus arteriosus become after birth?",
+    "option_a": "Ligamentum teres hepatis",
+    "option_b": "Ligamentum venosum",
+    "option_c": "Ligamentum arteriosum",
+    "option_d": "Medial umbilical ligament",
+    "option_e": "Fossa ovalis",
+    "correct_answer": "C",
+    "explanation": "The ductus arteriosus is a vascular shunt in fetal circulation that connects the main pulmonary artery to the descending aorta, diverting blood away from the fluid-filled fetal lungs. After birth, increased oxygen tension and decreased prostaglandin E2 levels cause functional closure within 24-48 hours, with anatomical closure occurring over several weeks to form the ligamentum arteriosum. Patent ductus arteriosus (PDA) occurs when this closure fails, causing a left-to-right shunt and potentially leading to pulmonary hypertension. Other fetal remnants include: ligamentum teres hepatis (from umbilical vein), ligamentum venosum (from ductus venosus), medial umbilical ligaments (from umbilical arteries), and fossa ovalis (from foramen ovale). Understanding fetal circulation is crucial for diagnosing congenital heart defects and managing neonatal cardiovascular adaptation.",
+    "order": 1
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 58,
+  "fields": {
+    "quiz": 12,
+    "category": 8,
+    "text": "A newborn presents with absent parathyroid glands and thymic aplasia (DiGeorge syndrome). Which pharyngeal pouch derivative is primarily affected in this condition?",
+    "option_a": "First pharyngeal pouch",
+    "option_b": "Second pharyngeal pouch",
+    "option_c": "Third pharyngeal pouch",
+    "option_d": "Fourth pharyngeal pouch",
+    "option_e": "Fifth pharyngeal pouch",
+    "correct_answer": "C",
+    "explanation": "The third pharyngeal pouch gives rise to the inferior parathyroid glands (dorsal wing) and the thymus (ventral wing). DiGeorge syndrome results from 22q11.2 deletion affecting neural crest cell migration and third/fourth pharyngeal pouch development, leading to thymic hypoplasia/aplasia (T cell immunodeficiency), absent/hypoplastic parathyroid glands (hypocalcemia), and cardiac defects. Other pharyngeal pouch derivatives include: first pouch → tympanic cavity and auditory tube; second pouch → palatine tonsil epithelium; fourth pouch → superior parathyroid glands and ultimobranchial body (parafollicular C cells of thyroid). The pharyngeal arches also give rise to specific nerves, arteries, and skeletal/muscular structures. Understanding pharyngeal arch embryology is essential for recognizing congenital syndromes affecting craniofacial structures, thyroid, parathyroid, and cardiovascular development. Clinical presentation includes the CATCH-22 acronym: Cardiac defects, Abnormal facies, Thymic hypoplasia, Cleft palate, Hypocalcemia.",
+    "order": 2
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 59,
+  "fields": {
+    "quiz": 12,
+    "category": 8,
+    "text": "During embryonic development, the midgut undergoes a 270-degree counterclockwise rotation around the superior mesenteric artery. Failure of this rotation can result in which congenital anomaly?",
+    "option_a": "Tracheoesophageal fistula",
+    "option_b": "Duodenal atresia",
+    "option_c": "Malrotation with potential volvulus",
+    "option_d": "Meckel's diverticulum",
+    "option_e": "Hirschsprung disease",
+    "correct_answer": "C",
+    "explanation": "Malrotation occurs when the midgut fails to complete its normal 270-degree counterclockwise rotation around the superior mesenteric artery during weeks 6-10 of development. This abnormal positioning creates a narrow mesenteric base predisposing to midgut volvulus—a surgical emergency where the intestines twist around the mesenteric vessels, causing ischemia and potential bowel necrosis. Classic presentation includes bilious vomiting in neonates or infants. The midgut (from the second part of duodenum to proximal two-thirds of transverse colon) is supplied by the superior mesenteric artery and temporarily herniates into the umbilical cord during rapid intestinal growth before returning to the abdominal cavity. Other midgut anomalies include Meckel's diverticulum (persistent vitelline duct remnant) and omphalocele (failure of gut to return to abdomen). Early recognition and surgical correction of malrotation prevent life-threatening volvulus.",
+    "order": 3
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 60,
+  "fields": {
+    "quiz": 12,
+    "category": 8,
+    "text": "A pregnant woman is exposed to thalidomide during the first trimester. Thalidomide is a known teratogen most likely to cause limb defects (phocomelia) if exposure occurs during which developmental period?",
+    "option_a": "Weeks 1-2 (pre-embryonic period)",
+    "option_b": "Weeks 3-8 (embryonic period/organogenesis)",
+    "option_c": "Weeks 9-12 (early fetal period)",
+    "option_d": "Weeks 13-40 (late fetal period)",
+    "option_e": "Throughout pregnancy with equal risk",
+    "correct_answer": "B",
+    "explanation": "The embryonic period (weeks 3-8) is the most critical time for teratogenic exposure because this is when organogenesis occurs—the formation of major organ systems. Thalidomide exposure during weeks 4-8 causes limb defects (phocomelia: absence/severe shortening of limbs) because this coincides with limb bud development. The specific defect depends on timing: earlier exposure affects proximal structures (upper limbs), while later exposure affects distal structures (lower limbs). Different organ systems have different critical periods: heart (weeks 3-6), neural tube (weeks 3-4), palate (weeks 6-9), external genitalia (weeks 8-12). The pre-embryonic period (weeks 1-2) follows the \"all-or-nothing\" principle—exposure either causes death or no effect. The fetal period (weeks 9-birth) is characterized by growth and functional maturation; teratogen exposure causes functional defects rather than gross structural abnormalities. Understanding critical periods guides counseling about medication use, substance exposure, and infections during pregnancy to minimize teratogenic risk.",
+    "order": 4
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 61,
+  "fields": {
+    "quiz": 13,
+    "category": 10,
+    "text": "During glycolysis, glucose is converted to pyruvate under aerobic conditions. What is the net ATP yield per molecule of glucose in glycolysis alone (not including subsequent oxidative phosphorylation)?",
+    "option_a": "0 ATP",
+    "option_b": "2 ATP",
+    "option_c": "4 ATP",
+    "option_d": "6 ATP",
+    "option_e": "8 ATP",
+    "correct_answer": "B",
+    "explanation": "Glycolysis produces a net yield of 2 ATP molecules per glucose molecule. The pathway consumes 2 ATP in the preparatory phase (hexokinase and phosphofructokinase steps) and generates 4 ATP in the payoff phase (phosphoglycerate kinase and pyruvate kinase steps), resulting in a net gain of 2 ATP. Additionally, glycolysis produces 2 NADH molecules, which can generate more ATP through oxidative phosphorylation in the mitochondria (approximately 5 ATP total under aerobic conditions). Under anaerobic conditions, pyruvate is reduced to lactate, regenerating NAD+ needed for continued glycolysis but producing no additional ATP. Glycolysis is the only ATP-generating pathway that can function without oxygen, making it crucial in tissues with limited oxygen supply (red blood cells, exercising muscle). Understanding glycolysis is essential for managing metabolic disorders and conditions like lactic acidosis.",
+    "order": 0
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 62,
+  "fields": {
+    "quiz": 13,
+    "category": 10,
+    "text": "A patient with a urea cycle defect presents with hyperammonemia. Which enzyme deficiency is most commonly responsible for urea cycle disorders?",
+    "option_a": "Carbamoyl phosphate synthetase I (CPS I)",
+    "option_b": "Ornithine transcarbamylase (OTC)",
+    "option_c": "Argininosuccinate synthetase",
+    "option_d": "Argininosuccinate lyase",
+    "option_e": "Arginase",
+    "correct_answer": "B",
+    "explanation": "Ornithine transcarbamylase (OTC) deficiency is the most common urea cycle disorder, accounting for approximately 50% of cases. OTC is an X-linked disorder (the only X-linked urea cycle defect), while other urea cycle enzyme deficiencies are autosomal recessive. The urea cycle converts toxic ammonia (from amino acid catabolism) into urea for renal excretion. OTC catalyzes the condensation of carbamoyl phosphate and ornithine to form citrulline in the mitochondria. Deficiency leads to accumulation of ammonia and carbamoyl phosphate, causing hyperammonemia with neurological symptoms (lethargy, seizures, coma) and elevated urinary orotic acid (from carbamoyl phosphate shunting into pyrimidine synthesis). Treatment includes protein restriction, ammonia scavengers (sodium benzoate, sodium phenylacetate), and arginine supplementation. CPS I deficiency is the second most common but does not cause orotic aciduria. Early recognition and treatment are critical to prevent permanent neurological damage from hyperammonemia.",
+    "order": 1
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 63,
+  "fields": {
+    "quiz": 13,
+    "category": 10,
+    "text": "During prolonged fasting or uncontrolled diabetes mellitus, the liver produces ketone bodies as an alternative fuel source. Which enzyme catalyzes the rate-limiting step of ketogenesis?",
+    "option_a": "Acetyl-CoA carboxylase",
+    "option_b": "HMG-CoA synthase",
+    "option_c": "HMG-CoA lyase",
+    "option_d": "Thiolase",
+    "option_e": "β-Hydroxybutyrate dehydrogenase",
+    "correct_answer": "B",
+    "explanation": "HMG-CoA synthase (3-hydroxy-3-methylglutaryl-CoA synthase) catalyzes the rate-limiting step of ketogenesis in hepatic mitochondria. During fasting or insulin deficiency, increased fatty acid oxidation generates excess acetyl-CoA, which exceeds the capacity of the citric acid cycle. Two acetyl-CoA molecules condense to form acetoacetyl-CoA (via thiolase), which then combines with another acetyl-CoA to form HMG-CoA (via HMG-CoA synthase). HMG-CoA lyase then cleaves HMG-CoA to produce acetoacetate, the first ketone body. Acetoacetate can be reduced to β-hydroxybutyrate or spontaneously decarboxylate to acetone. Ketone bodies serve as important fuel for the brain, heart, and skeletal muscle during fasting. Excessive ketone production causes ketoacidosis, seen in diabetic ketoacidosis (DKA) or starvation. Note that HMG-CoA reductase (not HMG-CoA synthase) is the rate-limiting enzyme of cholesterol synthesis and is inhibited by statins.",
+    "order": 2
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 64,
+  "fields": {
+    "quiz": 13,
+    "category": 10,
+    "text": "A competitive inhibitor is added to an enzyme reaction. How does this affect the Michaelis constant (Km) and maximum velocity (Vmax) of the reaction?",
+    "option_a": "Km increases, Vmax decreases",
+    "option_b": "Km increases, Vmax unchanged",
+    "option_c": "Km decreases, Vmax unchange",
+    "option_d": "Km unchanged, Vmax decreases",
+    "option_e": "Both Km and Vmax decrease",
+    "correct_answer": "B",
+    "explanation": "Competitive inhibition occurs when an inhibitor competes with substrate for binding to the enzyme's active site. This increases the apparent Km (lower affinity for substrate, requiring higher substrate concentration to reach half-maximal velocity) but does not change Vmax because sufficient substrate can still outcompete the inhibitor and saturate all enzyme active sites. The effect is reversible with increasing substrate concentration. Classic examples include methotrexate (competitive inhibitor of dihydrofolate reductase) and statins (competitive inhibitors of HMG-CoA reductase). In contrast, non-competitive inhibitors bind to a site distinct from the active site, decreasing Vmax (reducing enzyme activity) without affecting Km (substrate binding affinity unchanged). Uncompetitive inhibitors bind only to the enzyme-substrate complex, decreasing both Km and Vmax proportionally. Understanding inhibition mechanisms is crucial for drug design and therapeutic applications—most drugs function as enzyme inhibitors.",
+    "order": 3
+  }
+},
+{
+  "model": "Quizzes.question",
+  "pk": 65,
+  "fields": {
+    "quiz": 13,
+    "category": 10,
+    "text": "A patient with chronic alcoholism presents with Wernicke-Korsakoff syndrome, characterized by confusion, ataxia, and ophthalmoplegia. This condition results from deficiency of which vitamin that serves as a coenzyme in carbohydrate metabolism?",
+    "option_a": "Vitamin B1 (Thiamine)",
+    "option_b": "Vitamin B2 (Riboflavin)",
+    "option_c": "Vitamin B3 (Niacin)",
+    "option_d": "Vitamin B6 (Pyridoxine)",
+    "option_e": "Vitamin B12 (Cobalamin)",
+    "correct_answer": "A",
+    "explanation": "Thiamine (vitamin B1) deficiency causes Wernicke-Korsakoff syndrome, particularly in chronic alcoholics due to poor nutrition, impaired absorption, and increased metabolic demand. Thiamine pyrophosphate (TPP) is an essential coenzyme for several key enzymes in carbohydrate metabolism: α-ketoglutarate dehydrogenase and pyruvate dehydrogenase (linking glycolysis to the citric acid cycle), and transketolase (in the pentose phosphate pathway). Deficiency impairs ATP production, particularly affecting the brain and nervous system with high glucose requirements. Wernicke encephalopathy presents acutely with the classic triad of confusion, ataxia, and ophthalmoplegia, while Korsakoff syndrome involves chronic memory impairment with confabulation. Thiamine deficiency also causes beriberi (wet beriberi with cardiac failure, dry beriberi with peripheral neuropathy). Treatment requires immediate IV thiamine before glucose administration to prevent precipitating acute Wernicke encephalopathy. Other B vitamin deficiencies: B2 (cheilosis, glossitis), B3 (pellagra: diarrhea, dermatitis, dementia), B6 (sideroblastic anemia, peripheral neuropathy), B12 (megaloblastic anemia, subacute combined degeneration).",
+    "order": 4
+  }
+},
+{
+  "model": "Quizzes.attempt",
+  "pk": 11,
+  "fields": {
+    "user": 1,
+    "quiz": 5,
+    "question": null,
+    "selected_option": null,
+    "is_correct": false,
+    "is_flagged": false,
+    "score": 100.0,
+    "started_at": "2025-10-21T19:05:02.850Z",
+    "finished_at": null,
+    "extra_data": {
+      "answers": {
+        "21": {
+          "selected": "B",
+          "is_correct": true
+        },
+        "22": {
+          "selected": "B",
+          "is_correct": true
+        },
+        "23": {
+          "selected": "B",
+          "is_correct": true
+        },
+        "24": {
+          "selected": "B",
+          "is_correct": true
+        },
+        "25": {
+          "selected": "C",
+          "is_correct": true
+        }
+      },
+      "flagged": []
+    }
+  }
+},
+{
+  "model": "Quizzes.attempt",
+  "pk": 12,
+  "fields": {
+    "user": 1,
+    "quiz": 1,
+    "question": null,
+    "selected_option": null,
+    "is_correct": false,
+    "is_flagged": false,
+    "score": 100.0,
+    "started_at": "2025-10-22T12:25:57.205Z",
+    "finished_at": null,
+    "extra_data": {
+      "answers": {
+        "1": {
+          "selected": "A",
+          "is_correct": true
+        },
+        "2": {
+          "selected": "C",
+          "is_correct": true
+        },
+        "3": {
+          "selected": "C",
+          "is_correct": true
+        },
+        "4": {
+          "selected": "C",
+          "is_correct": true
+        },
+        "5": {
+          "selected": "A",
+          "is_correct": true
+        }
+      },
+      "flagged": [
+        3
+      ]
+    }
+  }
+},
+{
+  "model": "Quizzes.attempt",
+  "pk": 13,
+  "fields": {
+    "user": 1,
+    "quiz": 3,
+    "question": null,
+    "selected_option": null,
+    "is_correct": false,
+    "is_flagged": false,
+    "score": 0.0,
+    "started_at": "2025-10-22T19:18:16.176Z",
+    "finished_at": null,
+    "extra_data": {
+      "answers": {
+        "11": {
+          "selected": "C",
+          "is_correct": false
+        },
+        "12": {
+          "selected": "E",
+          "is_correct": false
+        },
+        "13": {
+          "selected": "D",
+          "is_correct": false
+        },
+        "14": {
+          "selected": "D",
+          "is_correct": false
+        },
+        "15": {
+          "selected": "E",
+          "is_correct": false
+        }
+      },
+      "flagged": []
+    }
+  }
+},
+{
+  "model": "Quizzes.attempt",
+  "pk": 14,
+  "fields": {
+    "user": 1,
+    "quiz": 8,
+    "question": null,
+    "selected_option": null,
+    "is_correct": false,
+    "is_flagged": false,
+    "score": 0.0,
+    "started_at": "2025-10-22T19:20:41.229Z",
+    "finished_at": null,
+    "extra_data": {
+      "answers": {
+        "36": {
+          "selected": "D",
+          "is_correct": false
+        },
+        "37": {
+          "selected": "E",
+          "is_correct": false
+        },
+        "38": {
+          "selected": "C",
+          "is_correct": false
+        },
+        "39": {
+          "selected": "C",
+          "is_correct": false
+        },
+        "40": {
+          "selected": "E",
+          "is_correct": false
+        }
+      },
+      "flagged": []
+    }
+  }
+},
+{
+  "model": "Quizzes.attempt",
+  "pk": 15,
+  "fields": {
+    "user": 1,
+    "quiz": 7,
+    "question": null,
+    "selected_option": null,
+    "is_correct": false,
+    "is_flagged": false,
+    "score": 0.0,
+    "started_at": "2025-10-22T21:22:38.326Z",
+    "finished_at": null,
+    "extra_data": {
+      "answers": {
+        "31": {
+          "selected": "D",
+          "is_correct": false
+        },
+        "32": {
+          "selected": "C",
+          "is_correct": true
+        }
+      },
+      "flagged": []
+    }
+  }
+},
+{
+  "model": "Quizzes.attempt",
+  "pk": 16,
+  "fields": {
+    "user": 1,
+    "quiz": 13,
+    "question": null,
+    "selected_option": null,
+    "is_correct": false,
+    "is_flagged": false,
+    "score": 0.0,
+    "started_at": "2025-10-22T22:08:08.134Z",
+    "finished_at": null,
+    "extra_data": {
+      "answers": {},
+      "flagged": []
+    }
+  }
+},
+{
+  "model": "Quizzes.blogpost",
+  "pk": 1,
+  "fields": {
+    "title": "Demo Blog Post",
+    "slug": "demo-blog-post",
+    "thumbnail": "blog_images/blog1.jpg",
+    "short_description": "Sample blog post",
+    "content": "<p>asdksal;dksal;dksal;dksla;dop21i3poklsad0-okd</p><p>a;sdkasl;dksa;ld</p><p>asl;dksa;lkd</p><p>&nbsp;</p><p>a;lskdls;akd</p><p>&nbsp;</p><p>alskdl;sakdsa;l</p><figure class=\"image\"><img style=\"aspect-ratio:300/168;\" src=\"/media/blog2.jpg\" width=\"300\" height=\"168\"></figure>",
+    "created_at": "2025-10-25T13:34:11.837Z",
+    "author": 1
+  }
+}
+]
