@@ -9,3 +9,4 @@ django-admin-sortable2>=2.1
 setuptools<81
 whitenoise>=6.6.0
 stripe>=13.0.1
+django-ckeditor-5>=0.2.18
