@@ -639,7 +639,7 @@
   const cbUnattempted = document.getElementById("only_unattempted");
   const topicSelect = document.getElementById("topic");
 
-  // prevent navigation if disabled
+  // Prevent navigation if disabled
   startQuizBtn.addEventListener("click", (e) => {
     if (startQuizBtn.classList.contains("disabled")) {
       e.preventDefault();
@@ -648,14 +648,12 @@
   });
 
   function buildParams() {
-    // If any "other" filter is active, auto-uncheck "Only Unattempted"
     const othersActive = cbWrong.checked || cbFlagged.checked || topicSelect.value !== "";
     if (othersActive && cbUnattempted.checked) {
       cbUnattempted.checked = false;
     }
 
     const fd = new FormData(form);
-    // Unchecked checkboxes won't be sent – that's what we want.
     return new URLSearchParams(fd);
   }
 
@@ -670,16 +668,12 @@
       const data = await res.json();
 
       const total = data.total || 1;
-      
-      // Calculate percentages with proper priority
       const wrongPct = Math.round((data.wrong / total) * 100);
       const flaggedPct = Math.round((data.flagged / total) * 100);
       const unattemptedPct = Math.round((data.unattempted / total) * 100);
-      
-      // Correct (attempted - wrong) gets the remaining space
       const correctPct = Math.max(0, 100 - wrongPct - flaggedPct - unattemptedPct);
 
-      setBar("attempted-bar", correctPct);  // Only show CORRECT answers in blue
+      setBar("attempted-bar", correctPct);
       setBar("wrong-bar", wrongPct);
       setBar("flagged-bar", flaggedPct);
       setBar("unattempted-bar", unattemptedPct);
@@ -695,14 +689,17 @@
       if (data.filtered_count === 0) {
         matchCount.classList.add("zero");
         startQuizBtn.classList.add("disabled");
-        startQuizBtn.setAttribute("aria-disabled", "true");
         startQuizBtn.href = "#";
       } else {
         matchCount.classList.remove("zero");
         startQuizBtn.classList.remove("disabled");
-        startQuizBtn.removeAttribute("aria-disabled");
-        startQuizBtn.href = "{% url 'Quizzes:start_quiz' quiz.id %}?" + params.toString();
+
+        // ✅ Always point to normal quiz start URL, not AI quiz
+        const baseUrl = "{% url 'Quizzes:start_quiz' quiz.id %}";
+        const queryString = params.toString() ? "?" + params.toString() : "";
+        startQuizBtn.href = baseUrl + queryString;
       }
+
       matchCount.style.display = "block";
     } catch (e) {
       console.error("Filter update failed", e);
@@ -711,7 +708,6 @@
     }
   }
 
-  // wire once
   form.addEventListener("change", updateFilters);
   document.addEventListener("DOMContentLoaded", updateFilters);
 
@@ -720,14 +716,26 @@
     el.style.width = Math.max(0, Math.min(100, widthPct)) + "%";
   }
 
-  // reset modal helpers remain unchanged…
-  function openResetModal(){ document.getElementById("resetModal").classList.add("show"); }
-  function closeResetModal(){ document.getElementById("resetModal").classList.remove("show"); }
-  document.getElementById("resetModal").addEventListener("click", e => { if (e.target === e.currentTarget) closeResetModal(); });
+  function openResetModal() {
+    document.getElementById("resetModal").classList.add("show");
+  }
+  function closeResetModal() {
+    document.getElementById("resetModal").classList.remove("show");
+  }
+  document.getElementById("resetModal").addEventListener("click", e => {
+    if (e.target === e.currentTarget) closeResetModal();
+  });
 
-  function openResetFlagsModal(){ document.getElementById("resetFlagsModal").classList.add("show"); }
-  function closeResetFlagsModal(){ document.getElementById("resetFlagsModal").classList.remove("show"); }
-  document.getElementById("resetFlagsModal").addEventListener("click", e => { if (e.target === e.currentTarget) closeResetFlagsModal(); });
-  </script>
+  function openResetFlagsModal() {
+    document.getElementById("resetFlagsModal").classList.add("show");
+  }
+  function closeResetFlagsModal() {
+    document.getElementById("resetFlagsModal").classList.remove("show");
+  }
+  document.getElementById("resetFlagsModal").addEventListener("click", e => {
+    if (e.target === e.currentTarget) closeResetFlagsModal();
+  });
+</script>
+
 
 {% endblock %}
