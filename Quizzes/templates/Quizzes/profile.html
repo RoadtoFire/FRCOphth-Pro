@@ -33,6 +33,27 @@
     </div>
   </div>
 
+
+  <!-- AI Quiz Performance Chart -->
+  {% if ai_recent %}
+  <div class="card mt-4">
+    <h3 class="mb-3">Smart AI Exam Performance</h3>
+    <canvas id="aiQuizChart" width="400" height="200"></canvas>
+    <p class="mt-3 text-center">
+      <strong>Most Recent:</strong> {{ ai_recent }}% ({{ ai_recent_questions }} questions)
+      <br>
+      <strong>Average Accuracy:</strong> {{ ai_average }}%
+    </p>
+  </div>
+  {% else %}
+  <div class="card mt-4">
+    <h3>Smart AI Exam Performance</h3>
+    <p>No AI quiz attempts yet.</p>
+  </div>
+  {% endif %}
+
+
+
   <div class="card shadow-sm p-4">
     <h4 class="mb-3">Performance by Topic</h4>
 
@@ -75,6 +96,7 @@
 
 {% block extra_scripts %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
@@ -119,6 +141,71 @@ document.addEventListener("DOMContentLoaded", function () {
     },
   });
 });
+
+
+
+ {% if ai_recent %}
+  const ctxAI = document.getElementById('aiQuizChart').getContext('2d');
+  new Chart(ctxAI, {
+    type: 'doughnut',
+    data: {
+      labels: ['Average Accuracy', 'Remaining'],
+      datasets: [{
+        data: [{{ ai_average }}, {{ 100 - ai_average }}],
+        borderWidth: 1,
+        backgroundColor: ['#4CAF50', '#e0e0e0'],
+        hoverOffset: 4
+      }]
+    },
+    options: {
+      plugins: {
+        legend: {
+          position: 'bottom',
+        },
+        title: {
+          display: true,
+          text: 'AI Quiz Average Accuracy',
+          font: { size: 16 }
+        }
+      },
+      cutout: '70%'
+    }
+  });
+  {% endif %}
+
+
+  {% if ai_scores %}
+  const ctxTrend = document.getElementById('aiQuizTrendChart').getContext('2d');
+  new Chart(ctxTrend, {
+    type: 'line',
+    data: {
+      labels: {{ ai_labels|safe }},
+      datasets: [{
+        label: 'AI Quiz Scores (%)',
+        data: {{ ai_scores|safe }},
+        fill: false,
+        tension: 0.3,
+        borderColor: '#2196F3',
+        backgroundColor: '#2196F3',
+        borderWidth: 2,
+        pointRadius: 4
+      }]
+    },
+    options: {
+      scales: {
+        y: { beginAtZero: true, max: 100 }
+      },
+      plugins: {
+        legend: { display: false },
+        title: {
+          display: true,
+          text: 'AI Quiz Progress Over Time',
+          font: { size: 16 }
+        }
+      }
+    }
+  });
+  {% endif %}
 </script>
 {% endblock %}
 

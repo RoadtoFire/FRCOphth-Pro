@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from .models import Quiz, Question, Attempt
 import random
 from django.urls import reverse
-from .models import BlogPost
+from .models import BlogPost, AIQuizAttempt
 
 
 import random
@@ -170,15 +170,32 @@ def ai_quiz_question_view(request, question_number):
 
 @login_required
 def ai_quiz_complete_view(request):
-    """Show results and clear AI quiz session."""
+    """Show AI quiz results and store attempt in the database."""
     queue = request.session.get("ai_quiz_queue", [])
     answers = request.session.get("ai_quiz_answers", {})
 
     total_attempted = len(queue)
-    correct = sum(1 for qid in queue if str(qid) in answers and answers[str(qid)]["is_correct"])
+    correct = sum(
+        1 for qid in queue if str(qid) in answers and answers[str(qid)]["is_correct"]
+    )
     percentage = round((correct / total_attempted) * 100, 1) if total_attempted > 0 else 0
 
-    # Clean up
+    # ✅ Save this attempt in the DB
+    AIQuizAttempt.objects.create(
+        user=request.user,
+        score=percentage,
+        total_questions=total_attempted,
+    )
+
+    # Compute averages directly from DB
+    all_attempts = AIQuizAttempt.objects.filter(user=request.user)
+    all_scores = [a.score for a in all_attempts]
+    average_score = round(sum(all_scores) / len(all_scores), 1) if all_scores else 0
+
+    # Get latest attempt
+    recent_attempt = all_attempts.first() if all_attempts.exists() else None
+
+    # Clean up session
     for key in ["ai_quiz_queue", "ai_quiz_fresh", "ai_quiz_answers"]:
         request.session.pop(key, None)
 
@@ -187,8 +204,12 @@ def ai_quiz_complete_view(request):
         "total_correct": correct,
         "total_attempted": total_attempted,
         "percentage": percentage,
+        "average_score": average_score,
+        "recent_attempt": recent_attempt,
     }
+
     return render(request, "Quizzes/ai_quiz_complete.html", context)
+
 
 
 # ──────────────────────────────────────────────────────────────
@@ -706,6 +727,9 @@ def profile_view(request):
     overall_attempted = 0
     overall_correct = 0
     topic_stats = {}
+    ai_attempts = AIQuizAttempt.objects.filter(user=request.user).order_by("created_at")
+    ai_scores = [a.score for a in ai_attempts]
+    ai_labels = [a.created_at.strftime("%d %b") for a in ai_attempts]
 
     for attempt in attempts:
         answers = attempt.extra_data.get("answers", {})
@@ -730,11 +754,26 @@ def profile_view(request):
         accuracy = round((correct / attempted) * 100, 1) if attempted else 0
         topic_stats[topic]["accuracy"] = accuracy
 
+
+    ai_quiz_history = request.session.get("ai_quiz_history", [])
+    ai_average = round(
+        sum(a["score"] for a in ai_quiz_history) / len(ai_quiz_history),
+        1
+    ) if ai_quiz_history else 0
+
+    ai_recent = ai_quiz_history[-1]["score"] if ai_quiz_history else None
+    ai_recent_questions = ai_quiz_history[-1]["total_questions"] if ai_quiz_history else 0
+
     context = {
         "overall_attempted": overall_attempted,
         "overall_correct": overall_correct,
         "overall_accuracy": overall_accuracy,
         "topic_stats": topic_stats,
+        "ai_average": ai_average,
+        "ai_recent": ai_recent,
+        "ai_recent_questions": ai_recent_questions,
+        "ai_scores": ai_scores,
+        "ai_labels": ai_labels, 
     }
 
     return render(request, "Quizzes/profile.html", context)
