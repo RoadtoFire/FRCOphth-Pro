@@ -2,22 +2,132 @@
 {% load static %}
 
 {% block content %}
+<style>
+  /* Make all cards equal height */
+  .pricing-row {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+    .price-section {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  .old-price {
+    position: relative;
+    font-size: 1.3rem;
+    color: #dc3545;
+    opacity: 0.8;
+  }
+
+  .old-price::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #dc3545;
+    transform: rotate(-10deg);
+  }
+
+  .new-price {
+    font-size: 2rem;
+    color: #198754;
+  }
+
+  .pricing-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .pricing-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  }
+
+  /* Glowing highlight for 6-month plan */
+  .best-value {
+    box-shadow: 0 0 20px 4px rgba(40, 167, 69, 0.5);
+    border: 2px solid #28a745;
+    background: #f9fff9;
+    position: relative;
+  }
+
+.best-value-badge {
+  position: absolute;
+  top: 5px; /* moved down slightly from -15px */
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ffc107;
+  color: #000;
+  font-weight: 600;
+  border-radius: 50px;
+  padding: 5px 15px;
+  font-size: 0.9rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  z-index: 10; /* keep it in front */
+}
+  /* Keep all buttons aligned */
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .subscribe-btn {
+    margin-top: auto;
+  }
+</style>
+
 <div class="container my-5">
   <h2 class="text-center mb-5 fw-bold">Choose Your Subscription Plan</h2>
 
-  <div class="row justify-content-center">
-    <!-- 3-Month Plan -->
-    <div class="col-md-4">
-      <div class="card shadow-lg border-0 text-center">
-        <div class="card-body py-5">
-          <h4 class="card-title mb-3 fw-semibold">3-Month Plan</h4>
-          <p class="card-text text-muted mb-4">Perfect for short-term learners.</p>
-          <h2 class="fw-bold mb-4">$XX</h2>
+  <div class="pricing-row">
 
+    <!-- 1-Month Plan -->
+    <div class="col-md-3">
+      <div class="card shadow-sm border-0 text-center pricing-card opacity-75">
+        <div class="card-body py-4">
+          <div>
+            <h4 class="card-title mb-2 fw-semibold">1-Month Plan</h4>
+            <p class="card-text text-muted mb-3">Try it out — short commitment.</p>
+            <h2 class="fw-bold mb-3">£25</h2>
+            <p class="text-muted small">(£25 / month)</p>
+          </div>
+          <form action="{% url 'create_checkout_session' %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="plan" value="1_month">
+            <button type="submit" class="btn btn-outline-secondary btn-lg px-4 py-2 rounded-pill subscribe-btn">
+              Subscribe
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3-Month Plan -->
+    <div class="col-md-3">
+      <div class="card shadow-lg border-0 text-center pricing-card">
+        <div class="card-body py-5">
+          <div>
+            <h4 class="card-title mb-2 fw-semibold">3-Month Plan</h4>
+            <p class="card-text text-muted mb-3">Ideal for steady learners.</p>
+            <h2 class="fw-bold mb-3">£40</h2>
+            <p class="text-muted small">(£13.33 / month)</p>
+          </div>
           <form action="{% url 'create_checkout_session' %}" method="POST">
             {% csrf_token %}
             <input type="hidden" name="plan" value="3_month">
-            <button type="submit" class="btn btn-primary btn-lg px-4 py-2 rounded-pill">
+            <button type="submit" class="btn btn-primary btn-lg px-4 py-2 rounded-pill subscribe-btn">
               Subscribe
             </button>
           </form>
@@ -25,24 +135,31 @@
       </div>
     </div>
 
-    <!-- 6-Month Plan -->
-    <div class="col-md-4">
-      <div class="card shadow-lg border-0 text-center">
+    <!-- 6-Month Plan (Best Value) -->
+    <div class="col-md-3 position-relative">
+      <div class="card text-center pricing-card best-value">
+        <div class="best-value-badge">⭐ Best Value</div>
         <div class="card-body py-5">
-          <h4 class="card-title mb-3 fw-semibold">6-Month Plan</h4>
-          <p class="card-text text-muted mb-4">Best value for dedicated learners.</p>
-          <h2 class="fw-bold mb-4">$XX</h2>
-
+          <div>
+            <h4 class="card-title mb-2 fw-bold text-success">6-Month Plan</h4>
+            <p class="card-text text-muted mb-3">Commit and save big!</p>
+            <div class="price-section mb-3">
+              <span class="old-price">£75</span>
+              <span class="new-price fw-bold">£50</span>
+            </div>
+            <p class="text-muted small">(£8.33 / month)</p>
+          </div>
           <form action="{% url 'create_checkout_session' %}" method="POST">
             {% csrf_token %}
             <input type="hidden" name="plan" value="6_month">
-            <button type="submit" class="btn btn-success btn-lg px-4 py-2 rounded-pill">
+            <button type="submit" class="btn btn-success btn-lg px-4 py-2 rounded-pill subscribe-btn">
               Subscribe
             </button>
           </form>
         </div>
       </div>
     </div>
+
   </div>
 </div>
 {% endblock %}
