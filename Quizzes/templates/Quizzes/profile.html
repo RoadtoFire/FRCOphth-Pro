@@ -151,7 +151,7 @@ document.addEventListener("DOMContentLoaded", function () {
     data: {
       labels: ['Average Accuracy', 'Remaining'],
       datasets: [{
-        data: [{{ ai_average }}, {{ 100|add:-ai_average }}],,
+        data: [{{ ai_average }}, {{ 100|add:"-ai_average" }}],
         borderWidth: 1,
         backgroundColor: ['#4CAF50', '#e0e0e0'],
         hoverOffset: 4
