@@ -4,7 +4,7 @@
   <h3 class="mb-3">AI Exam Generator</h3>
   <p>Choose the number of questions you’d like to attempt.</p>
 
-  <form method="POST" action="{% url 'Quizzes:ai_quiz_start' %}">
+  <form method="POST" action="{% url 'Quizzes:ai_quiz_start' %}"  onsubmit="console.log('Form submitting...');">
   {% csrf_token %}
   <div class="form-group mb-3">
     <label for="total_questions" class="form-label">Select Number of Questions:</label>

@@ -14,38 +14,53 @@ from .models import Question
 
 # Example topic weights (adjust yours accordingly)
 TOPIC_WEIGHTS = {
-    "Optics" : 24,
-    "Epidemiology and Biostatistics" : 16,
-    "Anatomy" : 9,
-    "Instruments and Investigations" : 8,
-    "Pathology" : 7,
-    "Immunology" : 7,
-    "Embryology" : 7,
-    "Microbiology" : 7,
-    "Pharmacology" : 2,
-    "Genetics" : 2,
-    "Biochemistry" : 4,
-    "Cell Biology" : 3,
-    "Physiology" : 3,
-    "Genetics" : 1,
-    
+    "Optics": 28,
+    "Epidemiology and Biostatistics": 19,
+    "Anatomy": 12,
+    "Instruments and Investigations": 8,
+    "Pathology": 7,
+    "Immunology": 7,
+    "Microbiology": 7,
+    "Pharmacology": 2,
+    "Cell Biology": 3,
+    "Physiology": 3,
+    "Genetics": 4,
 }
 
 def get_weighted_questions(total_questions):
     """
-    Selects questions proportionally to topic weights.
+    Selects questions proportionally to topic weights by QUIZ title.
     Ensures rounding errors never reduce total question count.
     """
-    questions_by_topic = {topic: Question.objects.filter(category__name=topic) for topic in TOPIC_WEIGHTS.keys()}
+    # Get questions by topic (using quiz__title instead of category__name)
+    questions_by_topic = {
+        topic: list(Question.objects.filter(quiz__title=topic)) 
+        for topic in TOPIC_WEIGHTS.keys()
+    }
+
+    # Filter to only topics that have questions
+    topics_with_questions = {k: v for k, v in questions_by_topic.items() if v}
+    
+    if not topics_with_questions:
+        print("❌ ERROR: No questions found for any topics!")
+        return []
+
+    # Normalize weights for available topics only
+    available_weights = {k: TOPIC_WEIGHTS[k] for k in topics_with_questions.keys()}
+    total_weight = sum(available_weights.values())
 
     # Step 1: Base allocation by weight
-    allocation = {topic: int(total_questions * weight) for topic, weight in TOPIC_WEIGHTS.items()}
+    allocation = {}
+    for topic, weight in available_weights.items():
+        normalized_weight = weight / total_weight
+        allocation[topic] = int(total_questions * normalized_weight)
 
     # Step 2: Fix rounding errors (ensure total matches exactly)
     current_total = sum(allocation.values())
+    
     if current_total < total_questions:
         # Add leftover questions to heaviest topics first
-        sorted_topics = sorted(TOPIC_WEIGHTS.items(), key=lambda x: x[1], reverse=True)
+        sorted_topics = sorted(available_weights.items(), key=lambda x: x[1], reverse=True)
         for topic, _ in sorted_topics:
             if current_total >= total_questions:
                 break
@@ -53,7 +68,7 @@ def get_weighted_questions(total_questions):
             current_total += 1
     elif current_total > total_questions:
         # Reduce excess from lowest-weight topics
-        sorted_topics = sorted(TOPIC_WEIGHTS.items(), key=lambda x: x[1])
+        sorted_topics = sorted(available_weights.items(), key=lambda x: x[1])
         for topic, _ in sorted_topics:
             if current_total <= total_questions:
                 break
@@ -61,16 +76,17 @@ def get_weighted_questions(total_questions):
                 allocation[topic] -= 1
                 current_total -= 1
 
-    # Step 3: Randomly sample from each category
+    # Step 3: Randomly sample from each topic
     selected_questions = []
     for topic, count in allocation.items():
-        available = list(questions_by_topic[topic])
-        if available:
+        available = questions_by_topic[topic]
+        if available and count > 0:
             sample_size = min(len(available), count)
             selected_questions.extend(random.sample(available, sample_size))
 
     # Step 4: Shuffle the final question list
     random.shuffle(selected_questions)
+    
     return selected_questions
 
 
@@ -82,26 +98,37 @@ def ai_quiz_select_view(request):
 @login_required
 def ai_quiz_start_view(request):
     if request.method == "POST":
-        total_questions = int(request.POST.get("total_questions"))
+        total_questions = int(request.POST.get("total_questions", 10))
         selected_questions = get_weighted_questions(total_questions)
 
+        if not selected_questions:
+            messages.warning(request, "Could not generate questions. Please contact support.")
+            return redirect("Quizzes:ai_quiz_select")
+
         ids = [q.id for q in selected_questions]
+        
+        # Clear any existing AI quiz session data first
+        for key in list(request.session.keys()):
+            if key.startswith('ai_quiz_'):
+                del request.session[key]
+        
+        # Set new session data
         request.session["ai_quiz_queue"] = ids
         request.session["ai_quiz_fresh"] = ids[:]
+        request.session["ai_quiz_answers"] = {}
+        
+        # Force session save
         request.session.modified = True
 
-        print("Selected questions:", selected_questions)
-        print("Count:", len(selected_questions))
-
-
         return redirect("Quizzes:ai_quiz_question", question_number=1)
+    
     return redirect("Quizzes:ai_quiz_select")
-
 
 @login_required
 def ai_quiz_question_view(request, question_number):
     """Handles AI Quiz questions with proper submit disabling and last-question protection."""
     queue = request.session.get("ai_quiz_queue", [])
+    
     if not queue:
         messages.warning(request, "Your AI quiz has expired or not started.")
         return redirect("Quizzes:ai_quiz_select")
@@ -180,7 +207,7 @@ def ai_quiz_complete_view(request):
     )
     percentage = round((correct / total_attempted) * 100, 1) if total_attempted > 0 else 0
 
-    # ✅ Save this attempt in the DB
+    # Save this attempt in the DB
     AIQuizAttempt.objects.create(
         user=request.user,
         score=percentage,
@@ -719,7 +746,7 @@ def toggle_flag(request, quiz_id, question_id):
 def profile_view(request):
     """
     Displays user's overall and per-topic statistics.
-    Data pulled from Attempt.extra_data['answers'] and linked quizzes.
+    Includes both normal quizzes and AI quiz performance.
     """
     user = request.user
     attempts = Attempt.objects.filter(user=user).select_related("quiz")
@@ -727,10 +754,8 @@ def profile_view(request):
     overall_attempted = 0
     overall_correct = 0
     topic_stats = {}
-    ai_attempts = AIQuizAttempt.objects.filter(user=request.user).order_by("created_at")
-    ai_scores = [a.score for a in ai_attempts]
-    ai_labels = [a.created_at.strftime("%d %b") for a in ai_attempts]
 
+    # ─────────────── Regular Quizzes ───────────────
     for attempt in attempts:
         answers = attempt.extra_data.get("answers", {})
         correct = sum(1 for a in answers.values() if a.get("is_correct"))
@@ -746,24 +771,26 @@ def profile_view(request):
         topic_stats[quiz_title]["correct"] += correct
 
     overall_accuracy = round((overall_correct / overall_attempted) * 100, 1) if overall_attempted else 0
+    recent_attempts = Attempt.objects.filter(user=user).select_related("quiz").order_by("-id")[:10]
 
-    # Add percentage for each topic
+
     for topic, data in topic_stats.items():
         attempted = data["attempted"]
         correct = data["correct"]
         accuracy = round((correct / attempted) * 100, 1) if attempted else 0
         topic_stats[topic]["accuracy"] = accuracy
 
+    # ─────────────── AI Quiz Performance ───────────────
+    ai_average = ai_recent = ai_recent_questions = None
 
-    ai_quiz_history = request.session.get("ai_quiz_history", [])
-    ai_average = round(
-        sum(a["score"] for a in ai_quiz_history) / len(ai_quiz_history),
-        1
-    ) if ai_quiz_history else 0
+    latest_ai = AIQuizAttempt.objects.filter(user=user).order_by("-created_at").first()
 
-    ai_recent = ai_quiz_history[-1]["score"] if ai_quiz_history else None
-    ai_recent_questions = ai_quiz_history[-1]["total_questions"] if ai_quiz_history else 0
+    if latest_ai:
+        ai_recent = round(latest_ai.score, 1)
+        ai_recent_questions = latest_ai.total_questions
+        ai_average = ai_recent  # Same as recent since we’re not tracking history
 
+    # ─────────────── Context ───────────────
     context = {
         "overall_attempted": overall_attempted,
         "overall_correct": overall_correct,
@@ -772,13 +799,10 @@ def profile_view(request):
         "ai_average": ai_average,
         "ai_recent": ai_recent,
         "ai_recent_questions": ai_recent_questions,
-        "ai_scores": ai_scores,
-        "ai_labels": ai_labels, 
+        "recent_attempts": recent_attempts,
     }
 
     return render(request, "Quizzes/profile.html", context)
-
-
 
 
 

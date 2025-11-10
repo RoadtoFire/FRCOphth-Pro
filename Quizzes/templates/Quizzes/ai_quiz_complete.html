@@ -147,11 +147,17 @@
       <div class="progress-bar-container">
         <div class="progress-fill" style="width: {{ percentage }}%;"></div>
       </div>
-      <p class="mb-1"><strong>{{ percentage }}%</strong> achieved</p>
-      <p class="text-muted small">{{ correct }} / {{ total }} correct</p>
-    </div>
 
-    <div class="sidebar-card">
+      <!-- Main label -->
+      <p class="mb-1">
+        <strong>{{ percentage }}%</strong> achieved
+      </p>
+
+      <!-- ✅ Correct count summary -->
+      <p class="text-muted small">
+        {{ total_correct|default:"0" }} / {{ total_attempted|default:"0" }} correct
+      </p>
+    </div>
       <a href="{% url 'Quizzes:ai_quiz_select' %}" class="btn btn-outline-danger w-100">Restart AI Exam</a>
     </div>
   </div>

@@ -2,59 +2,37 @@
 {% load static %}
 
 {% block content %}
-<div class="container mt-5 mb-5">
-  <h2 class="text-center mb-4">{{ user.username }}'s Profile</h2>
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Your Profile</h2>
 
-    <div class="text-center mb-5">
-    <div style="max-width: 320px; margin: 0 auto;">
-        <canvas id="accuracyChart"></canvas>
-    </div>
-    <p class="text-muted mt-2">Overall Answer Distribution</p>
-    </div>
-
-
-
-
-  <div class="card shadow-sm p-4 mb-5">
-    <h4 class="mb-3">Overall Statistics</h4>
-    <div class="row text-center">
-      <div class="col-md-4">
-        <h5 class="fw-bold">{{ overall_attempted }}</h5>
-        <p class="text-muted mb-0">Total Questions Attempted</p>
+  <div class="row justify-content-center">
+    <!-- Overall Performance Chart -->
+    <div class="col-md-6 text-center mb-5">
+      <div style="max-width: 320px; margin: 0 auto;">
+        <canvas id="performanceChart"></canvas>
       </div>
-      <div class="col-md-4">
-        <h5 class="fw-bold">{{ overall_correct }}</h5>
-        <p class="text-muted mb-0">Correct Answers</p>
-      </div>
-      <div class="col-md-4">
-        <h5 class="fw-bold">{{ overall_accuracy }}%</h5>
-        <p class="text-muted mb-0">Overall Accuracy</p>
-      </div>
+      <p class="text-muted mt-2">
+        Overall Performance — <strong>{{ overall_accuracy|default:"0" }}%</strong> accuracy
+      </p>
     </div>
+
+    <!-- AI Quiz Performance Chart -->
+    {% if ai_recent %}
+    <div class="col-md-6 text-center mb-5">
+      <div style="max-width: 320px; margin: 0 auto;">
+        <canvas id="aiQuizChart"></canvas>
+      </div>
+      <p class="text-muted mt-2">
+        Smart AI Exam — <strong>{{ ai_average }}%</strong> accuracy
+        ({{ ai_recent_questions }} questions)
+      </p>
+    </div>
+    {% endif %}
   </div>
 
+  <hr class="my-5">
 
-  <!-- AI Quiz Performance Chart -->
-  {% if ai_recent %}
-  <div class="card mt-4">
-    <h3 class="mb-3">Smart AI Exam Performance</h3>
-    <canvas id="aiQuizChart" width="400" height="200"></canvas>
-    <p class="mt-3 text-center">
-      <strong>Most Recent:</strong> {{ ai_recent }}% ({{ ai_recent_questions }} questions)
-      <br>
-      <strong>Average Accuracy:</strong> {{ ai_average }}%
-    </p>
-  </div>
-  {% else %}
-  <div class="card mt-4">
-    <h3>Smart AI Exam Performance</h3>
-    <p>No AI quiz attempts yet.</p>
-  </div>
-  {% endif %}
-
-
-
-  <div class="card shadow-sm p-4">
+ <div class="card shadow-sm p-4">
     <h4 class="mb-3">Performance by Topic</h4>
 
     {% if topic_stats %}
@@ -81,7 +59,7 @@
         {% endfor %}
       </div>
     {% else %}
-      <p class="text-muted text-center mb-0">No exam data yet. Start an exam to see your stats!</p>
+      <p class="text-muted text-center mb-0">No quiz data yet. Start a quiz to see your stats!</p>
     {% endif %}
   </div>
 
@@ -92,121 +70,81 @@
   </div>
 </div>
 
-
-
-{% block extra_scripts %}
+<!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-
+<!-- Overall Chart Script -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-  const ctx = document.getElementById("accuracyChart");
-
-  const correct = {{ overall_correct|default:0 }};
-  const attempted = {{ overall_attempted|default:0 }};
-  const wrong = attempted - correct;
-
-  new Chart(ctx, {
-    type: "pie",
-    data: {
-      labels: ["Correct", "Incorrect"],
-      datasets: [{
-        data: [correct, wrong],
-        backgroundColor: ["#10b981", "#ef4444"],
-        borderColor: ["#ffffff", "#ffffff"],
-        borderWidth: 2,
-      }],
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: {
-          position: "bottom",
-          labels: {
-            font: { size: 14 },
-            color: "#1e293b"
-          }
-        },
-        tooltip: {
-          callbacks: {
-            label: function (context) {
-              const total = correct + wrong;
-              const value = context.raw;
-              const percentage = total ? ((value / total) * 100).toFixed(1) : 0;
-              return `${context.label}: ${value} (${percentage}%)`;
-            }
+  const ctxOverall = document.getElementById('performanceChart');
+  if (ctxOverall) {
+    const overallAccuracy = {{ overall_accuracy|default:0 }};
+    new Chart(ctxOverall, {
+      type: 'doughnut',
+      data: {
+        labels: ['Correct', 'Incorrect'],
+        datasets: [{
+          data: [overallAccuracy, 100 - overallAccuracy],
+          backgroundColor: ['#4CAF50', '#ef4444'], // ✅ Green + Red
+          borderColor: ['#ffffff', '#ffffff'],
+          borderWidth: 2,
+          cutout: '70%'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: {
+          legend: { position: 'bottom' },
+          title: {
+            display: true,
+            text: 'Overall Answer Distribution',
+            font: { size: 16 }
           }
         }
       }
-    },
-  });
+    });
+  }
 });
+</script>
 
-
-
- {% if ai_recent %}
-  const ctxAI = document.getElementById('aiQuizChart').getContext('2d');
-  new Chart(ctxAI, {
-    type: 'doughnut',
-    data: {
-      labels: ['Average Accuracy', 'Remaining'],
-      datasets: [{
-        data: [{{ ai_average }}, {{ 100|add:"-ai_average" }}],
-        borderWidth: 1,
-        backgroundColor: ['#4CAF50', '#e0e0e0'],
-        hoverOffset: 4
-      }]
-    },
-    options: {
-      plugins: {
-        legend: {
-          position: 'bottom',
-        },
-        title: {
-          display: true,
-          text: 'AI Quiz Average Accuracy',
-          font: { size: 16 }
-        }
+<!-- AI Quiz Chart Script -->
+{% if ai_recent %}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const ctxAI = document.getElementById('aiQuizChart');
+  if (ctxAI) {
+    const aiScore = {{ ai_average }};
+    new Chart(ctxAI, {
+      type: 'doughnut',
+      data: {
+        labels: ['Average Accuracy', 'Incorrect'],
+        datasets: [{
+          data: [aiScore, 100 - aiScore],
+          backgroundColor: ['#4CAF50', '#ef4444'], // ✅ Matching colors
+          borderColor: ['#ffffff', '#ffffff'],
+          borderWidth: 2,
+          cutout: '70%'
+        }]
       },
-      cutout: '70%'
-    }
-  });
-  {% endif %}
-
-
-  {% if ai_scores %}
-  const ctxTrend = document.getElementById('aiQuizTrendChart').getContext('2d');
-  new Chart(ctxTrend, {
-    type: 'line',
-    data: {
-      labels: {{ ai_labels|safe }},
-      datasets: [{
-        label: 'AI Quiz Scores (%)',
-        data: {{ ai_scores|safe }},
-        fill: false,
-        tension: 0.3,
-        borderColor: '#2196F3',
-        backgroundColor: '#2196F3',
-        borderWidth: 2,
-        pointRadius: 4
-      }]
-    },
-    options: {
-      scales: {
-        y: { beginAtZero: true, max: 100 }
-      },
-      plugins: {
-        legend: { display: false },
-        title: {
-          display: true,
-          text: 'AI Quiz Progress Over Time',
-          font: { size: 16 }
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: { font: { size: 14 }, color: '#1e293b' }
+          },
+          title: {
+            display: true,
+            text: 'AI Quiz Average Accuracy',
+            font: { size: 16 }
+          }
         }
       }
-    }
-  });
-  {% endif %}
+    });
+  }
+});
 </script>
-{% endblock %}
-
+{% endif %}
 {% endblock %}
