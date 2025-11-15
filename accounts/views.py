@@ -1,11 +1,9 @@
 from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import redirect
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
 import stripe
 from datetime import timedelta, date
 from django.conf import settings
-from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -13,6 +11,7 @@ from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from .models import Subscription
+from django.contrib.auth.hashers import make_password
 
 # ---------------------------------------------------------
 # STRIPE CONFIG
@@ -23,6 +22,9 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 def logout_view(request):
     logout(request)
     return redirect("home")
+
+
+
 
 
 def login_view(request):
@@ -116,6 +118,54 @@ def create_checkout_session(request):
     return JsonResponse({"error": "Invalid request"}, status=400)
 
 
+
+def password_reset_view(request):
+    if request.method == "POST":
+        # Safely get email even if it's missing
+        email = (request.POST.get("email") or "").strip().lower()
+
+        # If we're on the "enter email" step
+        if "new_password" not in request.POST:
+            if not email:
+                messages.error(request, "Please enter your email.")
+                return render(request, "accounts/password_reset.html")
+
+            try:
+                user = User.objects.get(email=email)
+            except User.DoesNotExist:
+                messages.error(request, "No account found with this email. Please sign up first.")
+                return render(request, "accounts/password_reset.html")
+
+            # ✅ Show reset form
+            return render(request, "accounts/password_reset.html", {"email": email, "allow_reset": True})
+
+        # If we're on the "reset password" step
+        new_password = request.POST.get("new_password")
+        confirm_password = request.POST.get("confirm_password")
+
+        if not email:
+            messages.error(request, "Something went wrong. Please start over.")
+            return redirect("password_reset")
+
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            messages.error(request, "No account found with this email. Please sign up first.")
+            return render(request, "accounts/password_reset.html")
+
+        if new_password != confirm_password:
+            messages.error(request, "Passwords do not match.")
+            return render(request, "accounts/password_reset.html", {"email": email, "allow_reset": True})
+
+        user.password = make_password(new_password)
+        user.save()
+        messages.success(request, "Your password has been reset successfully. You can now log in.")
+        return redirect("login")
+
+    # GET request — show the basic email form
+    return render(request, "accounts/password_reset.html")
+
+
 # ---------------------------------------------------------
 # PAYMENT SUCCESS VIEW
 # ---------------------------------------------------------
@@ -204,3 +254,5 @@ def stripe_webhook(request):
         )
 
     return HttpResponse(status=200)
+
+
