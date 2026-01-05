@@ -31,3 +31,6 @@ A comprehensive web application designed for medical professionals to prepare fo
 1. Clone the repo
    ```bash
    git clone [https://github.com/RoadtoFire/FRCOphth-Pro.git](https://github.com/RoadtoFire/FRCOphth-Pro.git)
+   pip install -r requirements.txt
+   python manage.py migrate
+   python manage.py runserver
