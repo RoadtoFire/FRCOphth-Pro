@@ -1,1 +1,1 @@
-web: python manage.py migrate && gunicorn MedicalQuiz.wsgi:application --bind 0.0.0.0:$PORT
+web: gunicorn MedicalQuiz.wsgi:application --bind 0.0.0.0:$PORT
