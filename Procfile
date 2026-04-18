@@ -1,1 +1,1 @@
-web: python manage.py migrate && gunicorn MedicalQuiz.wsgi:application --bind 0.0.0.0:$PORT
+web: python manage.py migrate && python manage.py loaddata fixtures/data.json && gunicorn MedicalQuiz.wsgi:application --bind 0.0.0.0:$PORT
