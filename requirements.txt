@@ -29,3 +29,4 @@ tzdata==2025.2
 urllib3==2.5.0
 whitenoise==6.11.0
 django-extensions==4.1
+python-dotenv==1.0.1
