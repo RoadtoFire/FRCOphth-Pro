@@ -69,7 +69,7 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': '/app/data/db.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
 # Password validation
@@ -176,3 +176,4 @@ SESSION_SAVE_EVERY_REQUEST = False
 SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SECURE = not DEBUG   # True in production (HTTPS), False locally
 SESSION_COOKIE_SAMESITE = 'Lax'
+
