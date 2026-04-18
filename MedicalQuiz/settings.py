@@ -56,8 +56,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'MedicalQuiz.wsgi.application'
 
-# --- Database ---
-# Uses PostgreSQL in production (DATABASE_URL env var), SQLite locally
 DATABASE_URL = os.environ.get('DATABASE_URL')
 if DATABASE_URL:
     DATABASES = {
@@ -71,10 +69,9 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
+            'NAME': '/app/data/db.sqlite3',
         }
     }
-
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
