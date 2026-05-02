@@ -1,3 +1,4 @@
+from accounts.decorators import subscription_required
 from typing import Set, List
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -42,7 +43,6 @@ def get_weighted_questions(total_questions):
     topics_with_questions = {k: v for k, v in questions_by_topic.items() if v}
     
     if not topics_with_questions:
-        print("❌ ERROR: No questions found for any topics!")
         return []
 
     # Normalize weights for available topics only
@@ -90,12 +90,12 @@ def get_weighted_questions(total_questions):
     return selected_questions
 
 
-@login_required
+@subscription_required
 def ai_quiz_select_view(request):
     return render(request, "Quizzes/ai_quiz_select.html")
 
 
-@login_required
+@subscription_required
 def ai_quiz_start_view(request):
     if request.method == "POST":
         total_questions = int(request.POST.get("total_questions", 10))
@@ -124,7 +124,7 @@ def ai_quiz_start_view(request):
     
     return redirect("Quizzes:ai_quiz_select")
 
-@login_required
+@subscription_required
 def ai_quiz_question_view(request, question_number):
     """Handles AI Quiz questions with proper submit disabling and last-question protection."""
     queue = request.session.get("ai_quiz_queue", [])
@@ -195,7 +195,7 @@ def ai_quiz_question_view(request, question_number):
     return render(request, "Quizzes/ai_quiz_question.html", context)
 
 
-@login_required
+@subscription_required
 def ai_quiz_complete_view(request):
     """Show AI quiz results and store attempt in the database."""
     queue = request.session.get("ai_quiz_queue", [])
@@ -332,7 +332,7 @@ def home(request):
 # Select Questions page
 # ──────────────────────────────────────────────────────────────
 
-@login_required
+@subscription_required
 def select_questions(request, quiz_id):
     quiz = get_object_or_404(Quiz, id=quiz_id)
     attempt = _get_attempt(request.user, quiz)
@@ -370,7 +370,7 @@ def select_questions(request, quiz_id):
 # AJAX Filter Preview
 # ──────────────────────────────────────────────────────────────
 
-@login_required
+@subscription_required
 def ajax_filter_preview(request, quiz_id):
     quiz = get_object_or_404(Quiz, id=quiz_id)
     attempt = _get_attempt(request.user, quiz)
@@ -420,7 +420,7 @@ def ajax_filter_preview(request, quiz_id):
 # Start Quiz
 # ──────────────────────────────────────────────────────────────
 
-@login_required
+@subscription_required
 def start_quiz(request, quiz_id):
     """
     Creates a fresh run 'queue' and a 'fresh' list for this run.
@@ -485,7 +485,7 @@ def start_quiz(request, quiz_id):
 # Quiz Complete Page
 # ──────────────────────────────────────────────────────────────
 
-@login_required
+@subscription_required
 def quiz_complete(request, quiz_id):
     quiz = get_object_or_404(Quiz, id=quiz_id)
     attempt = _get_attempt(request.user, quiz)
@@ -535,7 +535,7 @@ def quiz_complete(request, quiz_id):
 # Reset Progress / Flags / Toggle Flag
 # ──────────────────────────────────────────────────────────────
 
-@login_required
+@subscription_required
 def reset_progress(request, quiz_id):
     """Clears all answers and flags for the user's current attempt."""
     quiz = get_object_or_404(Quiz, id=quiz_id)
@@ -549,7 +549,7 @@ def reset_progress(request, quiz_id):
     return redirect("Quizzes:select_questions", quiz.id)
 
 
-@login_required
+@subscription_required
 def reset_flags(request, quiz_id):
     """Clears all flagged questions for the current attempt."""
     quiz = get_object_or_404(Quiz, id=quiz_id)
@@ -561,7 +561,7 @@ def reset_flags(request, quiz_id):
     messages.success(request, "All flags have been removed.")
     return redirect("Quizzes:select_questions", quiz.id)
 
-@login_required
+@subscription_required
 def quiz_question(request, quiz_id, question_number):
     """
     Displays one question within the current quiz run.
@@ -708,7 +708,7 @@ def quiz_question(request, quiz_id, question_number):
     return render(request, "Quizzes/quiz_question.html", context)
 
 
-@login_required
+@subscription_required
 def toggle_flag(request, quiz_id, question_id):
     """Toggle flag; redirect back to the current question if this isn't AJAX."""
     quiz = get_object_or_404(Quiz, id=quiz_id)
@@ -808,7 +808,6 @@ def profile_view(request):
 
 def blog_index(request):
     posts = BlogPost.objects.all().order_by('-created_at')
-    print("DEBUG → Posts count:", posts.count())  # TEMP debug line
     return render(request, "Quizzes/blog.html", {"posts": posts})
 
 def blog_detail(request, slug):

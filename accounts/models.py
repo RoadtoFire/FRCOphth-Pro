@@ -7,6 +7,10 @@ class Subscription(models.Model):
         ("3_month", "3 Month"),
         ("6_month", "6 Month"),
     ]
+    @property
+    def is_valid(self):
+        """Single source of truth for subscription access checks."""
+        return self.is_active and self.end_date is not None and self.end_date >= date.today()
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     plan = models.CharField(max_length=20, choices=PLAN_CHOICES)

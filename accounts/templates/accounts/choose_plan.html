@@ -92,28 +92,6 @@
   <h2 class="text-center mb-5 fw-bold">Choose Your Subscription Plan</h2>
 
   <div class="pricing-row">
-
-    <!-- 1-Month Plan -->
-    <div class="col-md-3">
-      <div class="card shadow-sm border-0 text-center pricing-card opacity-75">
-        <div class="card-body py-4">
-          <div>
-            <h4 class="card-title mb-2 fw-semibold">1-Month Plan</h4>
-            <p class="card-text text-muted mb-3">Try it out — short commitment.</p>
-            <h2 class="fw-bold mb-3">£25</h2>
-            <p class="text-muted small">(£25 / month)</p>
-          </div>
-          <form action="{% url 'create_checkout_session' %}" method="POST">
-            {% csrf_token %}
-            <input type="hidden" name="plan" value="1_month">
-            <button type="submit" class="btn btn-outline-secondary btn-lg px-4 py-2 rounded-pill subscribe-btn">
-              Subscribe
-            </button>
-          </form>
-        </div>
-      </div>
-    </div>
-
     <!-- 3-Month Plan -->
     <div class="col-md-3">
       <div class="card shadow-lg border-0 text-center pricing-card">

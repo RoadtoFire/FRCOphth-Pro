@@ -1,3 +1,5 @@
+from dotenv import load_dotenv
+load_dotenv()
 from pathlib import Path
 import os
 import dj_database_url
@@ -9,7 +11,10 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-local-dev-only')
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
-CSRF_TRUSTED_ORIGINS = ['https://frcophth-pro-production.up.railway.app']
+CSRF_TRUSTED_ORIGINS = [
+    origin.strip()
+    for origin in os.environ.get('CSRF_TRUSTED_ORIGINS', 'http://localhost:8000').split(',')
+]
 
 # Application definition
 INSTALLED_APPS = [
@@ -165,6 +170,9 @@ CKEDITOR_5_CONFIGS = {
 STRIPE_PUBLIC_KEY = os.environ.get('STRIPE_PUBLIC_KEY', '')
 STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY', '')
 STRIPE_WEBHOOK_SECRET = os.environ.get('STRIPE_WEBHOOK_SECRET', '')
+
+STRIPE_PRICE_3_MONTH = os.environ.get('STRIPE_PRICE_3_MONTH', '')
+STRIPE_PRICE_6_MONTH = os.environ.get('STRIPE_PRICE_6_MONTH', '')
 
 # --- Upload Limits ---
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 20000
