@@ -1,5 +1,8 @@
 from dotenv import load_dotenv
 load_dotenv()
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 from pathlib import Path
 import os
 import dj_database_url
@@ -16,6 +19,13 @@ CSRF_TRUSTED_ORIGINS = [
     for origin in os.environ.get('CSRF_TRUSTED_ORIGINS', 'http://localhost:8000').split(',')
 ]
 
+
+
+cloudinary.config(
+    cloud_name=os.environ.get('CLOUDINARY_CLOUD_NAME', ''),
+    api_key=os.environ.get('CLOUDINARY_API_KEY', ''),
+    api_secret=os.environ.get('CLOUDINARY_API_SECRET', ''),
+)
 # Application definition
 INSTALLED_APPS = [
     'crispy_forms',
@@ -109,8 +119,9 @@ LOGIN_REDIRECT_URL = "/Quizzes/"
 LOGOUT_REDIRECT_URL = "/accounts/login/"
 
 # --- Media ---
-MEDIA_URL = '/media/'
+MEDIA_URL = 'https://res.cloudinary.com/dudsumkuz/image/upload/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # --- CKEditor ---
 CKEDITOR_5_UPLOAD_PATH = "uploads/"
@@ -194,4 +205,3 @@ CLOUDINARY_STORAGE = {
     'API_KEY': os.environ.get('CLOUDINARY_API_KEY', ''),
     'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET', ''),
 }
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
