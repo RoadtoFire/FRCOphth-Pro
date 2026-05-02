@@ -541,6 +541,17 @@
 
       <form id="filter-form">
         <div class="filter-group">
+        <label class="filter-label-text">Number of Questions</label>
+        <select name="limit" id="limit" class="topic-select">
+          <option value="30">30 Questions</option>
+          <option value="50">50 Questions</option>
+          <option value="100">100 Questions</option>
+          <option value="all" selected>All Questions</option>
+        </select>
+      </div>
+        
+        
+        <div class="filter-group">
           <label class="filter-label-text">Topic</label>
           <select name="topic" id="topic" class="topic-select">
             <option value="">All topics</option>
@@ -578,9 +589,6 @@
 
         <div class="action-buttons">
           <a href="#" id="start-quiz-btn" class="btn-primary">Start Exam →</a>
-          {% if has_queue %}
-          <a href="{% url 'Quizzes:quiz_question' quiz.id 1 %}" class="btn-secondary">Continue</a>
-          {% endif %}
         </div>
       </form>
     </div>

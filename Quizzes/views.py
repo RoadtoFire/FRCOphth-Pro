@@ -357,12 +357,13 @@ def select_questions(request, quiz_id):
         .order_by("category__name")
     )
 
-    has_queue = bool(request.session.get(f"quiz_{quiz.id}_queue"))
 
     return render(
         request,
         "Quizzes/select_questions.html",
-        {"quiz": quiz, "topics": topics, "stats": stats, "has_queue": has_queue},
+        {"quiz": quiz, "topics": topics,
+          "stats": stats, 
+        },
     )
 
 
@@ -405,6 +406,13 @@ def ajax_filter_preview(request, quiz_id):
     )
     unattempted = max(0, total - attempted)
 
+    limit_param = request.GET.get("limit", "all")
+    if limit_param != "all":
+        try:
+            filtered_count = min(filtered_count, int(limit_param))
+        except ValueError:
+            pass
+
     data = {
         "total": total,
         "attempted": attempted,
@@ -413,6 +421,7 @@ def ajax_filter_preview(request, quiz_id):
         "unattempted": unattempted,
         "filtered_count": filtered_count,
     }
+    
     return JsonResponse(data)
 
 
@@ -462,7 +471,17 @@ def start_quiz(request, quiz_id):
     # Get IDs
     ids: List[int] = list(qs.values_list("id", flat=True))
 
-    # Check if any questions match
+    limit_param = request.GET.get("limit", "all")
+    if limit_param != "all":
+        try:
+            limit = int(limit_param)
+            if randomize:
+                ids = random.sample(ids, min(limit, len(ids)))
+            else:
+                ids = ids[:limit]
+        except ValueError:
+            pass
+
     if not ids:
         messages.warning(request, "No questions match your filters. Adjust filters and try again.")
         return redirect("Quizzes:select_questions", quiz.id)
@@ -788,7 +807,10 @@ def profile_view(request):
     if latest_ai:
         ai_recent = round(latest_ai.score, 1)
         ai_recent_questions = latest_ai.total_questions
-        ai_average = ai_recent  # Same as recent since we’re not tracking history
+        all_ai_scores = list(
+            AIQuizAttempt.objects.filter(user=user).values_list("score", flat=True)
+        )
+        ai_average = round(sum(all_ai_scores) / len(all_ai_scores), 1) if all_ai_scores else None
 
     # ─────────────── Context ───────────────
     context = {

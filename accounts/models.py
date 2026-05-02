@@ -17,6 +17,7 @@ class Subscription(models.Model):
     start_date = models.DateField(auto_now_add=True)
     end_date = models.DateField(blank=True, null=True)
     is_active = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
 
     # For Stripe integration
     stripe_customer_id = models.CharField(max_length=255, blank=True, null=True)
