@@ -53,13 +53,25 @@ def login_view(request):
     if request.method == 'POST':
         email = request.POST.get('username', '').strip().lower()
         password = request.POST.get('password', '')
+
+        # First try authenticating directly by username
         user = authenticate(request, username=email, password=password)
+
+        # If that fails, look up the user by email and try their actual username
+        if user is None:
+            try:
+                user_obj = User.objects.get(email__iexact=email)
+                user = authenticate(request, username=user_obj.username, password=password)
+            except User.DoesNotExist:
+                pass
+
         if user is not None:
             login(request, user)
             return redirect('home')
         else:
             messages.error(request, 'Invalid email or password.')
             return redirect('home')
+
     return redirect('home')
 
 
